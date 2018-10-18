@@ -1,0 +1,21 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.manualSistema}" closable="true">
+		
+		<h:form id="frmManual">
+		
+			<p:media value="/resources/MANUAL_SISTEMA_PRESENTE.pdf" width="100%" height="400px">
+			</p:media>
+				
+		</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

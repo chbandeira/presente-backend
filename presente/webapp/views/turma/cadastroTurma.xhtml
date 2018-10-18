@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.cadastroTurma}" closable="true">
+			
+			<h:form id="frmCadastro">
+		    
+		    <p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid 
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+				
+			    <h:outputLabel for="turma" value="#{lbl.turma}:" />  
+			    <p:inputText id="turma" maxlength="10" value="#{turmaMB.turma.descricao}" label="#{lbl.turma}" size="10"/>
+
+			</h:panelGrid>
+			
+			<p:separator></p:separator>
+			    
+			<p:commandButton 
+				value="#{lbl.salvar}"
+				icon="ui-icon-check" 
+				actionListener="#{turmaMB.salvar}"
+				update="frmCadastro"/>
+				
+			</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

@@ -1,0 +1,23 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:head>
+		<meta http-equiv="refresh" content="#{session.maxInactiveInterval};url=#{request.contextPath}/index.jsf"/>
+	</h:head>
+	
+    <h:form prependId="false">
+   		<h:panelGrid columns="2" width="100%" columnClasses="panelGridLeft,panelGridRight" cellpadding="8" styleClass="logo">
+  			<h:column>
+  				<h:outputText value="#{lbl.presente}!" styleClass="logoPrincipal"/>
+  			</h:column>
+   			<h:column>
+   				<h:outputText value="#{SESSION_CONFIGURACAO_ESCOLA.nome}" styleClass="logoStatus"/>
+   				<br/>
+   				<h:outputText value="#{msg.MSG003} " styleClass="logoStatus"/>
+   				<h:outputText value="#{SESSION_USUARIO.nome}" styleClass="logoUser"/>
+   				<h:outputText value="!" styleClass="logoStatus"/>
+   			</h:column>
+  		</h:panelGrid>
+    </h:form>
+</html>

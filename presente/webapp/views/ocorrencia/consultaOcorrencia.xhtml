@@ -1,0 +1,133 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.consultarOcorrencia}" closable="true">
+		
+		<h:form id="frmConsulta">
+		
+			<p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+				
+			    <h:outputLabel for="nomeAluno" value="#{lbl.aluno}:" />  
+			    <p:inputText id="nomeAluno" size="30" maxlength="30" value="#{ocorrenciaMB.ocorrencia.matricula.aluno.nome}" label="#{lbl.aluno}"/>
+			    
+			    <h:outputLabel for="tipoOcorrencia" value="#{lbl.tipoOcorrencia}:" />
+			    <h:column>  
+				    <p:autoComplete id="tipoOcorrencia" maxResults="10" value="#{ocorrenciaMB.ocorrencia.tipo}" size="30" var="t" itemLabel="#{t.descricao}" itemValue="#{t}" label="#{lbl.tipoOcorrencia}" converter="tipoOcorrenciaConverter" completeMethod="#{ocorrenciaMB.carregarTipoOcorrencias}" />
+			        <h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG065}"/>
+			    </h:column> 	
+			    
+			    <h:outputLabel for="turma" value="#{lbl.turma}: " />  
+			    <p:column>
+			    	<p:autoComplete id="turma" maxResults="10" value="#{ocorrenciaMB.ocorrencia.matricula.turma}" var="tu" itemLabel="#{tu.descricao}" itemValue="#{tu}" label="#{lbl.turma}" converter="turmaConverter" completeMethod="#{ocorrenciaMB.carregarTurmas}" />
+			    	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG025}"/>
+			    </p:column>
+			    
+			</h:panelGrid>
+
+			<p:separator></p:separator>
+			
+			<p:commandButton 
+				value="#{lbl.consultar}"
+				icon="ui-icon-search" 
+				actionListener="#{ocorrenciaMB.consultar}" 
+				update="frmConsulta"/>
+				
+			<p:separator></p:separator>
+				
+			<!-- LISTA -->
+				
+			<p:dataTable 
+				id="dataTable" 
+				var="ocorrencia" 
+				value="#{ocorrenciaMB.ocorrencias}" 
+				paginator="true" 
+				rows="10"
+				emptyMessage="#{msg.MSG001}">  
+	  
+		        <p:column headerText="#{lbl.numero}">  
+		            <h:outputText value="#{ocorrencia.id}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.aluno}">  
+		            <h:outputText value="#{ocorrencia.matricula.aluno.nome}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.serie}">  
+		            <h:outputText value="#{ocorrencia.matricula.serie.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.turma}">  
+		            <h:outputText value="#{ocorrencia.matricula.turma.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.turno}">  
+		            <h:outputText value="#{ocorrencia.matricula.turno.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.anoLetivo}">  
+		            <h:outputText value="#{ocorrencia.matricula.anoLetivo}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.tipoOcorrencia}">  
+		            <h:outputText value="#{ocorrencia.tipo.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.dataOcorrencia}">  
+		            <h:outputText value="#{ocorrencia.data}" converter="dataHoraFullConverter" />  
+		        </p:column>
+		        
+		        <p:column 
+					headerText="#{lbl.opcoes}" 
+					style="width: 150px">
+					<center>
+			            <p:commandButton icon="ui-icon-folder-open" title="#{lbl.visualizarCadastro}" actionListener="#{ocorrenciaMB.alterar}"/>
+			            <p:commandButton icon="ui-icon-trash" onclick="PF('confirmaExcluir').show()">
+			            	<f:setPropertyActionListener target="#{ocorrenciaMB.ocorrenciaSelecionada}" value="#{ocorrencia}"></f:setPropertyActionListener>
+			            </p:commandButton>
+		            </center>
+		        </p:column>
+		        
+		        <f:facet name="footer">
+		        	<h:outputLabel rendered="#{ocorrenciaMB.ocorrencias.rowCount gt 0}" value="#{ocorrenciaMB.ocorrencias.rowCount}"/>
+		        	<h:outputLabel rendered="#{ocorrenciaMB.ocorrencias.rowCount gt 0}" value=" #{msg.MSG041}"/>
+		        </f:facet>
+		  
+		    </p:dataTable>
+		    
+	    	<!-- CAIXA DE DIALOGO -->
+			
+			<p:confirmDialog 
+				message="#{msg.MSG002}"  
+                header="#{lbl.excluirRegistro}" 
+                severity="alert" 
+                widgetVar="confirmaExcluir">  
+		        <p:commandButton 
+		        	value="#{lbl.sim}"
+		        	actionListener="#{ocorrenciaMB.excluir}" 
+		        	ajax="false"
+		        	oncomplete="PF('confirmaExcluir').hide()"/>
+		        <p:commandButton
+		        	value="#{lbl.nao}" 
+		        	onclick="PF('confirmaExcluir').hide()" 
+		        	type="button" />   
+		    </p:confirmDialog> 	
+			
+		</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

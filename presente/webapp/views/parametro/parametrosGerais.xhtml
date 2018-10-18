@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.parametrosGerais}" closable="true">
+		
+		<h:form id="frmParametrosGerais">
+		
+			<p:messages autoUpdate="true" />
+		
+			<h:panelGrid 
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+		    
+			    <h:outputLabel for="anoLetivo" value="* #{lbl.anoLetivo}:" />  
+				<p:inputText id="anoLetivo" maxlength="4" value="#{parametroGeralMB.wrapper.anoLetivo}" label="#{lbl.anoLetivo}" size="10" required="true" disabled="true">
+					<f:convertNumber integerOnly="true" pattern="####"/>
+				</p:inputText>
+					
+				<h:outputLabel for="nomeRemetente" value="* #{lbl.nomeRemetente}:" />  
+				<p:inputText id="nomeRemetente" maxlength="100" value="#{parametroGeralMB.wrapper.nomeRemetente}" label="#{lbl.nomeRemetente}" size="50" required="true"/>
+				
+				<h:outputLabel for="emailRemetente" value="* #{lbl.emailRemetente}:" />  
+				<p:inputText id="emailRemetente" maxlength="100" value="#{parametroGeralMB.wrapper.emailRemetente}" label="#{lbl.emailRemetente}" size="50" required="true" validator="emailValidator"/>
+
+				<h:outputLabel for="senhaEmailRemetente" value="* #{lbl.senhaEmailRemetente}:" />  
+				<p:password id="senhaEmailRemetente" maxlength="100" value="#{parametroGeralMB.wrapper.senhaEmailRemetente}" label="#{lbl.senhaEmailRemetente}" size="50" required="true"/>
+				
+				<h:outputLabel for="smtpEmailServidor" value="* #{lbl.smtpEmailServidor}:" />  
+				<p:inputText id="smtpEmailServidor" maxlength="100" value="#{parametroGeralMB.wrapper.smtpEmailServidor}" label="#{lbl.smtpEmailServidor}" size="50" required="true"/>	
+					
+			</h:panelGrid>	
+				
+			<p:separator></p:separator>
+			    
+			<p:commandButton 
+				value="#{lbl.salvar}"
+				icon="ui-icon-check" 
+				update="frmParametrosGerais"
+				actionListener="#{parametroGeralMB.salvar}"/>
+				
+		</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

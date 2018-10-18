@@ -1,0 +1,41 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.cadastroTipoOcorrencia}" closable="true">
+			
+			<h:form id="frmCadastro">
+		    
+		    <p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid 
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+				
+			    <h:outputLabel for="tipoOcorrencia" value="* #{lbl.tipoOcorrencia}:" />  
+			    <p:inputText id="tipoOcorrencia" maxlength="30" value="#{tipoOcorrenciaMB.tipoOcorrencia.descricao}" label="#{lbl.tipoOcorrencia}" size="30" required="true"/> 
+			    
+			</h:panelGrid>
+			
+			<p:separator></p:separator>
+			    
+			<p:commandButton 
+				value="#{lbl.salvar}"
+				icon="ui-icon-check" 
+				actionListener="#{tipoOcorrenciaMB.salvar}"
+				update="frmCadastro"/>
+				
+			</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

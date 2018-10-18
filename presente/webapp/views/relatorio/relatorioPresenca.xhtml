@@ -1,0 +1,83 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.relatorioPresenca}" closable="true">
+		
+		<h:form id="frmRelatorio">
+		
+			<p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+								
+			    <h:outputLabel for="periodoInicial" value="* #{lbl.periodoInicial}:" />  
+			    <p:calendar id="periodoInicial" navigator="true" converter="dataConverter" value="#{relatorioMB.periodoInicial}" label="#{lbl.periodoInicial}" showOn="button" mask="true" pattern="dd/MM/yyyy" locale="pt_BR"/>
+			    
+			    <h:outputLabel for="periodoFinal" value="* #{lbl.periodoFinal}:" />  
+			    <p:calendar id="periodoFinal" navigator="true" converter="dataConverter" value="#{relatorioMB.periodoFinal}" label="#{lbl.periodoFinal}" showOn="button" mask="true" pattern="dd/MM/yyyy" locale="pt_BR"/>
+				
+				<h:outputLabel for="nome" value="#{lbl.nome}:" />
+			    <p:inputText id="nome" value="#{relatorioMB.matricula.aluno.nome}" label="#{lbl.nome}" maxlength="50" size="40" />
+			    
+		        <h:outputLabel for="matricula" value="#{lbl.matricula}:" />  
+			    <p:inputText id="matricula" value="#{relatorioMB.matricula.matricula}" label="#{lbl.matricula}" maxlength="15" >
+			    	<f:convertNumber integerOnly="true"></f:convertNumber>
+			    </p:inputText>
+				
+				<h:outputLabel for="serie" value="#{lbl.serie}: " />  
+			    <p:column>
+			    	<p:autoComplete id="serie" maxResults="10" value="#{relatorioMB.matricula.serie}" var="s" itemLabel="#{s.descricao}" itemValue="#{s}" label="#{lbl.serie}" converter="serieConverter" completeMethod="#{relatorioMB.carregarSeries}" />
+			    	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG075}"/> 
+		        </p:column>
+		        
+		        <h:outputLabel for="turma" value="#{lbl.turma}: " />  
+			    <p:column>
+			    	<p:autoComplete id="turma" maxResults="10" value="#{relatorioMB.matricula.turma}" var="t" itemLabel="#{t.descricao}" itemValue="#{t}" label="#{lbl.turma}" converter="turmaConverter" completeMethod="#{relatorioMB.carregarTurmas}" />
+			    	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG075}"/>
+			    </p:column>
+			    
+			    <h:outputLabel for="sala" value="#{lbl.sala}: " />  
+			    <p:column>
+			    	<p:autoComplete id="sala" maxResults="10" value="#{relatorioMB.matricula.sala}" var="sa" itemLabel="#{sa.descricao}" itemValue="#{sa}" label="#{lbl.sala}" converter="salaConverter" completeMethod="#{relatorioMB.carregarSalas}" />
+		        	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG075}"/>
+			    </p:column>
+		        
+			    <h:outputText for="turno" value="#{lbl.turno}: " />  
+		        <p:selectOneMenu value="#{relatorioMB.matricula.turno}" label="#{lbl.turno}" converter="turnoConverter">  
+		            <f:selectItem itemLabel="" itemValue="" itemDisabled="false"/>  
+		            <f:selectItems value="#{relatorioMB.turnos}" var="turno" itemLabel="#{turno.descricao}" itemValue="#{turno}"></f:selectItems>
+		        </p:selectOneMenu>
+
+			    <h:outputText value="#{lbl.alunoBolsista}?" />  
+		        <p:selectOneRadio value="#{relatorioMB.matricula.bolsista}" label="#{lbl.alunoBolsista}">  
+		            <f:selectItem itemLabel="#{lbl.sim}" itemValue="true" />  
+		            <f:selectItem itemLabel="#{lbl.nao}" itemValue="false" />  
+		        </p:selectOneRadio> 
+			    
+			</h:panelGrid>
+
+			<p:separator></p:separator>
+			
+			<p:commandButton 
+				value="#{lbl.gerar}"
+				icon="ui-icon-search" 
+				onclick="this.form.target='_blank'"
+				ajax="false"
+				actionListener="#{relatorioMB.gerarRelatorioPresenca}"/>
+			
+		</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

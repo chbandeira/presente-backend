@@ -1,0 +1,93 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.consultarDisciplina}" closable="true">
+		
+		<h:form id="frmConsulta">
+		
+			<p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+				
+			    <h:outputLabel for="disciplina" value="#{lbl.nomeDisciplina}:" />  
+			    <p:inputText id="disciplina" size="30" maxlength="30" value="#{disciplinaMB.disciplina.nome}" label="#{lbl.nomeDisciplina}"/> 	
+			    
+			</h:panelGrid>
+
+			<p:separator></p:separator>
+			
+			<p:commandButton 
+				value="#{lbl.consultar}"
+				icon="ui-icon-search" 
+				actionListener="#{disciplinaMB.consultar}" 
+				update="frmConsulta"/>
+				
+			<p:separator></p:separator>
+				
+			<!-- LISTA -->
+				
+			<p:dataTable 
+				id="dataTable" 
+				var="disciplina" 
+				value="#{disciplinaMB.disciplinas}" 
+				paginator="true" 
+				rows="10"
+				emptyMessage="#{msg.MSG001}">  
+	  
+		        <p:column headerText="#{lbl.disciplina}">  
+		            <h:outputText value="#{disciplina.nome}" />  
+		        </p:column>
+		        
+		        <p:column 
+					headerText="#{lbl.opcoes}" 
+					style="width: 150px">
+					<center>
+			            <p:commandButton icon="ui-icon-folder-open" title="#{lbl.visualizarCadastro}" actionListener="#{disciplinaMB.alterar}"/>
+			            <p:commandButton icon="ui-icon-trash" onclick="PF('confirmaExcluir').show()">
+			            	<f:setPropertyActionListener target="#{disciplinaMB.disciplinaSelecionada}" value="#{disciplina}"></f:setPropertyActionListener>
+			            </p:commandButton>
+		            </center>
+		        </p:column>
+		        
+		        <f:facet name="footer">
+		        	<h:outputLabel rendered="#{disciplinaMB.disciplinas.rowCount gt 0}" value="#{disciplinaMB.disciplinas.rowCount}"/>
+		        	<h:outputLabel rendered="#{disciplinaMB.disciplinas.rowCount gt 0}" value=" #{msg.MSG041}"/>
+		        </f:facet>
+		  
+		    </p:dataTable>
+		    
+	    	<!-- CAIXA DE DIALOGO -->
+			
+			<p:confirmDialog 
+				message="#{msg.MSG002}"  
+                header="#{lbl.excluirRegistro}" 
+                severity="alert" 
+                widgetVar="confirmaExcluir">  
+		        <p:commandButton 
+		        	value="#{lbl.sim}"
+		        	actionListener="#{disciplinaMB.excluir}" 
+		        	ajax="false"
+		        	oncomplete="PF('confirmaExcluir').hide()"/>
+		        <p:commandButton
+		        	value="#{lbl.nao}" 
+		        	onclick="PF('confirmaExcluir').hide()" 
+		        	type="button" />   
+		    </p:confirmDialog> 	
+			
+		</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

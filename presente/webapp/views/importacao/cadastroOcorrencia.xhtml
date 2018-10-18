@@ -1,0 +1,98 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.corrigirOcorrencia}" closable="true">
+			
+			<h:form id="frmCadastro">
+		    
+		    <p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+		    <p:fieldset>
+		    	<b><p:outputLabel value="#{lbl.aluno}"/></b>
+		  		<h:panelGrid 
+		  			id="painel"
+					columns="2" 
+					cellspacing="4"
+					columnClasses="panelGridRight,panelGridLeft">
+				
+				    <h:outputLabel for="matricula" value="#{lbl.matricula}:" />  
+				    <p:inputText id="matricula" value="#{importacaoMB.ocorrencia.matricula}" label="#{lbl.matricula}" maxlength="15">
+				    	<f:convertNumber integerOnly="true"></f:convertNumber>
+				    </p:inputText> 
+				    
+				    <h:outputLabel for="nome" value="* #{lbl.nome}:" />  
+				    <p:inputText id="nome" maxlength="50" size="50" value="#{importacaoMB.ocorrencia.nome}" label="#{lbl.nome}" required="true"/>
+				    
+				    <h:outputLabel for="serie" value="#{lbl.serie}:" />  
+				    <p:inputText id="serie" maxlength="10" value="#{importacaoMB.ocorrencia.serie}" label="#{lbl.serie}" size="10"/>
+				    
+				    <h:outputLabel for="turma" value="#{lbl.turma}:" />  
+				    <p:inputText id="turma" maxlength="10" value="#{importacaoMB.ocorrencia.turma}" label="#{lbl.turma}" size="10"/>
+				    
+				    <h:outputText value="#{lbl.turno}: " />  
+			        <p:selectOneMenu value="#{importacaoMB.turno}" label="#{lbl.turno}" converter="turnoConverter">  
+			            <f:selectItem itemLabel="#{lbl.selecione}" itemValue="" itemDisabled="false"/>  
+			            <f:selectItems value="#{importacaoMB.turnos}" var="turno" itemLabel="#{turno.descricao}" itemValue="#{turno}"></f:selectItems>
+			        </p:selectOneMenu>
+			        
+			        <h:outputLabel for="sala" value="#{lbl.sala}: " />  
+			        <p:inputText id="sala" maxlength="10" value="#{importacaoMB.ocorrencia.sala}" label="#{lbl.sala}" size="10"/>
+			        
+			        <h:outputLabel for="dataNascimento" value="#{lbl.dataNascimento}: " />  
+			        <p:calendar navigator="true" value="#{importacaoMB.ocorrencia.dataNascimento}" id="dataNascimento" label="#{lbl.dataNascimento}" showOn="button" pattern="dd/MM/yyyy" locale="pt_BR"/>
+			        
+			        <h:outputLabel for="anoLetivo" value="#{lbl.anoLetivo}: " />  
+			        <p:inputText id="anoLetivo" maxlength="10" value="#{importacaoMB.ocorrencia.anoLetivo}" label="#{lbl.anoLetivo}" size="10"/>
+			        
+			        <h:outputText value="#{lbl.alunoBolsista}?" />  
+			        <p:selectOneRadio value="#{importacaoMB.ocorrencia.bolsista}" label="#{lbl.alunoBolsista}">  
+			            <f:selectItem itemLabel="#{lbl.sim}" itemValue="true" />  
+			            <f:selectItem itemLabel="#{lbl.nao}" itemValue="false" />  
+			        </p:selectOneRadio>
+			        
+				</h:panelGrid>
+			</p:fieldset>
+	        
+		    <p:fieldset>
+			   	<b><p:outputLabel value="#{lbl.responsavel}"/></b>
+		  		<h:panelGrid 
+					columns="2" 
+					cellspacing="4"
+					columnClasses="panelGridRight,panelGridLeft">
+					
+					<h:outputLabel for="nomeResponsavel" value="#{lbl.nome}:" />
+				    <p:inputText id="nomeResponsavel" value="#{importacaoMB.ocorrencia.responsavel}" label="#{lbl.nomeResponsavel}" maxlength="50" size="50"/>
+				    
+				    <h:outputLabel for="emailResponsavel" value="#{lbl.email}:" />
+				    <p:inputText id="emailResponsavel" validator="emailValidator" value="#{importacaoMB.ocorrencia.responsavelEmail}" label="#{lbl.emailResponsavel}" maxlength="50" size="50"/>
+				    
+				    <h:outputLabel for="telefoneFixoResponsavel" value="#{lbl.telefoneFixo}:" />
+				    <p:inputMask id="telefoneFixoResponsavel" value="#{importacaoMB.ocorrencia.responsavelTelefone}" label="#{lbl.telefoneFixo}" mask="(99)9999-9999?9"/>
+				    
+				    <h:outputLabel for="telefoneCelularResponsavel" value="#{lbl.telefoneCelular}:" />
+				    <p:inputMask id="telefoneCelularResponsavel" value="#{importacaoMB.ocorrencia.responsavelCelular}" label="#{lbl.telefoneCelular}" mask="(99)9999-9999?9"/>
+				</h:panelGrid>
+			</p:fieldset>
+			
+			<p:separator></p:separator>
+			    
+			<p:commandButton 
+				value="#{lbl.salvarCorrecao}"
+				icon="ui-icon-check" 
+				disabled="desabilitar"
+				actionListener="#{importacaoMB.salvarCorrecao}"
+				update="frmCadastro"/>
+				
+			</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

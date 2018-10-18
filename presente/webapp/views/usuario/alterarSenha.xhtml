@@ -1,0 +1,65 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.alterarSenha}" closable="true">
+			
+			<h:form id="frmAlterarSenha">
+		    
+		    <p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid 
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+				
+				<h:outputLabel for="senhaAtual" value="* #{lbl.senhaAtual}:"/>
+				<p:password id="senhaAtual" value="#{usuarioMB.senhaAtual}" required="true" label="#{lbl.senhaAtual}"/>
+				
+			    <h:outputLabel for="novaSenha" value="* #{lbl.novaSenha}:" />
+			   	<p:password 
+					id="novaSenha"
+					value="#{usuarioMB.usuario.senha}"
+					maxlength="20" 
+					size="20" 
+					match="confirmarSenha"
+					feedback="true"
+					promptLabel="#{msg.MSG029}" 
+					weakLabel="#{msg.MSG030}"  
+           			goodLabel="#{msg.MSG031}" 
+           			strongLabel="#{msg.MSG032}"
+					required="true"
+					validatorMessage="#{msg.MSG033}"
+					label="#{lbl.senha}"/>
+					
+				<h:outputLabel for="confirmarSenha" value="* #{lbl.confirmarSenha}:" />
+				<p:password 
+					id="confirmarSenha" 
+					maxlength="20" 
+					size="20"
+					required="true"
+					label="#{lbl.confirmarSenha}"/>
+					
+			</h:panelGrid>
+			
+			<p:separator></p:separator>
+			    
+			<p:commandButton 
+				value="#{lbl.salvar}"
+				icon="ui-icon-check" 
+				actionListener="#{usuarioMB.alterarSenha}"
+				update="frmAlterarSenha"/>
+				
+			</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

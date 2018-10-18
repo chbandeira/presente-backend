@@ -1,0 +1,74 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.cadastroCalendarioEscolar}" closable="true">
+			
+			<h:form id="frmCadastro">
+		    
+		    <p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid 
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+				
+			    <h:outputLabel for="descricao" value="* #{lbl.descricao}:" />  
+			    <p:inputText id="descricao" maxlength="100" value="#{calendarioEscolarMB.calendarioEscolar.descricao}" label="#{lbl.descricao}" size="50" required="true"/> 
+			    
+			    <h:outputLabel for="data" value="* #{lbl.data}:" />  
+			    <p:calendar navigator="true" value="#{calendarioEscolarMB.calendarioEscolar.data}" id="data" label="#{lbl.data}" showOn="button" pattern="dd/MM/yyyy" locale="pt_BR"/>
+			    
+		        <h:outputText value="#{lbl.dataRecorrente}?" /> 
+		       	<p:column> 
+		       		<h:panelGrid columns="2">
+			  			<h:column>
+					        <p:selectOneRadio value="#{calendarioEscolarMB.calendarioEscolar.recorrente}" label="#{lbl.dataRecorrente}">  
+					            <f:selectItem itemLabel="#{lbl.sim}" itemValue="true" />  
+					            <f:selectItem itemLabel="#{lbl.nao}" itemValue="false" />  
+					        </p:selectOneRadio>
+					    </h:column>
+						<h:column>
+					        <h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG043}"/>
+					    </h:column>
+					</h:panelGrid>
+			    </p:column>
+		        
+		        <h:outputText value="#{lbl.dataAula}?" />
+		        <p:column>  
+		        	<h:panelGrid columns="2">
+			  			<h:column>
+					        <p:selectOneRadio value="#{calendarioEscolarMB.calendarioEscolar.status}" label="#{lbl.dataAula}">  
+					            <f:selectItem itemLabel="#{lbl.sim}" itemValue="1" />  
+					            <f:selectItem itemLabel="#{lbl.nao}" itemValue="2" />  
+					        </p:selectOneRadio>
+					    </h:column>
+					    <h:column>
+				        	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG042}"/>
+				        </h:column>
+				    </h:panelGrid>
+			    </p:column>
+			    
+			</h:panelGrid>
+			
+			<p:separator></p:separator>
+			    
+			<p:commandButton 
+				value="#{lbl.salvar}"
+				icon="ui-icon-check" 
+				actionListener="#{calendarioEscolarMB.salvar}"
+				update="frmCadastro"/>
+				
+			</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

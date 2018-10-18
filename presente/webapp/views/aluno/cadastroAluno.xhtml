@@ -1,0 +1,160 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.cadastroAluno}" closable="true">
+			
+			<h:form id="frmCadastro" enctype="multipart/form-data">
+		    
+		    <p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid 
+	  			id="painelGeral"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridLeft,panelGridLeft">
+				
+				<p:column>
+				
+					<!-- Foto -->
+					<h:panelGrid columns="1" cellpadding="5">
+						<p:column>
+							<h:outputText value="#{lbl.foto}:" />
+							<h:panelGrid columns="2" cellpadding="5">
+					        	<p:photoCam widgetVar="pc" listener="#{alunoMB.tirarFoto}" update="photo" height="320" width="240" photoHeight="800" photoWidth="600" forceFlash="true"/>
+					        	<p:outputPanel id="photo">
+						            <p:graphicImage name="img/foto/#{alunoMB.filename}.jpeg" rendered="#{not empty alunoMB.matricula.aluno.foto}" height="320" width="240"/>
+						        </p:outputPanel>
+						    </h:panelGrid>
+				        	
+				        	<p:fileUpload value="#{alunoMB.uploadedFile}" mode="simple" />
+							<p:commandButton value="#{lbl.carregarFoto}" ajax="false" actionListener="#{alunoMB.carregarFoto}" />
+							<br/>
+							<h:outputLabel value=" #{msg.MSG060}" style="font-size: 10px;"/>
+		
+		     				<br/><br/>
+		     				<p:commandButton icon="ui-icon-image" type="button" value="#{lbl.tirarFoto}" onclick="PF('pc').capture()"/>
+					        <p:commandButton 
+								value="#{lbl.apagarFoto}"
+								icon="ui-icon-closethick" 
+								update="photo"
+								immediate="true"
+								actionListener="#{alunoMB.apagarFoto}"/>
+				        </p:column>
+				    </h:panelGrid>
+				
+				</p:column>
+				
+				<p:column>
+					<h:panelGrid 
+			  			id="painel"
+						columns="2" 
+						cellspacing="4"
+						columnClasses="panelGridRight,panelGridLeft">
+						
+							<p:outputLabel value="#{lbl.aluno}" style="font-weight: bold;"/>
+							<p:column></p:column>
+							
+							<h:outputLabel for="nome" value="* #{lbl.nome}:" />
+						    <p:inputText id="nome" value="#{alunoMB.matricula.aluno.nome}" label="#{lbl.nome}" maxlength="50" size="40" />
+						    
+						    <h:outputLabel for="dataNascimento" value="#{lbl.dataNascimento}:" />  
+						    <p:calendar navigator="true" value="#{alunoMB.matricula.aluno.dataNascimento}" id="dataNascimento" label="#{lbl.dataNascimento}" showOn="button" pattern="dd/MM/yyyy" mask="true" locale="pt_BR"/>
+						    
+						    <h:outputLabel for="matricula" value="* #{lbl.matricula}:" />  
+						    <p:inputText id="matricula" value="#{alunoMB.matricula.matricula}" label="#{lbl.matricula}" maxlength="15" >
+						    	<f:convertNumber integerOnly="true"></f:convertNumber>
+						    </p:inputText>
+						    
+						    <h:outputLabel for="anoLetivo" value="#{lbl.anoLetivo}:" rendered="#{alunoMB.matricula.id != null}" />  
+						    <p:inputText id="anoLetivo" rendered="#{alunoMB.matricula.id != null}" value="#{alunoMB.matricula.anoLetivo}" label="#{lbl.anoLetivo}" maxlength="5" disabled="true">
+						    </p:inputText>
+						    
+						    <h:outputLabel value="#{lbl.serie}: " />  
+						    <p:column>
+						    	<p:autoComplete id="serie" maxResults="10" value="#{alunoMB.matricula.serie}" var="s" itemLabel="#{s.descricao}" itemValue="#{s}" label="#{lbl.serie}" converter="serieConverter" completeMethod="#{alunoMB.carregarSeries}" />
+						    	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG027}"/> 
+					        </p:column>
+					        
+					        <h:outputLabel for="turma" value="#{lbl.turma}: " />  
+						    <p:column>
+						    	<p:autoComplete id="turma" maxResults="10" value="#{alunoMB.matricula.turma}" var="t" itemLabel="#{t.descricao}" itemValue="#{t}" label="#{lbl.turma}" converter="turmaConverter" completeMethod="#{alunoMB.carregarTurmas}" />
+						    	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG025}"/>
+						    </p:column>
+						    
+						    <h:outputLabel for="sala" value="#{lbl.sala}: " />  
+						    <p:column>
+						    	<p:autoComplete id="sala" maxResults="10" value="#{alunoMB.matricula.sala}" var="sa" itemLabel="#{sa.descricao}" itemValue="#{sa}" label="#{lbl.sala}" converter="salaConverter" completeMethod="#{alunoMB.carregarSalas}" />
+					        	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG026}"/>
+						    </p:column>
+					        
+						    <h:outputText value="#{lbl.turno}: " />  
+					        <p:selectOneMenu value="#{alunoMB.matricula.turno}" label="#{lbl.turno}" converter="turnoConverter">  
+					            <f:selectItem itemLabel="#{lbl.selecione}" itemValue="" itemDisabled="false"/>  
+					            <f:selectItems value="#{alunoMB.turnos}" var="turno" itemLabel="#{turno.descricao}" itemValue="#{turno}"></f:selectItems>
+					        </p:selectOneMenu>
+					        
+					        <h:outputText value="#{lbl.alunoBolsista}?" />  
+					        <p:selectOneRadio value="#{alunoMB.matricula.bolsista}" label="#{lbl.alunoBolsista}">  
+					            <f:selectItem itemLabel="#{lbl.sim}" itemValue="true" />  
+					            <f:selectItem itemLabel="#{lbl.nao}" itemValue="false" />  
+					        </p:selectOneRadio>
+				        
+				        	<p:separator></p:separator>
+				        	<p:separator></p:separator>
+				        
+					        <p:outputLabel value="#{lbl.responsavel}" style="font-weight: bold;"/>
+					        <p:column></p:column>
+										
+							<h:outputLabel for="nomeResponsavel" value="#{lbl.nome}:" />
+						    <p:inputText id="nomeResponsavel" value="#{alunoMB.matricula.responsavel.nome}" label="#{lbl.nomeResponsavel}" maxlength="50" size="40"/>
+						    
+						    <h:outputLabel for="cpfResponsavel" value="#{lbl.cpf}:" />
+						    <p:inputText id="cpfResponsavel" disabled="#{alunoMB.matricula.responsavel.usuario != null}" value="#{alunoMB.matricula.responsavel.cpf}" label="#{lbl.cpf}" maxlength="11" size="15"/>
+						    
+						    <h:outputLabel for="emailResponsavel" value="#{lbl.email}:" />
+						    <p:inputText id="emailResponsavel" validator="emailValidator" value="#{alunoMB.matricula.responsavel.email}" label="#{lbl.emailResponsavel}" maxlength="50" size="40"/>
+						    
+						    <h:outputLabel for="telefoneFixoResponsavel" value="#{lbl.telefoneFixo}:" />
+						    <p:inputMask id="telefoneFixoResponsavel" value="#{alunoMB.matricula.responsavel.telefoneFixo}" label="#{lbl.telefoneFixo}" mask="(99)9999-9999?9"/>
+						    
+						    <h:outputLabel for="telefoneCelularResponsavel" value="#{lbl.telefoneCelular}:" />
+						    <p:inputMask id="telefoneCelularResponsavel" value="#{alunoMB.matricula.responsavel.telefoneCelular}" label="#{lbl.telefoneCelular}" mask="(99)9999-9999?9"/>
+						    
+						    <h:outputText value="#{lbl.enviarEmailRegistro}?" rendered="#{perfilMB.admin || perfilMB.diretor}"/>  
+					        <p:selectOneRadio rendered="#{perfilMB.admin || perfilMB.diretor}" value="#{alunoMB.matricula.enviarEmailRegistro}" label="#{lbl.enviarEmailRegistro}">  
+					            <f:selectItem itemLabel="#{lbl.sim}" itemValue="true" />  
+					            <f:selectItem itemLabel="#{lbl.nao}" itemValue="false" />  
+					        </p:selectOneRadio>
+					        
+					        <h:outputText value="#{lbl.enviarSmsRegistro}?" rendered="#{perfilMB.admin || perfilMB.diretor}"/>  
+					        <p:selectOneRadio rendered="#{perfilMB.admin || perfilMB.diretor}" value="#{alunoMB.matricula.enviarSmsRegistro}" label="#{lbl.enviarSmsRegistro}">  
+					            <f:selectItem itemLabel="#{lbl.sim}" itemValue="true" />  
+					            <f:selectItem itemLabel="#{lbl.nao}" itemValue="false" />  
+					        </p:selectOneRadio>
+					    </h:panelGrid>
+
+					</p:column>
+					
+				</h:panelGrid>
+			<p:separator></p:separator>
+			    
+			<p:commandButton 
+				disabled="#{perfilMB.comum}"
+				value="#{lbl.salvar}"
+				icon="ui-icon-check" 
+				update="frmCadastro"
+				actionListener="#{alunoMB.salvar}"/>
+				
+			</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

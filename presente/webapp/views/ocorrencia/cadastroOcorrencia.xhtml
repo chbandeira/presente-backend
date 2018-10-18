@@ -1,0 +1,274 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.cadastroOcorrencia}" closable="true">
+			
+			<h:form id="frmCadastro" acceptcharset="ISO-8859-1" enctype="application/form-data">
+		    
+		    <p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid 
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+				
+			    <h:outputLabel for="numeroOcorrencia" value="#{lbl.numeroOcorrencia}:" rendered="#{!ocorrenciaMB.visualizarCampos}" />  
+			    <p:inputText disabled="true" rendered="#{!ocorrenciaMB.visualizarCampos}" id="numeroOcorrencia" maxlength="10" value="#{ocorrenciaMB.ocorrencia.id}" label="#{lbl.numeroOcorrencia}" size="10"/> 
+			    
+			    <h:outputLabel for="dataOcorrencia" value="* #{lbl.dataOcorrencia}:" />  
+			    <p:calendar id="dataOcorrencia" converter="timestampConverter" navigator="true" locale="pt_BR" pattern="dd/MM/yyyy HH:mm" mask="true" showOn="button" value="#{ocorrenciaMB.ocorrencia.data}" label="#{lbl.dataOcorrencia}" required="true"/>
+
+			    <h:outputLabel for="tipoOcorrencia" value="* #{lbl.tipoOcorrencia}:" />  
+			    <p:column>
+			    	<p:autoComplete id="tipoOcorrencia" maxResults="10" value="#{ocorrenciaMB.ocorrencia.tipo}" size="30" required="true" var="t" itemLabel="#{t.descricao}" itemValue="#{t}" label="#{lbl.tipoOcorrencia}" converter="tipoOcorrenciaConverter" completeMethod="#{ocorrenciaMB.carregarTipoOcorrencias}" />
+		        	<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG063}"/>
+			    </p:column>
+			    
+			    <h:outputLabel for="qtdDias" value="#{lbl.qtdDias}:" />  
+			    <p:inputMask id="qtdDias" mask="9?99" maxlength="3" value="#{ocorrenciaMB.ocorrencia.qtdDias}" label="#{lbl.qtdDias}" size="5"/>
+			    
+			    <h:outputLabel for="responsavelOcorrencia" value="* #{lbl.responsavelOcorrencia}:" />  
+			    <p:inputText disabled="true" id="responsavelOcorrencia" maxlength="30" value="#{ocorrenciaMB.ocorrencia.usuario.nome}" label="#{lbl.responsavelOcorrencia}" size="30"/>
+			    
+		    	<h:outputLabel for="descricao" value="* #{lbl.descricao}:" />
+			    <p:column>
+					<p:inputTextarea id="descricao" cols="50" rows="10" maxlength="500"
+						counter="caracteresRestantes" counterTemplate="{0} #{lbl.caracteresRestantes}."
+						value="#{ocorrenciaMB.ocorrencia.descricao}"
+						label="#{lbl.descricao}" required="true" />
+					<br/>	
+					<h:outputText id="caracteresRestantes" />
+				</p:column>	
+					
+			    <p:column rendered="#{ocorrenciaMB.cadastroPorAluno}">
+				    <h:outputLabel for="aluno" value="* #{lbl.alunoOuMatricula}:" rendered="#{!ocorrenciaMB.visualizarCampos}" />
+				    <h:outputLabel for="aluno" value="#{lbl.alunoOuMatricula}:" rendered="#{ocorrenciaMB.visualizarCampos}" />
+			    </p:column>
+			    <p:column rendered="#{!ocorrenciaMB.cadastroPorAluno}">
+				    <h:outputLabel for="turma" value="* #{lbl.turma}:" rendered="#{!ocorrenciaMB.visualizarCampos}" />
+				    <h:outputLabel for="turma" value="#{lbl.turma}:" rendered="#{ocorrenciaMB.visualizarCampos}" />
+			    </p:column>
+			    
+			    <p:column rendered="#{ocorrenciaMB.cadastroPorAluno}">
+					<p:autoComplete 
+						id="aluno" 
+						var="m"
+						maxResults="50"
+						size="50"
+						required="#{!ocorrenciaMB.visualizarCampos}"
+						value="#{ocorrenciaMB.matriculaSelecionada}" 
+						itemLabel="#{m.aluno.nome}"
+						itemValue="#{m}" 
+						label="#{lbl.aluno}"
+						converter="matriculaConverter"
+						completeMethod="#{ocorrenciaMB.carregarMatriculas}">
+						
+						<p:column>
+							<h:outputText value="#{m.aluno.nome}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{m.matricula}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{m.serie.descricao}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{m.turma.descricao}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{m.turno.descricao}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{m.anoLetivo}" />
+						</p:column>
+					</p:autoComplete>
+					<h:outputLabel value=" " />
+					<p:commandButton 
+						icon="ui-icon-plus" 
+						immediate="false"
+						rendered="#{ocorrenciaMB.visualizarCampos}"
+						actionListener="#{ocorrenciaMB.adicionarNaLista}"
+						update="frmCadastro"/>	
+					<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG064}"/>
+			    </p:column>
+			    
+			    <p:column rendered="#{!ocorrenciaMB.cadastroPorAluno}">
+					<p:autoComplete 
+						id="turma" 
+						var="t"
+						maxResults="10"
+						size="10"
+						maxlength="10"
+						required="#{!ocorrenciaMB.visualizarCampos}"
+						value="#{ocorrenciaMB.turmaSelecionada}" 
+						itemLabel="#{t.descricao}"
+						itemValue="#{t}" 
+						label="#{lbl.turma}"
+						converter="turmaSerieAnoLetivoConverter"
+						completeMethod="#{ocorrenciaMB.carregarTurmas}">
+						
+						<p:column>
+							<h:outputText value="#{t.serie.descricao}" />
+						</p:column>
+						
+						<p:column>
+							<h:outputText value="#{t.descricao}" />
+						</p:column>
+						
+						<p:column>
+							<h:outputText value="#{t.turno.descricao}" />
+						</p:column>
+						
+						<p:column>
+							<h:outputText value="#{t.anoLetivo}" />
+						</p:column>
+						
+					</p:autoComplete>
+					<h:outputLabel value=" " />
+					<p:commandButton 
+						icon="ui-icon-plus" 
+						immediate="false"
+						rendered="#{ocorrenciaMB.visualizarCampos}"
+						actionListener="#{ocorrenciaMB.adicionarNaLista}"
+						update="frmCadastro"/>	
+					<h:outputLabel value=" " /><h:graphicImage library="img/16x16" name="help.png" title="#{msg.MSG069}"/>
+			    </p:column>
+			    
+			</h:panelGrid>
+			    
+		    <!-- Lista de alunos -->
+		    
+		    <p:dataTable 
+				id="dataTableAlunos"
+				rendered="#{ocorrenciaMB.cadastroPorAluno and ocorrenciaMB.visualizarCampos}"
+				var="matricula" 
+				value="#{ocorrenciaMB.matriculasSelecionadas}" 
+				paginator="true" 
+				rows="10"
+				emptyMessage="#{msg.MSG001}">  
+	  
+	  			<f:facet name="header">
+	  				<h:outputLabel value="* #{msg.MSG067}"></h:outputLabel>
+	  			</f:facet>
+	  
+		        <p:column headerText="#{lbl.aluno}">  
+		            <h:outputText value="#{matricula.aluno.nome}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.serie}">  
+		            <h:outputText value="#{matricula.serie.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.turma}">  
+		            <h:outputText value="#{matricula.turma.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.turno}">  
+		            <h:outputText value="#{matricula.turno.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.anoLetivo}">  
+		            <h:outputText value="#{matricula.anoLetivo}" />  
+		        </p:column>
+		        
+		        <p:column 
+					headerText="#{lbl.opcoes}" 
+					style="width: 100px">
+					<center>
+			            <p:commandButton icon="ui-icon-minus" title="#{lbl.removerDaLista}" actionListener="#{ocorrenciaMB.removerDaLista}" update="dataTableAlunos"/>
+		            </center>
+		        </p:column>
+		        
+		        <f:facet name="footer">
+		        	<h:outputLabel rendered="#{ocorrenciaMB.matriculasSelecionadas.rowCount gt 0}" value="#{ocorrenciaMB.matriculasSelecionadas.rowCount}"/>
+		        	<h:outputLabel rendered="#{ocorrenciaMB.matriculasSelecionadas.rowCount gt 0}" value=" #{msg.MSG041}"/>
+		        </f:facet>
+		  
+		    </p:dataTable>
+		    
+		    <!-- Lista de turmas -->
+		    
+		    <p:dataTable 
+				id="dataTableTurmas"
+				rendered="#{!ocorrenciaMB.cadastroPorAluno and ocorrenciaMB.visualizarCampos}"
+				var="turma" 
+				value="#{ocorrenciaMB.turmasSelecionadas}" 
+				paginator="true" 
+				rows="10"
+				emptyMessage="#{msg.MSG001}">  
+	  
+	  			<f:facet name="header">
+	  				<h:outputLabel value="* #{msg.MSG068}"></h:outputLabel>
+	  			</f:facet>
+	  
+		        <p:column headerText="#{lbl.serie}">  
+		            <h:outputText value="#{turma.serie.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.turma}">  
+		            <h:outputText value="#{turma.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.turno}">  
+		            <h:outputText value="#{turma.turno.descricao}" />  
+		        </p:column>
+		        
+		        <p:column headerText="#{lbl.anoLetivo}">  
+		            <h:outputText value="#{turma.anoLetivo}" />
+		        </p:column> 
+		        
+		        <p:column 
+					headerText="#{lbl.opcoes}" 
+					style="width: 100px">
+					<center>
+			            <p:commandButton icon="ui-icon-minus" title="#{lbl.removerDaLista}" actionListener="#{ocorrenciaMB.removerDaLista}" update="dataTableTurmas"/>
+		            </center>
+		        </p:column>
+		        
+		        <f:facet name="footer">
+		        	<h:outputLabel rendered="#{ocorrenciaMB.turmasSelecionadas.rowCount gt 0}" value="#{ocorrenciaMB.turmasSelecionadas.rowCount}"/>
+		        	<h:outputLabel rendered="#{ocorrenciaMB.turmasSelecionadas.rowCount gt 0}" value=" #{msg.MSG041}"/>
+		        </f:facet>
+		  
+		    </p:dataTable>
+			
+			<p:separator></p:separator>
+			    	    
+			<h:outputText value="#{msg.MSG076}: " />
+			<p:selectBooleanCheckbox value="#{ocorrenciaMB.enviarEmail}" />			
+			
+			<p:separator></p:separator>
+			 
+			<h:outputText value="#{msg.MSG077}: " />
+			<p:selectBooleanCheckbox value="#{ocorrenciaMB.imprimirDuplicado}" />			
+			
+			<p:separator></p:separator> 	    
+			    	    
+			<p:commandButton 
+				value="#{lbl.salvar}"
+				icon="ui-icon-check" 
+				actionListener="#{ocorrenciaMB.salvar}"
+				update="frmCadastro"/>
+
+			<p:commandButton 
+				value="#{lbl.salvarImprimir}"
+				icon="ui-icon-search" 
+				onclick="this.form.target='_blank'"
+				ajax="false"
+				update="frmCadastro"
+				actionListener="#{ocorrenciaMB.salvarImprimir}"/>
+
+			</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

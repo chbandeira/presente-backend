@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+
+	<application>
+		<resource-bundle>
+			<base-name>br.com.w2c.resource.message_pt_BR</base-name>
+			<var>msg</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>br.com.w2c.resource.label_pt_BR</base-name>
+			<var>lbl</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>br.com.w2c.resource.message_support_pt_BR</base-name>
+			<var>spt</var>
+		</resource-bundle>
+		<message-bundle>br.com.w2c.resource.message_faces_pt_BR</message-bundle>
+	</application>
+
+</faces-config>

@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.importarDados}" closable="true">
+			
+			<h:form id="frmImportacao" enctype="multipart/form-data">
+		    
+		    	<p:messages id="messages" autoUpdate="true" />
+	            
+	            <br/><br/>
+	            <h:outputLabel value="#{lbl.layout}: "/>	
+	            <h:outputLabel value="#{msg.MSG047}"/>
+	            <br/>
+	            <h:outputLabel value="#{msg.MSG057}"/>
+	            <br/><br/>
+		    
+		    	<p:fileUpload 
+		    		value="#{importacaoMB.uploadedFile}" mode="simple" />
+
+				<p:commandButton value="#{lbl.enviar}" ajax="false"
+					actionListener="#{importacaoMB.importarArquivoDados}" />
+	            	
+			</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 

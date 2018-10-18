@@ -1,0 +1,56 @@
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui">  
+  
+<ui:composition template="../layout/template.xhtml">  
+    <ui:define name="corpo">  
+		<p:panel header="#{lbl.codigoBarras}" closable="true">
+		
+		<h:form id="frmGerador">
+		
+			<p:messages autoUpdate="true" />
+		    
+		    <p:focus context="painel"/>
+		    
+	  		<h:panelGrid
+	  			id="painel"
+				columns="2" 
+				cellspacing="4"
+				columnClasses="panelGridRight,panelGridLeft">
+				
+			    <h:outputLabel for="nome" value="#{lbl.nomeAluno}:" />
+			    <p:inputText id="nome" value="#{codigoBarrasMB.matricula.aluno.nome}" label="#{lbl.nomeAluno}" maxlength="50" size="50"/>
+			    
+			    <h:outputLabel for="matricula" value="#{lbl.matricula}:" />  
+			    <p:inputText id="matricula" value="#{codigoBarrasMB.matricula.matricula}" label="#{lbl.matricula}" maxlength="15">
+			    	<f:convertNumber integerOnly="true"></f:convertNumber>
+			    </p:inputText> 	
+			    
+			    <h:outputLabel for="periodoInicial" value="#{lbl.periodoInicial}:" />  
+			    <p:calendar navigator="true" value="#{codigoBarrasMB.periodoInicial}" id="periodoInicial" label="#{lbl.periodoInicial}" showOn="button" pattern="dd/MM/yyyy" locale="pt_BR"/>
+			    
+			    <h:outputLabel for="periodoFinal" value="#{lbl.periodoFinal}:" />  
+			    <p:calendar navigator="true" value="#{codigoBarrasMB.periodoFinal}" id="periodoFinal" label="#{lbl.periodoFinal}" showOn="button" pattern="dd/MM/yyyy" locale="pt_BR"/>
+			    
+			</h:panelGrid>
+
+			<p:separator></p:separator>
+			
+			<p:commandButton 
+				value="#{lbl.gerar}"
+				icon="ui-icon-gear" 
+				actionListener="#{codigoBarrasMB.gerar}" 
+				update="frmGerador"/>
+				
+			<p:commandButton disabled="#{!codigoBarrasMB.habilitarBotaoPdf}" value="#{lbl.baixarPdf}" ajax="false" icon="ui-icon-arrowthickstop-1-s">  
+			    <p:fileDownload value="#{codigoBarrasMB.pdf}" />  
+			</p:commandButton> 
+				
+		</h:form>
+			
+	    </p:panel>
+    </ui:define>  
+</ui:composition>  
+</html> 
