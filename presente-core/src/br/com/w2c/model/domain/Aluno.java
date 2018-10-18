@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,6 +22,11 @@ import br.com.chbandeira.utilitario.annotation.ExclusionStrategy;
  * @author charlles
  * @since 01/09/2013
  */
+@NamedQueries({
+	@NamedQuery(name="Aluno.obterPorNome", query="select a from Aluno a where upper(a.nome) like upper(:nome) and a.ativo = true"),
+	@NamedQuery(name="Aluno.obterPorNomeExato", query="select a from Aluno a where upper(a.nome) = upper(:nome) and a.ativo = true"),
+	@NamedQuery(name="Aluno.obterPorNomeEUsuario", query="select a from Aluno a where upper(a.nome) like upper(:nome) and a.ativo = true and a.identificador = :identificador")
+})
 @Entity
 @Table(name="aluno")
 public class Aluno extends BaseEntity {

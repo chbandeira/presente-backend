@@ -24,14 +24,14 @@ public class TipoOcorrenciaDAOImpl extends BaseDAOImpl<TipoOcorrencia> implement
 	public List<TipoOcorrencia> obterListaPorParametros(TipoOcorrencia tipoOcorrencia) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(tipoOcorrencia.getDescricao()));
-		return obterResultado("br.com.w2c.model.dao.TipoOcorrenciaDAOImpl.obterListaPorParametros", parametros);
+		return obterResultado("TipoOcorrencia.obterListaPorParametros", parametros);
 	}
 
 	@Override
 	public TipoOcorrencia obterPorDescricao(TipoOcorrencia tipoOcorrencia) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", tipoOcorrencia.getDescricao());
-		return (TipoOcorrencia) obterResultadoUnico("br.com.w2c.model.dao.TipoOcorrenciaDAOImpl.obterPorDescricao", parametros);
+		return (TipoOcorrencia) obterResultadoUnico("TipoOcorrencia.obterPorDescricao", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -39,7 +39,7 @@ public class TipoOcorrenciaDAOImpl extends BaseDAOImpl<TipoOcorrencia> implement
 	public List<TipoOcorrencia> obterListaPorSugestaoDescricao(String descricao) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(descricao));
-		return obterResultado("br.com.w2c.model.dao.TipoOcorrenciaDAOImpl.obterListaPorSugestaoDescricao", parametros);
+		return obterResultado("TipoOcorrencia.obterListaPorSugestaoDescricao", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,7 +57,7 @@ public class TipoOcorrenciaDAOImpl extends BaseDAOImpl<TipoOcorrencia> implement
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(descricao));
 		parametros.put("identificador", usuario.getIdentificador());
-		return obterResultado("br.com.w2c.model.dao.TipoOcorrenciaDAOImpl.obterListaPorSugestaoDescricaoEUsuario", parametros);
+		return obterResultado("TipoOcorrencia.obterListaPorSugestaoDescricaoEUsuario", parametros);
 	}
 
 }

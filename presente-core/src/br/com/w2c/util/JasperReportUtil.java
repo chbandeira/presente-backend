@@ -2,6 +2,8 @@ package br.com.w2c.util;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
@@ -27,22 +29,36 @@ public class JasperReportUtil {
 	}
 	
 	@Deprecated
-	public void exportar(String sourceFileName, Map<String, Object> params, String destFileName) throws JRException {
-		JasperPrint print = JasperFillManager.fillReport(sourceFileName, params, HibernateUtil.getConnection());
-		File file = new File(destFileName);
-		File parentFile = file.getParentFile();
-		if (parentFile != null && !parentFile.exists()) {
-			parentFile.mkdirs();
+	public void exportar(String sourceFileName, Map<String, Object> params, String destFileName) throws JRException, SQLException {
+		Connection conn = null;
+		try {
+			conn = HibernateUtil.getConnection();
+			JasperPrint print = JasperFillManager.fillReport(sourceFileName, params, conn);
+			File file = new File(destFileName);
+			File parentFile = file.getParentFile();
+			if (parentFile != null && !parentFile.exists()) {
+				parentFile.mkdirs();
+			}
+			JasperExportManager.exportReportToPdfFile(print, destFileName);
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
 		}
-		JasperExportManager.exportReportToPdfFile(print, destFileName);
 	}
 
-	public void exportarPdf(String sourceFileName, Map<String, Object> parametros, OutputStream outputStream) {
+	public void exportarPdf(String sourceFileName, Map<String, Object> parametros, OutputStream outputStream) throws SQLException {
+		Connection conn = null;
 		try {
-			JasperPrint jasperPrint = JasperFillManager.fillReport(sourceFileName, parametros, HibernateUtil.getConnection());
+			conn = HibernateUtil.getConnection();
+			JasperPrint jasperPrint = JasperFillManager.fillReport(sourceFileName, parametros, conn);
 			JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
 		} catch (JRException e) {
 			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
 		}
 	}
 

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -12,6 +14,12 @@ import javax.persistence.Table;
  * @author charlles
  * @since 01/09/2013
  */
+@NamedQueries({
+	@NamedQuery(name="Serie.obterListaPorParametros", query="select s from Serie s where upper(s.descricao) like upper(:descricao) and s.ativo = true"),
+	@NamedQuery(name="Serie.obterListaPorSugestaoDescricao", query="select s from Serie s where upper(s.descricao) like upper(:descricao) and s.ativo = true"),
+	@NamedQuery(name="Serie.obterPorParametrosUnicos", query="select s from Serie s where upper(s.descricao) = upper(:descricao) and s.ativo = true"),
+	@NamedQuery(name="Serie.obterRepetido", query="select s from Serie s where upper(s.descricao) = upper(:descricao) and s.id != :id and s.ativo = true"),
+})
 @Entity
 @Table(name="serie")
 public class Serie extends BaseEntity {

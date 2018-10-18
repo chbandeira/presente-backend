@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -17,6 +19,9 @@ import javax.persistence.Table;
  * @author Charlles
  * @since 19/05/2015
  */
+@NamedQueries({
+	@NamedQuery(name="Ocorrencia.obterPorUsuario", query="select o from Ocorrencia o inner join o.matricula m inner join m.responsavel r inner join r.usuario u where u.login = :login and u.identificador = :identificador order by o.data desc")
+})
 @Entity
 @Table(name="ocorrencia")
 public class Ocorrencia extends BaseEntity {

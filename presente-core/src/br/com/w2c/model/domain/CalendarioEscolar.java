@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -17,6 +19,16 @@ import javax.persistence.TemporalType;
  * @author charlles
  * @since 29/10/2013
  */
+@NamedQueries({
+	@NamedQuery(name="CalendarioEscolar.obterDataStringPorPeriodoEAulasValidas", query="select to_char(ce.data, 'dd/MM/yyyy') from CalendarioEscolar ce where to_char(ce.data, 'yyyy-MM-dd') between :inicio and :fim and ce.status = 1 order by ce.data desc"),
+	@NamedQuery(name="CalendarioEscolar.obterListaPorParametrosPesquisaComData", query="select ce from CalendarioEscolar ce where upper(ce.descricao) like upper(:descricao) and to_char(ce.data, 'yyyy-MM-dd') = :data and ce.recorrente = :recorrente and ce.status = :status order by ce.data desc"),
+	@NamedQuery(name="CalendarioEscolar.obterListaPorParametrosPesquisaSemData", query="select ce from CalendarioEscolar ce where upper(ce.descricao) like upper(:descricao) and ce.recorrente = :recorrente and ce.status = :status order by ce.data desc"),
+	@NamedQuery(name="CalendarioEscolar.obterPorMesAno", query="select ce from CalendarioEscolar ce where to_char(ce.data, 'yyyy-MM') = :mesAno order by ce.data asc"),
+	@NamedQuery(name="CalendarioEscolar.obterPorPeriodo", query="select ce from CalendarioEscolar ce where to_char(ce.data, 'yyyy-MM-dd') between :inicio and :fim order by ce.data asc"),
+	@NamedQuery(name="CalendarioEscolar.obterPorPeriodoAno", query="select ce from CalendarioEscolar ce where to_char(ce.data, 'yyyy') = :ano order by ce.data asc"),
+	@NamedQuery(name="CalendarioEscolar.obterPorPeriodoEAulasValidas", query="select ce from CalendarioEscolar ce where to_char(ce.data, 'yyyy-MM-dd') between :inicio and :fim and ce.status = 1 order by ce.data asc"),
+	@NamedQuery(name="CalendarioEscolar.obterRecorrentes", query="select new br.com.w2c.model.wrapper.CalendarioEscolarWrapper(ce.descricao, to_char(ce.data, 'MM'), to_char(ce.data, 'dd'), ce.status, ce.recorrente, ce.automatico) from CalendarioEscolar ce where ce.recorrente = true"),
+})
 @Entity
 @Table(name="calendario_escolar")
 public class CalendarioEscolar extends BaseEntity {

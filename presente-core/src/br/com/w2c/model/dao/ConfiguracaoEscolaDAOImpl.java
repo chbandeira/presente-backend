@@ -19,12 +19,12 @@ public class ConfiguracaoEscolaDAOImpl extends BaseDAOImpl<ConfiguracaoEscola> i
 
 	@Override
 	public String obterNomeEscola() throws AplicacaoException {
-		return (String) obterResultadoUnico("br.com.w2c.model.dao.ConfiguracaoEscolaDAOImpl.obterNomeEscola");
+		return (String) obterResultadoUnico("ConfiguracaoEscola.obterNomeEscola");
 	}
 
 	@Override
 	public ConfiguracaoEscola obterConfiguracoesEscola() throws AplicacaoException {
-		return (ConfiguracaoEscola) obterResultadoUnico("br.com.w2c.model.dao.ConfiguracaoEscolaDAOImpl.obterConfiguracoesEscola");
+		return (ConfiguracaoEscola) obterResultadoUnico("ConfiguracaoEscola.obterConfiguracoesEscola");
 	}
 
 	@SuppressWarnings("unchecked")

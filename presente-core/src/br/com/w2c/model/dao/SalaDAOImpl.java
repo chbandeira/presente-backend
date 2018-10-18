@@ -25,14 +25,14 @@ public class SalaDAOImpl extends BaseDAOImpl<Sala> implements SalaDAO {
 	public List<Sala> obterListaPorParametros(Sala sala) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(sala.getDescricao()));
-		return obterResultado("br.com.w2c.model.dao.SalaDAOImpl.obterListaPorParametros", parametros);
+		return obterResultado("Sala.obterListaPorParametros", parametros);
 	}
 
 	@Override
 	public Sala obterPorParametrosUnicos(Sala sala) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", sala.getDescricao());
-		return (Sala) obterResultadoUnico("br.com.w2c.model.dao.SalaDAOImpl.obterPorParametrosUnicos", parametros);
+		return (Sala) obterResultadoUnico("Sala.obterPorParametrosUnicos", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -40,7 +40,7 @@ public class SalaDAOImpl extends BaseDAOImpl<Sala> implements SalaDAO {
 	public List<Sala> obterListaPorSugestaoDescricao(String descricao) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(descricao));
-		return obterResultado("br.com.w2c.model.dao.SalaDAOImpl.obterListaPorSugestaoDescricao", parametros);
+		return obterResultado("Sala.obterListaPorSugestaoDescricao", parametros);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SalaDAOImpl extends BaseDAOImpl<Sala> implements SalaDAO {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", sala.getDescricao());
 		parametros.put("id", isNuloOuVazio(sala.getId()) ? 0L : sala.getId());
-		return (Sala) obterResultadoUnico("br.com.w2c.model.dao.SalaDAOImpl.obterRepetido", parametros);
+		return (Sala) obterResultadoUnico("Sala.obterRepetido", parametros);
 	}
 
 	@SuppressWarnings("unchecked")

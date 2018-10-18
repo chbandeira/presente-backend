@@ -56,18 +56,18 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
 	public T obter(Class<T> clazz, Serializable id) {
 		return (T) getSession().get(clazz, id);
 	}
-	
+/*	
 	protected String getQueryORM(String chave) throws AplicacaoException {
 		return ResourceUtil.getQueryORM(chave);
-	}
+	}*/
 	
 	protected Map<String, Object> criarParametros() {
 		return new HashMap<String, Object>();
 	}
 
 	@SuppressWarnings("rawtypes")
-	protected List obterResultado(String queryORM) throws AplicacaoException {
-		return getSession().createQuery(getQueryORM(queryORM)).list();
+	protected List obterResultado(String queryName) throws AplicacaoException {
+		return getSession().getNamedQuery(queryName).list();
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -100,35 +100,35 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	protected List obterResultado(String queryORM, Map<String, Object> parametros) throws AplicacaoException {
-		Query query = getSession().createQuery(getQueryORM(queryORM));
+	protected List obterResultado(String queryName, Map<String, Object> parametros) throws AplicacaoException {
+		Query query = getSession().getNamedQuery(queryName);
 		addParametros(parametros, query);
 		return query.list();
 	}
 
-	@SuppressWarnings("rawtypes")
-	protected List obterResultado(String queryORM, int limit) throws AplicacaoException {
-		Query query = getSession().createQuery(getQueryORM(queryORM));
+	@SuppressWarnings("unchecked")
+	protected List<T> obterResultado(String queryName, int limit) throws AplicacaoException {
+		Query query = getSession().getNamedQuery(queryName);
 		query.setMaxResults(limit);
 		return query.list();
 	}
 	
-	@SuppressWarnings("rawtypes")
-	protected List obterResultado(String queryORM, Map<String, Object> parametros, int limit) throws AplicacaoException {
-		Query query = getSession().createQuery(getQueryORM(queryORM));
+	@SuppressWarnings("unchecked")
+	protected List<T> obterResultado(String queryName, Map<String, Object> parametros, int limit) throws AplicacaoException {
+		Query query = getSession().getNamedQuery(queryName);
 		addParametros(parametros, query);
 		query.setMaxResults(limit);
 		return query.list();
 	}
 	
-	protected Object obterResultadoUnico(String queryORM) throws AplicacaoException {
-		Query query = getSession().createQuery(getQueryORM(queryORM));
+	protected Object obterResultadoUnico(String queryName) throws AplicacaoException {
+		Query query = getSession().getNamedQuery(queryName);
 		query.setMaxResults(1);
 		return query.uniqueResult();
 	}
 	
-	protected Object obterResultadoUnico(String queryORM, Map<String, Object> parametros) throws AplicacaoException {
-		Query query = getSession().createQuery(getQueryORM(queryORM));
+	protected Object obterResultadoUnico(String queryName, Map<String, Object> parametros) throws AplicacaoException {
+		Query query = getSession().getNamedQuery(queryName);
 		addParametros(parametros, query);
 		query.setMaxResults(1);
 		return query.uniqueResult();
@@ -169,6 +169,6 @@ public abstract class BaseDAOImpl<T> implements BaseDAO<T> {
 	}
 
 	private Long obterIdentificador() throws AplicacaoException {
-		return (Long) obterResultadoUnico("br.com.w2c.model.dao.BaseDAOImpl.obterIdentificador");
+		return (Long) obterResultadoUnico("ConfiguracaoEscola.obterIdentificador");
 	}
 }

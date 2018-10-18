@@ -20,7 +20,7 @@ public class OcorrenciaImportacaoDAOImpl extends BaseDAOImpl<OcorrenciaImportaca
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<OcorrenciaImportacao> obterTodos() throws AplicacaoException {
-		return obterResultado("br.com.w2c.model.dao.OcorrenciaImportacaoDAOImpl.obterTodos");
+		return obterResultado("OcorrenciaImportacao.obterTodos");
 	}
 
 	@SuppressWarnings("unchecked")

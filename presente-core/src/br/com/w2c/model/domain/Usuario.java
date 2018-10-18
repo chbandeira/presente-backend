@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,6 +20,11 @@ import javax.persistence.Table;
  * @version 2.0 - 06/10/2013
  * @since 23/01/2012
  */
+@NamedQueries({
+	@NamedQuery(name="Usuario.obterListaPorParametros", query="select u from Usuario u where upper(u.login) like upper(:login) and upper(u.nome) like upper(:nome) and u.ativo = true and u.login != 'admin' order by u.nome asc"),
+	@NamedQuery(name="Usuario.obterPorLogin", query="select u from Usuario u where u.login = :login and u.ativo = true"),
+	@NamedQuery(name="Usuario.isSenhaAtualLogin", query="select count(u) from Usuario u where u.login = :login and u.senha = :senhaAtual")
+})
 @Entity
 @Table(name="usuario")
 public class Usuario extends BaseEntity {

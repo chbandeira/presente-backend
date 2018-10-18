@@ -44,12 +44,12 @@ public class CalendarioEscolarDAOImpl extends BaseDAOImpl<CalendarioEscolar> imp
 
 	@SuppressWarnings("unchecked")
 	private List<CalendarioEscolar> obterListaPorParametrosPesquisaComData(Map<String, Object> parametros) throws AplicacaoException {
-		return obterResultado("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterListaPorParametrosPesquisaComData", parametros);
+		return obterResultado("CalendarioEscolar.obterListaPorParametrosPesquisaComData", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
 	private List<CalendarioEscolar> obterListaPorParametrosPesquisaSemData(Map<String, Object> parametros) throws AplicacaoException {
-		return obterResultado("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterListaPorParametrosPesquisaSemData", parametros);
+		return obterResultado("CalendarioEscolar.obterListaPorParametrosPesquisaSemData", parametros);
 	}
 
 	@Override
@@ -57,13 +57,13 @@ public class CalendarioEscolarDAOImpl extends BaseDAOImpl<CalendarioEscolar> imp
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", calendarioEscolar.getDescricao());
 		parametros.put("id", isNuloOuVazio(calendarioEscolar.getId()) ? 0L : calendarioEscolar.getId());
-		return (CalendarioEscolar) obterResultadoUnico("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterRepetido", parametros);
+		return (CalendarioEscolar) obterResultadoUnico("CalendarioEscolar.obterRepetido", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<CalendarioEscolarWrapper> obterRecorrentes() throws AplicacaoException {
-		return new HashSet<CalendarioEscolarWrapper>(obterResultado("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterRecorrentes"));
+		return new HashSet<CalendarioEscolarWrapper>(obterResultado("CalendarioEscolar.obterRecorrentes"));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -71,7 +71,7 @@ public class CalendarioEscolarDAOImpl extends BaseDAOImpl<CalendarioEscolar> imp
 	public List<CalendarioEscolar> obterPorMesAno(Date data) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("mesAno", UtilDate.getDataFormatada(data, Constantes.MM_YYYY_DB));
-		return obterResultado("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterPorMesAno", parametros);
+		return obterResultado("CalendarioEscolar.obterPorMesAno", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -80,7 +80,7 @@ public class CalendarioEscolarDAOImpl extends BaseDAOImpl<CalendarioEscolar> imp
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("inicio", UtilDate.getDataFormatada(inicio, Constantes.DD_MM_YYYY_DB));
 		parametros.put("fim", UtilDate.getDataFormatada(fim, Constantes.DD_MM_YYYY_DB));
-		return obterResultado("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterPorPeriodoEAulasValidas", parametros);
+		return obterResultado("CalendarioEscolar.obterPorPeriodoEAulasValidas", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -89,7 +89,7 @@ public class CalendarioEscolarDAOImpl extends BaseDAOImpl<CalendarioEscolar> imp
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("inicio", UtilDate.getDataFormatada(inicio, Constantes.DD_MM_YYYY_DB));
 		parametros.put("fim", UtilDate.getDataFormatada(fim, Constantes.DD_MM_YYYY_DB));
-		return obterResultado("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterPorPeriodo", parametros);
+		return obterResultado("CalendarioEscolar.obterPorPeriodo", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,7 +97,7 @@ public class CalendarioEscolarDAOImpl extends BaseDAOImpl<CalendarioEscolar> imp
 	public List<CalendarioEscolar> obterPorPeriodoAno(Integer ano) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("ano", ano.toString());
-		return obterResultado("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterPorPeriodoAno", parametros);
+		return obterResultado("CalendarioEscolar.obterPorPeriodoAno", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -106,7 +106,7 @@ public class CalendarioEscolarDAOImpl extends BaseDAOImpl<CalendarioEscolar> imp
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("inicio", UtilDate.getDataFormatada(periodoInicial, Constantes.DD_MM_YYYY_DB));
 		parametros.put("fim", UtilDate.getDataFormatada(periodoFinal, Constantes.DD_MM_YYYY_DB));
-		return obterResultado("br.com.w2c.model.dao.CalendarioEscolarDAOImpl.obterDataStringPorPeriodoEAulasValidas", parametros);
+		return obterResultado("CalendarioEscolar.obterDataStringPorPeriodoEAulasValidas", parametros);
 	}
 
 	@SuppressWarnings("unchecked")

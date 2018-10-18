@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -26,6 +28,30 @@ import br.com.w2c.model.enums.Turno;
  * @author charlles
  * @since 01/09/2013
  */
+
+@NamedQueries({
+	@NamedQuery(name="Matricula.obterListaPorParametros", query="select m from Matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(a.nome) like upper(:nome) and m.ativo = true and a.ativo = true order by a.nome, m.matricula, m.anoLetivo asc"),
+	@NamedQuery(name="Matricula.obterMatriculasPorPeriodo", query="select m from Matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(a.nome) like upper(:nome) and m.ativo = true and a.ativo = true and (to_char(m.data, 'yyyy-MM-dd') between :periodoInicial and :periodoFinal)"),
+	@NamedQuery(name="Matricula.obterMatriculasPorPeriodoFinal", query="select m from Matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(a.nome) like upper(:nome) and m.ativo = true and a.ativo = true and (to_char(m.data, 'yyyy-MM-dd') <= :periodoFinal)"),
+	@NamedQuery(name="Matricula.obterMatriculasPorPeriodoInicial", query="select m from Matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(a.nome) like upper(:nome) and m.ativo = true and a.ativo = true and (to_char(m.data, 'yyyy-MM-dd') >= :periodoInicial)"),
+	@NamedQuery(name="Matricula.obterPorMatricula", query="select m from Matricula m where upper(m.matricula) = upper(:matricula) and m.ativo = true"),
+	@NamedQuery(name="Matricula.obterPorParametrosUnicos", query="select m from Matricula m where upper(m.matricula) = upper(:matricula) and m.ativo = true"),
+	@NamedQuery(name="Matricula.obterRepetido ", query="select m from Matricula m where upper(m.matricula) = upper(:matricula) and m.id != :id and m.ativo = true"),
+	@NamedQuery(name="Matricula.obterTodos", query="select m from Matricula m inner join m.aluno a where m.ativo = true order by a.nome asc"),
+	@NamedQuery(name="Matricula.obterQtdAtivos", query="select count(m) from Matricula m where m.ativo = true"),
+	@NamedQuery(name="Matricula.obterRepetidoComMesmoAno", query="select m from Matricula m where upper(m.matricula) = upper(:matricula) and m.id != :id and m.ativo = true and m.anoLetivo = :anoLetivo"),
+	@NamedQuery(name="Matricula.obterPorMatriculaEAnoLetivo", query="select m from Matricula m where upper(m.matricula) = upper(:matricula) and m.ativo = true and m.anoLetivo = :anoLetivo"),
+	@NamedQuery(name="Matricula.obterListaPorParametrosEAnoLetivo", query="select m from Matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(a.nome) like upper(:nome) and m.ativo = true and a.ativo = true and m.anoLetivo = :anoLetivo order by a.nome, m.matricula, m.anoLetivo asc"),
+	@NamedQuery(name="Matricula.obterListaPorParametrosOrdemData", query="select m from Matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(a.nome) like upper(:nome) and m.ativo = true and a.ativo = true order by m.data desc"),
+	@NamedQuery(name="Matricula.obterListaPorParametrosOrdem", query="select m from Matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(a.nome) like upper(:nome) and m.ativo = true and a.ativo = true and m.anoLetivo = :anoLetivo order by m.data desc"),
+	@NamedQuery(name="Matricula.obterListaPorSugestaoNomeAluno", query="select m from Matricula m inner join m.aluno a where upper(a.nome) like upper(:nomeAluno) and m.ativo = true and a.ativo = true and m.anoLetivo = :anoLetivo"),
+	@NamedQuery(name="Matricula.obterPorTurma", query="select m from Matricula m inner join m.turma t where t.id = :id and m.ativo = true and t.ativo = true"),
+	@NamedQuery(name="Matricula.obterPorTurmaSerieAnoLetivo", query="select m from Matricula m where m.turma.id = :idTurma and m.serie.id = :idSerie and m.anoLetivo = :anoLetivo and m.ativo = true"),
+	@NamedQuery(name="Matricula.obterPorTurmaAnoLetivo", query="select m from Matricula m where m.turma.id = :idTurma and m.anoLetivo = :anoLetivo and m.ativo = true"),
+	@NamedQuery(name="Matricula.obterPorUsuario", query="select m from Matricula m inner join m.aluno a inner join m.responsavel r inner join r.usuario u where m.ativo = true and a.ativo = true and u.login = :idUsuario and u.identificador = :identificador order by a.nome, m.matricula, m.anoLetivo asc"),
+	@NamedQuery(name="Matricula.obterListaPorSugestaoNomeAlunoEUsuario", query="select m from Matricula m inner join m.aluno a where upper(a.nome) like upper(:nomeAluno) and m.ativo = true and a.ativo = true and m.identificador = :identificador"),
+	@NamedQuery(name="Matricula.obterListaPorSugestaoMatricula", query="select m from Matricula m inner join m.aluno a where m.matricula like :matricula and m.ativo = true and a.ativo = true and m.anoLetivo = :anoLetivo")
+})
 @Entity
 @Table(name="matricula")
 public class Matricula extends BaseEntity {

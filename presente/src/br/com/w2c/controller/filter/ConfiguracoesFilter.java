@@ -62,8 +62,8 @@ public class ConfiguracoesFilter implements Filter {
 	}
 	
 	private void setLicenca(HttpSession session) {
-//		session.setAttribute(Constantes.SESSION_LICENCA, "� Copyright ".concat(ChavePrivada.ANO));
-		session.setAttribute(Constantes.SESSION_LICENCA, "� Copyright "+getAnoAtual());
+//		session.setAttribute(Constantes.SESSION_LICENCA, "Copyright ".concat(ChavePrivada.ANO));
+		session.setAttribute(Constantes.SESSION_LICENCA, "Copyright "+getAnoAtual());
 	}
 	
 	private static int getAnoAtual() {

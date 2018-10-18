@@ -37,7 +37,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 	public Matricula obterPorParametrosUnicos(Matricula matricula) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("matricula", matricula.getMatricula());
-		return (Matricula) obterResultadoUnico("br.com.w2c.model.dao.MatriculaDAOImpl.obterPorParametrosUnicos", parametros);
+		return (Matricula) obterResultadoUnico("Matricula.obterPorParametrosUnicos", parametros);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 	public Matricula obterPorMatricula(String matricula) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("matricula", matricula);
-		return (Matricula) obterResultadoUnico("br.com.w2c.model.dao.MatriculaDAOImpl.obterPorMatricula", parametros);
+		return (Matricula) obterResultadoUnico("Matricula.obterPorMatricula", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -58,7 +58,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("matricula", isNuloOuVazio(matricula.getMatricula()) ? "%" : matricula.getMatricula());
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterListaPorParametros", parametros);
+		return obterResultado("Matricula.obterListaPorParametros", parametros);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("matricula", matricula.getMatricula());
 		parametros.put("id", isNuloOuVazio(matricula.getId()) ? 0L : matricula.getId());
-		return (Matricula) obterResultadoUnico("br.com.w2c.model.dao.MatriculaDAOImpl.obterRepetido", parametros);
+		return (Matricula) obterResultadoUnico("Matricula.obterRepetido", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -77,7 +77,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		parametros.put("periodoInicial", getDataFormatada(periodoInicial, Constantes.DD_MM_YYYY_DB));
 		parametros.put("periodoFinal", getDataFormatada(periodoFinal, Constantes.DD_MM_YYYY_DB));
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterMatriculasPorPeriodo", parametros);
+		return obterResultado("Matricula.obterMatriculasPorPeriodo", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -87,7 +87,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("matricula", like(matricula.getMatricula()));
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		parametros.put("periodoInicial", getDataFormatada(periodoInicial, Constantes.DD_MM_YYYY_DB));
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterMatriculasPorPeriodoInicial", parametros);
+		return obterResultado("Matricula.obterMatriculasPorPeriodoInicial", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,18 +97,18 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("matricula", like(matricula.getMatricula()));
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		parametros.put("periodoFinal", getDataFormatada(periodoFinal, Constantes.DD_MM_YYYY_DB));
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterMatriculasPorPeriodoFinal", parametros);
+		return obterResultado("Matricula.obterMatriculasPorPeriodoFinal", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Matricula> obterTodos() throws AplicacaoException {
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterTodos");
+		return obterResultado("Matricula.obterTodos");
 	}
 
 	@Override
 	public Long obterQtdAtivos() throws AplicacaoException {
-		return (Long) obterResultadoUnico("br.com.w2c.model.dao.MatriculaDAOImpl.obterQtdAtivos");
+		return (Long) obterResultadoUnico("Matricula.obterQtdAtivos");
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("matricula", matricula.getMatricula());
 		parametros.put("id", isNuloOuVazio(matricula.getId()) ? 0L : matricula.getId());
 		parametros.put("anoLetivo", matricula.getAnoLetivo());
-		return (Matricula) obterResultadoUnico("br.com.w2c.model.dao.MatriculaDAOImpl.obterRepetidoComMesmoAno", parametros);
+		return (Matricula) obterResultadoUnico("Matricula.obterRepetidoComMesmoAno", parametros);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("matricula", matricula.getMatricula());
 		parametros.put("anoLetivo", matricula.getAnoLetivo());
-		return (Matricula) obterResultadoUnico("br.com.w2c.model.dao.MatriculaDAOImpl.obterPorMatriculaEAnoLetivo", parametros);
+		return (Matricula) obterResultadoUnico("Matricula.obterPorMatriculaEAnoLetivo", parametros);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -136,7 +136,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		parametros.put("anoLetivo", matricula.getAnoLetivo());
 		
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterListaPorParametrosEAnoLetivo", parametros);
+		return obterResultado("Matricula.obterListaPorParametrosEAnoLetivo", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -146,7 +146,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("matricula", isNuloOuVazio(matricula.getMatricula()) ? "%" : matricula.getMatricula());
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterListaPorParametrosOrdemData", parametros);
+		return obterResultado("Matricula.obterListaPorParametrosOrdemData", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -157,7 +157,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		parametros.put("anoLetivo", matricula.getAnoLetivo());
 		
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterListaPorParametrosEAnoLetivoOrdemData", parametros);
+		return obterResultado("Matricula.obterListaPorParametrosOrdem", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -166,7 +166,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("nomeAluno", like(nomeAluno));
 		parametros.put("anoLetivo", UtilDate.getAnoAtual());
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterListaPorSugestaoNomeAluno", parametros);
+		return obterResultado("Matricula.obterListaPorSugestaoNomeAluno", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -174,7 +174,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 	public List<Matricula> obterPorTurma(Turma turma) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("id", turma.getId());
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterPorTurma", parametros);
+		return obterResultado("Matricula.obterPorTurma", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -184,7 +184,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		parametros.put("idTurma", turma.getId());
 		parametros.put("idSerie", turma.getSerie().getId());
 		parametros.put("anoLetivo", turma.getAnoLetivo());
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterPorTurmaSerieAnoLetivo", parametros);
+		return obterResultado("Matricula.obterPorTurmaSerieAnoLetivo", parametros);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -193,7 +193,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("idTurma", turma.getId());
 		parametros.put("anoLetivo", turma.getAnoLetivo());
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterPorTurmaAnoLetivo", parametros);
+		return obterResultado("Matricula.obterPorTurmaAnoLetivo", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -202,7 +202,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("idUsuario", usuario.getLogin());
 		parametros.put("identificador", usuario.getIdentificador());
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterPorUsuario", parametros);
+		return obterResultado("Matricula.obterPorUsuario", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -240,7 +240,7 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("nomeAluno", like(nomeAluno));
 		parametros.put("identificador", usuario.getIdentificador());
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterListaPorSugestaoNomeAlunoEUsuario", parametros);
+		return obterResultado("Matricula.obterListaPorSugestaoNomeAlunoEUsuario", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -270,6 +270,6 @@ public class MatriculaDAOImpl extends BaseDAOImpl<Matricula> implements Matricul
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("matricula", like(matricula));
 		parametros.put("anoLetivo", UtilDate.getAnoAtual());
-		return obterResultado("br.com.w2c.model.dao.MatriculaDAOImpl.obterListaPorSugestaoMatricula", parametros);
+		return obterResultado("Matricula.obterListaPorSugestaoMatricula", parametros);
 	}
 }

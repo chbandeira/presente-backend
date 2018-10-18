@@ -25,14 +25,14 @@ public class SerieDAOImpl extends BaseDAOImpl<Serie> implements SerieDAO {
 	public List<Serie> obterListaPorParametros(Serie serie) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(serie.getDescricao()));
-		return obterResultado("br.com.w2c.model.dao.SerieDAOImpl.obterListaPorParametros", parametros);
+		return obterResultado("Serie.obterListaPorParametros", parametros);
 	}
 	
 	@Override
 	public Serie obterPorParametrosUnicos(Serie serie) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", serie.getDescricao());
-		return (Serie) obterResultadoUnico("br.com.w2c.model.dao.SerieDAOImpl.obterPorParametrosUnicos", parametros);
+		return (Serie) obterResultadoUnico("Serie.obterPorParametrosUnicos", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -40,7 +40,7 @@ public class SerieDAOImpl extends BaseDAOImpl<Serie> implements SerieDAO {
 	public List<Serie> obterListaPorSugestaoDescricao(String descricao) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(descricao));
-		return obterResultado("br.com.w2c.model.dao.SerieDAOImpl.obterListaPorSugestaoDescricao", parametros);
+		return obterResultado("Serie.obterListaPorSugestaoDescricao", parametros);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SerieDAOImpl extends BaseDAOImpl<Serie> implements SerieDAO {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", serie.getDescricao());
 		parametros.put("id", isNuloOuVazio(serie.getId()) ? 0L : serie.getId());
-		return (Serie) obterResultadoUnico("br.com.w2c.model.dao.SerieDAOImpl.obterRepetido", parametros);
+		return (Serie) obterResultadoUnico("Serie.obterRepetido", parametros);
 	}
 
 	@SuppressWarnings("unchecked")

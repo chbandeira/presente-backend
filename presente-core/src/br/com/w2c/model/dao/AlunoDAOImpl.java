@@ -24,14 +24,14 @@ public class AlunoDAOImpl extends BaseDAOImpl<Aluno> implements AlunoDAO {
 	public List<Aluno> obterPorNome(String nome) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("nome", like(nome));
-		return obterResultado("br.com.w2c.model.dao.AlunoDAOImpl.obterPorNome", parametros);
+		return obterResultado("Aluno.obterPorNome", parametros);
 	}
 
 	@Override
 	public Aluno obterPorNomeExato(String nome) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("nome", nome);
-		return (Aluno) obterResultadoUnico("br.com.w2c.model.dao.AlunoDAOImpl.obterPorNomeExato", parametros);
+		return (Aluno) obterResultadoUnico("Aluno.obterPorNomeExato", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -49,7 +49,7 @@ public class AlunoDAOImpl extends BaseDAOImpl<Aluno> implements AlunoDAO {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("nome", like(nome));
 		parametros.put("identificador", usuario.getIdentificador());
-		return obterResultado("br.com.w2c.model.dao.AlunoDAOImpl.obterPorNomeEUsuario", parametros);
+		return obterResultado("Aluno.obterPorNomeEUsuario", parametros);
 	}
 
 }

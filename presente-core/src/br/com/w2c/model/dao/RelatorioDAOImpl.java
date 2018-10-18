@@ -22,7 +22,7 @@ public class RelatorioDAOImpl extends BaseDAOImpl<Relatorio> implements Relatori
 	public String obterNome(Long idRelatorio) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("idRelatorio", idRelatorio);
-		return (String) obterResultadoUnico("br.com.w2c.model.dao.RelatorioDAOImpl.obterNome", parametros);
+		return (String) obterResultadoUnico("Relatorio.obterNome", parametros);
 	}
 
 	@SuppressWarnings("unchecked")

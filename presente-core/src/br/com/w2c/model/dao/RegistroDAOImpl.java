@@ -33,14 +33,14 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 	public List<Registro> obterListaPorParametros(Registro registro) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("matricula", like(registro.getMatricula().getMatricula()));
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterListaPorParametros", parametros);
+		return obterResultado("Registro.obterListaPorParametros", parametros);
 	}
 
 	@Override
 	public Registro obterListaPorParametrosUnicos(Registro registro) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("matricula", registro.getMatricula().getMatricula());
-		return (Registro) obterResultadoUnico("br.com.w2c.model.dao.RegistroDAOImpl.obterListaPorParametrosUnicos", parametros);
+		return (Registro) obterResultadoUnico("Registro.obterListaPorParametrosUnicos", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -50,7 +50,7 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 		parametros.put("matricula", registro.getMatricula().getMatricula());
 		parametros.put("dataFormatada", getDataFormatada(registro.getData(), Constantes.DD_MM_YYYY_DB));
 		parametros.put("tipo", registro.getTipoRegistro());
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterRepetido", parametros);
+		return obterResultado("Registro.obterRepetido", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -62,7 +62,7 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 		parametros.put("periodoInicial", getDataFormatada(periodoInicial, Constantes.DD_MM_YYYY_DB));
 		parametros.put("periodoFinal", getDataFormatada(periodoFinal, Constantes.DD_MM_YYYY_DB));
 	
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterPorMatriculaEPeriodo", parametros);
+		return obterResultado("Registro.obterPorMatriculaEPeriodo", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -75,7 +75,7 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		parametros.put("periodoInicial", getDataFormatada(periodoInicial, Constantes.DD_MM_YYYY_DB));
 		
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterPorPeriodoInicial", parametros);
+		return obterResultado("Registro.obterPorPeriodoInicial", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -88,7 +88,7 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		parametros.put("periodoFinal", getDataFormatada(periodoFinal, Constantes.DD_MM_YYYY_DB));
 		
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterPorPeriodoFinal", parametros);
+		return obterResultado("Registro.obterPorPeriodoFinal", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -100,7 +100,7 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 		parametros.put("matricula", like(matricula.getMatricula()));
 		parametros.put("nome", like(matricula.getAluno().getNome()));
 		
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterSemPeriodo", parametros);
+		return obterResultado("Registro.obterSemPeriodo", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -110,7 +110,7 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 		parametros.put("periodoInicial", getDataFormatada(periodoInicial, Constantes.DD_MM_YYYY_DB));
 		parametros.put("periodoFinal", getDataFormatada(periodoFinal, Constantes.DD_MM_YYYY_DB));
 	
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterPorPeriodo", parametros);
+		return obterResultado("Registro.obterPorPeriodo", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -122,25 +122,25 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 		parametros.put("periodoInicial", getDataFormatada(periodoInicial, Constantes.DD_MM_YYYY_DB));
 		parametros.put("periodoFinal", getDataFormatada(periodoFinal, Constantes.DD_MM_YYYY_DB));
 	
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterDataStringPorMatriculaEPeriodo", parametros);
+		return obterResultado("Registro.obterDataStringPorMatriculaEPeriodo", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Registro> obterSmsNaoEnviado() throws AplicacaoException {
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterSmsNaoEnviado", 100);
+		return obterResultado("Registro.obterSmsNaoEnviado", 100);
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Registro> obterEmailNaoEnviado() throws AplicacaoException {
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterEmailNaoEnviado", 100);
+		return obterResultado("Registro.obterEmailNaoEnviado", 100);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Registro> obterNaoEnviado() throws AplicacaoException {
-		return obterResultado("br.com.w2c.model.dao.RegistroDAOImpl.obterNaoEnviado", 100);
+		return obterResultado("Registro.obterNaoEnviado", 100);
 	}
 
 	@SuppressWarnings("unchecked")

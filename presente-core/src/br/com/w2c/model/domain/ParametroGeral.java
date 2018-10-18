@@ -3,6 +3,8 @@ package br.com.w2c.model.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -10,6 +12,11 @@ import javax.persistence.Table;
  * @author charlles
  * @since 21/09/2013
  */
+@NamedQueries({
+	@NamedQuery(name="ParametroGeral.obterPorChave", query="select pg from ParametroGeral pg where upper(pg.chave) = upper(:chave)"),
+	@NamedQuery(name="ParametroGeral.obterPorChaves", query="select pg from ParametroGeral pg where pg.chave in (:chaves)"),
+	@NamedQuery(name="ParametroGeral.obterPorChaveIdentificador", query="select pg from ParametroGeral pg where upper(pg.chave) = upper(:chave) and pg.identificador = :identificador")
+})
 @Entity
 @Table(name="parametro_geral")
 public class ParametroGeral extends BaseEntity {

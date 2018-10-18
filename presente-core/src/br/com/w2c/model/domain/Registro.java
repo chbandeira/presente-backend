@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -25,6 +27,20 @@ import br.com.w2c.model.enums.Turno;
  * @author charlles
  * @since 01/09/2013
  */
+@NamedQueries({
+	@NamedQuery(name="Registro.obterDataStringPorMatriculaEPeriodo", query="select to_char(r.data, 'dd/MM/yyyy') from Registro r inner join r.matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(m.aluno.nome) like upper(:nome) and (to_char(r.data, 'yyyy-MM-dd') between :periodoInicial and :periodoFinal) and m.ativo = true and a.ativo = true order by r.data desc"),
+	@NamedQuery(name="Registro.obterListaPorParametros", query="select r from Registro r where upper(r.matricula.matricula) like upper(:matricula)"),
+	@NamedQuery(name="Registro.obterPorMatriculaEPeriodo", query="select r from Registro r inner join r.matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(m.aluno.nome) like upper(:nome) and (to_char(r.data, 'yyyy-MM-dd') between :periodoInicial and :periodoFinal) and m.ativo = true and a.ativo = true order by r.data desc"),
+	@NamedQuery(name="Registro.obterPorParametrosUnicos", query="select r from Registro r where upper(r.matricula.matricula) = upper(:matricula)"),
+	@NamedQuery(name="Registro.obterPorPeriodo", query="select r from Registro r inner join r.matricula m inner join m.aluno a where (to_char(r.data, 'yyyy-MM-dd') between :periodoInicial and :periodoFinal) and m.ativo = true and a.ativo = true order by r.data desc"),
+	@NamedQuery(name="Registro.obterPorPeriodoFinal", query="select r from Registro r inner join r.matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(m.aluno.nome) like upper(:nome) and (to_char(r.data, 'yyyy-MM-dd') <= :periodoFinal) and m.ativo = true and a.ativo = true order by r.data desc"),
+	@NamedQuery(name="Registro.obterPorPeriodoInicial", query="select r from Registro r inner join r.matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(m.aluno.nome) like upper(:nome) and (to_char(r.data, 'yyyy-MM-dd') >= :periodoInicial) and m.ativo = true and a.ativo = true order by r.data desc"),
+	@NamedQuery(name="Registro.obterRepetido", query="select r from Registro r where to_char(r.data, 'yyyy-MM-dd') = :dataFormatada and r.tipoRegistro = :tipo and upper(r.matricula.matricula) = upper(:matricula)"),
+	@NamedQuery(name="Registro.obterSemPeriodo", query="select r from Registro r inner join r.matricula m inner join m.aluno a where upper(m.matricula) like upper(:matricula) and upper(m.aluno.nome) like upper(:nome) and m.ativo = true and a.ativo = true order by r.data desc"),
+	@NamedQuery(name="Registro.obterSmsNaoEnviado", query="select r from Registro r where r.matriculaEnviarSmsRegistro = true and r.smsRegistroEnviado = false and to_char(r.data,'yyyy-mm-dd') = to_char(current_date,'yyyy-mm-dd')"),
+	@NamedQuery(name="Registro.obterEmailNaoEnviado", query="select r from Registro r where r.matriculaEnviarEmailRegistro = true and r.emailRegistroEnviado = false and to_char(r.data,'yyyy-mm-dd') = to_char(current_date,'yyyy-mm-dd')"),
+	@NamedQuery(name="Registro.obterNaoEnviado", query="select r from Registro r where ((r.matriculaEnviarEmailRegistro = true and r.emailRegistroEnviado = false) or (r.matriculaEnviarSmsRegistro = true and r.smsRegistroEnviado = false) and to_char(r.data,'yyyy-mm-dd') = to_char(current_date,'yyyy-mm-dd'))")
+})
 @Entity
 @Table(name="registro")
 public class Registro extends BaseEntity {

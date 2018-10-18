@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.w2c</groupId>
 	<artifactId>presente</artifactId>
-	<version>2.7</version>
+	<version>2.8</version>
 	<packaging>war</packaging>
 	<name>Presente</name>
 	<description>Assistente Educacional</description>
@@ -17,8 +17,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -45,7 +45,7 @@
 			<layout>default</layout>
 		</repository>
 	</repositories>
-	<dependencies>
+	<dependencies>	
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
@@ -94,13 +94,7 @@
 		<dependency>
 			<groupId>br.com.w2c</groupId>
 			<artifactId>presente-core</artifactId>
-			<version>2.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>br.com.w2c</groupId>
-			<artifactId>presente-comum-jsf</artifactId>
-			<version>2.1</version>
+			<version>2.8</version>
 		</dependency>
 
 	</dependencies>

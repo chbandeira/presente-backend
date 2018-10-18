@@ -44,18 +44,10 @@ public class JobInit {
 			
 			registrarSchedulerEnvioSmsEmail(scheduler);
 			
-			registrarSchedulerSincronizacaoWeb(scheduler);
 
 		} catch (SchedulerException se) {
 			log.error(se);
 		}
-	}
-
-	private static void registrarSchedulerSincronizacaoWeb(Scheduler scheduler) throws SchedulerException {
-		Jobs jobSincronizacaoWeb = registrarJobSincronizacaoWeb();
-		log.info("Registrando Sincronização Web por JOB");
-		scheduler.scheduleJob(jobSincronizacaoWeb.getJobDetail(), jobSincronizacaoWeb.getTrigger());
-		log.info("Registrado Sincronização Web por JOB");
 	}
 
 	private static void registrarSchedulerEnvioSmsEmail(Scheduler scheduler) throws SchedulerException {
@@ -135,30 +127,6 @@ public class JobInit {
 		return null;
 	}
 
-	
-	/**
-	 * Agendamento Sincronizacao Web
-	 * @return
-	 */
-	private static Jobs registrarJobSincronizacaoWeb() {
-		try {
-			
-			JobKey jobKey = new JobKey("jobKeySincronizacaoWebJOB", "group1");
-			JobDetail job = JobBuilder.newJob(SincronizacaoWebJOB.class).withIdentity(jobKey).build();
-
-			Trigger trigger = TriggerBuilder
-					.newTrigger()
-					.withIdentity("triggerSincronizacaoWebJOB", "group1")
-					.withSchedule(CronScheduleBuilder.cronSchedule("0 0/7 * * * ?"))
-					.build();
-			
-			return new Jobs(job, trigger);
-
-		} catch (Exception se) {
-			log.error(se);
-		}
-		return null;
-	}
 }
 
 class Jobs {

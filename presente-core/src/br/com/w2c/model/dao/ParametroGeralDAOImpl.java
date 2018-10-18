@@ -22,7 +22,7 @@ public class ParametroGeralDAOImpl extends BaseDAOImpl<ParametroGeral> implement
 	public ParametroGeral obterPorChave(String chave) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("chave", chave);
-		return (ParametroGeral) obterResultadoUnico("br.com.w2c.model.dao.ParametroGeralDAOImpl.obterPorChave", parametros);
+		return (ParametroGeral) obterResultadoUnico("ParametroGeral.obterPorChave", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -30,7 +30,7 @@ public class ParametroGeralDAOImpl extends BaseDAOImpl<ParametroGeral> implement
 	public List<ParametroGeral> obterPorChaves(List<String> chaves) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("chaves", chaves);
-		return obterResultado("br.com.w2c.model.dao.ParametroGeralDAOImpl.obterPorChaves", parametros);
+		return obterResultado("ParametroGeral.obterPorChaves", parametros);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ParametroGeralDAOImpl extends BaseDAOImpl<ParametroGeral> implement
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("chave", chave);
 		parametros.put("identificador", identificador);
-		return (ParametroGeral) obterResultadoUnico("br.com.w2c.model.dao.ParametroGeralDAOImpl.obterPorChaveIdentificador", parametros);
+		return (ParametroGeral) obterResultadoUnico("ParametroGeral.obterPorChaveIdentificador", parametros);
 	}
 
 	@SuppressWarnings("unchecked")

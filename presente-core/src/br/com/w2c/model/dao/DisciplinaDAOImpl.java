@@ -25,7 +25,7 @@ public class DisciplinaDAOImpl extends BaseDAOImpl<Disciplina> implements Discip
 	public List<Disciplina> obterListaPorParametros(Disciplina disciplina) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("nome", like(disciplina.getNome()));
-		return obterResultado("br.com.w2c.model.dao.DisciplinaDAOImpl.obterListaPorParametros", parametros);
+		return obterResultado("Disciplina.obterListaPorParametros", parametros);
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class DisciplinaDAOImpl extends BaseDAOImpl<Disciplina> implements Discip
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("id", isNuloOuVazio(disciplina.getId()) ? 0L : disciplina.getId());
 		parametros.put("nome", disciplina.getNome());
-		return (Disciplina) obterResultadoUnico("br.com.w2c.model.dao.DisciplinaDAOImpl.obterRepetido", parametros);
+		return (Disciplina) obterResultadoUnico("Disciplina.obterRepetido", parametros);
 	}
 
 	@SuppressWarnings("unchecked")

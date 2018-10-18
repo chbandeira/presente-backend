@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -16,6 +18,11 @@ import javax.persistence.TemporalType;
  * @author charlles
  * @since 29/10/2013
  */
+@NamedQueries({
+	@NamedQuery(name="ConfiguracaoEscola.obterIdentificador", query="select ce.identificador from ConfiguracaoEscola ce order by ce.id desc"),
+	@NamedQuery(name="ConfiguracaoEscola.obterConfiguracoesEscola", query="select ce from ConfiguracaoEscola ce order by ce.id desc"),
+	@NamedQuery(name="ConfiguracaoEscola.obterNomeEscola", query="select ce.nome from ConfiguracaoEscola ce order by ce.id desc")
+})
 @Entity
 @Table(name="configuracao_escola")
 public class ConfiguracaoEscola extends BaseEntity {

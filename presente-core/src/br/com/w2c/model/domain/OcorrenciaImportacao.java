@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,6 +21,9 @@ import br.com.w2c.util.Constantes;
  * @author charlles
  * @since 03/10/2013
  */
+@NamedQueries({
+	@NamedQuery(name="OcorrenciaImportacao.obterTodos", query="select oi from OcorrenciaImportacao oi")
+})
 @Entity
 @Table(name="ocorrencia_importacao")
 public class OcorrenciaImportacao extends BaseEntity {

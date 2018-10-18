@@ -483,9 +483,9 @@ ALTER TABLE matricula ALTER COLUMN bol_ativo SET NOT NULL;
 
 --NOVOS PARAMETROS
 INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('MAIL_SMTP_SERVER','smtp.gmail.com');
-INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('MAIL_SENDER','email.oryontec@gmail.com');
-INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('MAIL_PASSWORD','Ory0N#2015');
-INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('MAIL_NAME_SENDER','Oryon Tecnologia - Presente');
+INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('MAIL_SENDER','wdoisc@gmail.com');
+INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('MAIL_PASSWORD','senhaw2c');
+INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('MAIL_NAME_SENDER','W2C - Presente');
 
 --RETIRAR USUARIO COMUM
 DELETE FROM usuario_perfil pf WHERE pf.str_login = 'comum';
@@ -571,8 +571,8 @@ INSERT INTO relatorio(id_relatorio, str_nome) VALUES (1, 'BOLETIM DE FREQUÊNCIA
 INSERT INTO relatorio(id_relatorio, str_nome) VALUES (2, 'RELATÓRIO DE FALTAS');
 INSERT INTO relatorio(id_relatorio, str_nome) VALUES (3, 'RELATÓRIO FREQUÊNCIA POR TURMA');
 
-INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('EMAIL_CONTATO_ADM', 'oryontec@gmail.com');
-INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('NOME_EMPRESA', 'Oryon Tecnologia');
+INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('EMAIL_CONTATO_ADM', 'wdoisc@gmail.com');
+INSERT INTO parametro_geral(str_chave, str_valor) VALUES ('NOME_EMPRESA', 'W2C');
 
 -- ########################
 -- ##### VERSÃO 0.7.1 #####
@@ -743,7 +743,7 @@ UPDATE parametro_geral SET str_valor = '1.0.3' WHERE str_chave = 'VERSAO_BASE_DA
 -- ########################
 --ATUALIZAR VERSÃO DA BASE DA DADOS
 UPDATE parametro_geral SET str_valor = '1.0.4' WHERE str_chave = 'VERSAO_BASE_DADOS';
-UPDATE parametro_geral SET str_valor = 'Oryon Tecnologia - Presente!' WHERE str_chave = 'MAIL_NAME_SENDER';
+UPDATE parametro_geral SET str_valor = 'W2C - Presente!' WHERE str_chave = 'MAIL_NAME_SENDER';
 
 -- ########################
 -- ##### VERSÃO 1.0.5 #####
@@ -843,3 +843,307 @@ UPDATE parametro_geral SET str_valor = '1.2' WHERE str_chave = 'VERSAO_BASE_DADO
 -- ########################
 --ATUALIZAR VERSÃO DA BASE DA DADOS
 UPDATE parametro_geral SET str_valor = '1.2.1' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- ########################
+-- ##### VERSÃO 1.2.2 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '1.2.2' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+ALTER TABLE tipo_ocorrencia ALTER COLUMN identificador SET DEFAULT 1234;
+ALTER TABLE ocorrencia ALTER COLUMN identificador SET DEFAULT 1234;
+
+-- ########################
+-- ##### VERSÃO 1.2.2.1 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '1.2.2.1' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+ALTER TABLE tipo_ocorrencia ALTER COLUMN identificador SET DEFAULT 1234;
+ALTER TABLE ocorrencia ALTER COLUMN identificador SET DEFAULT 1234;
+
+-- EXECUTAR ATE AQUI. EXECUTE script_inicial_online_XXX.sql DEPOIS EXECUTE O RESTANTE
+
+-- ########################
+-- ##### VERSÃO 1.2.3 #####
+-- ########################
+UPDATE parametro_geral SET str_valor = '1.2.3' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+ALTER TABLE responsavel ADD COLUMN id_usuario VARCHAR(255);
+ALTER TABLE responsavel ADD CONSTRAINT fk_usuario FOREIGN KEY (id_usuario)
+	REFERENCES usuario (str_login) MATCH SIMPLE
+	ON UPDATE NO ACTION ON DELETE NO ACTION;
+	
+--ATUALIZACAO DADOS CORPORATIVO
+UPDATE parametro_geral SET str_valor = 'oryontec@gmail.com' WHERE str_chave = 'EMAIL_CONTATO_ADM';
+UPDATE parametro_geral SET str_valor = 'Oryon Tecnologia - Presente!' WHERE str_chave = 'MAIL_NAME_SENDER';
+UPDATE parametro_geral SET str_valor = 'email.oryontec@gmail.com' WHERE str_chave = 'MAIL_SENDER';
+UPDATE parametro_geral SET str_valor = 'senhaw2c' WHERE str_chave = 'MAIL_PASSWORD';
+UPDATE parametro_geral SET str_valor = 'Oryon Tecnologia' WHERE str_chave = 'NOME_EMPRESA';
+
+--19/01/2017 PARAMETROS PARA SINCRONIZACAO
+INSERT INTO parametro_geral VALUES ('ULTIMA_ATUALIZACAO_WEB','2017-01-01 00:00:00.00',1234);
+INSERT INTO parametro_geral VALUES ('STATUS_ATUALIZACAO_WEB','ATUALIZADO',1234);
+
+--31/01/2017 CRIACAO COLUNAS PARA ATUALIZACAO
+ALTER TABLE aluno ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE calendario_escolar ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE configuracao_escola ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE historico_alteracao ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE matricula ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE ocorrencia ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE ocorrencia_importacao ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE parametro_geral ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE perfil ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE registro ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE relatorio ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE responsavel ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE sala ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE serie ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE tipo_ocorrencia ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE turma ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE usuario ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+ALTER TABLE usuario_perfil ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00' NOT NULL;
+
+-- ########################
+-- ##### VERSÃO 2.0 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.0' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- Table: disciplina
+
+-- DROP TABLE disciplina;
+--SE DER ERRO, NÃO PRECISA EXECUTAR ESSE SCRIPT
+CREATE TABLE disciplina
+(
+  id_disciplina bigint NOT NULL,
+  dat_ultima_atualizacao timestamp without time zone NOT NULL DEFAULT now(),
+  identificador bigint NOT NULL,
+  bol_ativo boolean DEFAULT true,
+  num_carga_horaria integer,
+  str_nome character varying(255),
+  CONSTRAINT disciplina_pkey PRIMARY KEY (id_disciplina)
+);
+
+ALTER TABLE disciplina
+  OWNER TO presente;
+
+-- Sequence: seq_disciplina
+
+-- DROP SEQUENCE seq_disciplina;
+--SE DER ERRO, NÃO PRECISA EXECUTAR ESSE SCRIPT
+CREATE SEQUENCE seq_disciplina
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+
+ALTER TABLE seq_disciplina
+  OWNER TO presente;   
+  
+-- Table: aluno_disciplina
+
+-- DROP TABLE aluno_disciplina;
+--SE DER ERRO, NÃO PRECISA EXECUTAR ESSE SCRIPT
+CREATE TABLE aluno_disciplina
+(
+  dat_ultima_atualizacao timestamp without time zone NOT NULL DEFAULT now(),
+  identificador bigint NOT NULL,
+  vlr_nota_b1 double precision,
+  vlr_nota_b2 double precision,
+  vlr_nota_b3 double precision,
+  vlr_nota_b4 double precision,
+  vlr_nota_final double precision,
+  num_falta_b1 integer,
+  num_falta_b2 integer,
+  num_falta_b3 integer,
+  num_falta_b4 integer,
+  num_falta_final integer,
+  id_matricula bigint NOT NULL,
+  id_disciplina bigint NOT NULL,
+  CONSTRAINT aluno_disciplina_pkey PRIMARY KEY (id_disciplina, id_matricula),
+  CONSTRAINT fkc3e07b406798b5a4 FOREIGN KEY (id_matricula)
+      REFERENCES matricula (id_matricula) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fkc3e07b40a143d130 FOREIGN KEY (id_disciplina)
+      REFERENCES disciplina (id_disciplina) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);
+ALTER TABLE aluno_disciplina
+  OWNER TO presente;
+   
+-- Sequence: seq_ocorrencia
+
+-- DROP SEQUENCE seq_ocorrencia;
+--SE DER ERRO, NÃO PRECISA EXECUTAR ESSE SCRIPT
+CREATE SEQUENCE seq_ocorrencia
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_ocorrencia
+  OWNER TO presente;
+  
+-- Sequence: seq_tipo_ocorrencia
+
+-- DROP SEQUENCE seq_tipo_ocorrencia;
+--SE DER ERRO, NÃO PRECISA EXECUTAR ESSE SCRIPT
+CREATE SEQUENCE seq_tipo_ocorrencia
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 1
+  CACHE 1;
+ALTER TABLE seq_tipo_ocorrencia
+  OWNER TO presente;  
+
+--SE DER ERRO, NÃO PRECISA EXECUTAR ESSE SCRIPT
+--ALTER TABLE aluno_disciplina ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00';
+--SE DER ERRO, NÃO PRECISA EXECUTAR ESSE SCRIPT
+--ALTER TABLE disciplina ADD COLUMN dat_ultima_atualizacao TIMESTAMP DEFAULT '2017-01-01 00:00:00';
+
+--CRIANDO NOVO PERFIL RESPONSAVEL
+INSERT INTO perfil(str_perfil, str_nome) VALUES ('respo', 'Responsável');	
+
+ALTER TABLE responsavel ADD COLUMN str_cpf character varying(11);
+
+ALTER TABLE aluno ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE calendario_escolar ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE configuracao_escola ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE historico_alteracao ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE matricula ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE ocorrencia ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE ocorrencia_importacao ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE parametro_geral ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE perfil ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE registro ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE relatorio ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE responsavel ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE sala ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE serie ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE tipo_ocorrencia ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE turma ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE usuario ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE usuario_perfil ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE aluno_disciplina ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+ALTER TABLE disciplina ALTER COLUMN dat_ultima_atualizacao SET DEFAULT now();
+
+INSERT INTO parametro_geral VALUES ('JOB_SMS_LIGADO','true',1234);
+INSERT INTO parametro_geral VALUES ('JOB_EMAIL_LIGADO','true',1234);
+INSERT INTO parametro_geral VALUES ('JOB_SINCRONIZACAO_LIGADO','true',1234);
+
+UPDATE parametro_geral SET dat_ultima_atualizacao = '2017-01-01 00:00:00' WHERE str_chave = 'JOB_SMS_LIGADO';
+UPDATE parametro_geral SET dat_ultima_atualizacao = '2017-01-01 00:00:00' WHERE str_chave = 'JOB_EMAIL_LIGADO';
+UPDATE parametro_geral SET dat_ultima_atualizacao = '2017-01-01 00:00:00' WHERE str_chave = 'JOB_SINCRONIZACAO_LIGADO';
+
+-- ########################
+-- ##### VERSÃO 2.0.1 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.0.1' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+ALTER TABLE aluno ADD COLUMN id_local bigint;	
+ALTER TABLE aluno_disciplina ADD COLUMN id_local bigint;	
+ALTER TABLE calendario_escolar ADD COLUMN id_local bigint;	
+ALTER TABLE configuracao_escola ADD COLUMN id_local bigint;	
+ALTER TABLE disciplina ADD COLUMN id_local bigint;	
+ALTER TABLE historico_alteracao ADD COLUMN id_local bigint;	
+ALTER TABLE matricula ADD COLUMN id_local bigint;	
+ALTER TABLE ocorrencia ADD COLUMN id_local bigint;	
+ALTER TABLE ocorrencia_importacao ADD COLUMN id_local bigint;	
+ALTER TABLE parametro_geral ADD COLUMN id_local bigint;	
+ALTER TABLE perfil ADD COLUMN id_local bigint;	
+ALTER TABLE registro ADD COLUMN id_local bigint;	
+ALTER TABLE relatorio ADD COLUMN id_local bigint;	
+ALTER TABLE responsavel ADD COLUMN id_local bigint;	
+ALTER TABLE sala ADD COLUMN id_local bigint;	
+ALTER TABLE serie ADD COLUMN id_local bigint;	
+ALTER TABLE tipo_ocorrencia ADD COLUMN id_local bigint;	
+ALTER TABLE turma ADD COLUMN id_local bigint;	
+ALTER TABLE usuario ADD COLUMN id_local bigint;	
+ALTER TABLE usuario_perfil ADD COLUMN id_local bigint;	
+
+ALTER TABLE historico_alteracao RENAME COLUMN descricao TO str_turma_descricao;
+
+-- ########################
+-- ##### VERSÃO 2.0.2 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.0.2' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- ########################
+-- ##### VERSÃO 2.1 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.1' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- ########################
+-- ##### VERSÃO 2.2 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = false WHERE str_chave = 'JOB_SINCRONIZACAO_LIGADO';
+UPDATE parametro_geral SET str_valor = '2.2' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- ########################
+-- ##### VERSÃO 2.2.1 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.2.1' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- ########################
+-- ##### VERSÃO 2.3 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.3' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- ########################
+-- ##### VERSÃO 2.4 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.4' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- ########################
+-- ##### VERSÃO 2.5 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.5' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+--CONTROLE RELATÓRIOS QUE NÃO HAVIAM SIDO ADICIONADOS
+--INSERT INTO relatorio(id_relatorio, str_nome, dat_ultima_atualizacao, id_local) VALUES (4, 'RELATÓRIO DE PRESENÇA', '2017-09-07', null);
+--INSERT INTO relatorio(id_relatorio, str_nome, dat_ultima_atualizacao, id_local) VALUES (5, 'RELATÓRIO DE OCORRÊNCIAS', '2017-09-07', null);
+--NOVO RELATÓRIO	
+INSERT INTO relatorio(id_relatorio, str_nome, dat_ultima_atualizacao, id_local)
+	VALUES (6, 'FICHA DISCIPLINAR', '2017-09-07', null);
+	
+-- ########################
+-- ##### VERSÃO 2.5.1 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.5.1' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+--SCRIPT PARA AUMENTO DE TAMANHO DE COLUNA DESCRICAO DA OCORRENCIA
+ALTER TABLE ocorrencia ALTER COLUMN str_descricao TYPE VARCHAR(500);	
+
+-- ########################
+-- ##### VERSÃO 2.6 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.6' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+--NOVO TIPO RELATORIO
+INSERT INTO relatorio(id_relatorio, str_nome, dat_ultima_atualizacao, id_local) VALUES (7, 'RELATÓRIO DE OCORRÊNCIAS DUPLICADO', '2017-10-21', null);
+
+-- ########################
+-- ##### VERSÃO 2.6.1 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.6.1' WHERE str_chave = 'VERSAO_BASE_DADOS';
+
+-- ########################
+-- ##### VERSÃO 2.7 #####
+-- ########################
+--ATUALIZAR VERSÃO DA BASE DA DADOS
+UPDATE parametro_geral SET str_valor = '2.7' WHERE str_chave = 'VERSAO_BASE_DADOS';

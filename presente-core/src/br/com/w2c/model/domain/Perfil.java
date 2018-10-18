@@ -3,6 +3,8 @@ package br.com.w2c.model.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -11,6 +13,11 @@ import javax.persistence.Table;
  * @version 2.0 - 06/10/2013
  * @since 23/01/2012
  */
+@NamedQueries({
+	@NamedQuery(name="Perfil.obterPorNome", query="select p from Perfil p where p.nome = :nome"),
+	@NamedQuery(name="Perfil.obterTodos", query="select p from Perfil p"),
+	@NamedQuery(name="Perfil.obterTodosSemAdmin", query="select p from Perfil p where p.perfil <> :perfil")
+})
 @Entity
 @Table(name="perfil")
 public class Perfil extends BaseEntity {

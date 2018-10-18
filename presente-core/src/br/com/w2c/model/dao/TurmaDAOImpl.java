@@ -27,14 +27,14 @@ public class TurmaDAOImpl extends BaseDAOImpl<Turma> implements TurmaDAO {
 	public List<Turma> obterListaPorParametros(Turma turma) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(turma.getDescricao()));
-		return obterResultado("br.com.w2c.model.dao.TurmaDAOImpl.obterListaPorParametros", parametros);
+		return obterResultado("Turma.obterListaPorParametros", parametros);
 	}
 	
 	@Override
 	public Turma obterPorParametrosUnicos(Turma turma) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", turma.getDescricao());
-		return (Turma) obterResultadoUnico("br.com.w2c.model.dao.TurmaDAOImpl.obterPorParametrosUnicos", parametros);
+		return (Turma) obterResultadoUnico("Turma.obterPorParametrosUnicos", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -42,7 +42,7 @@ public class TurmaDAOImpl extends BaseDAOImpl<Turma> implements TurmaDAO {
 	public List<Turma> obterListaPorSugestaoDescricao(String descricao) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(descricao));
-		return obterResultado("br.com.w2c.model.dao.TurmaDAOImpl.obterListaPorSugestaoDescricao", parametros);
+		return obterResultado("Turma.obterListaPorSugestaoDescricao", parametros);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class TurmaDAOImpl extends BaseDAOImpl<Turma> implements TurmaDAO {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", turma.getDescricao());
 		parametros.put("id", isNuloOuVazio(turma.getId()) ? 0L : turma.getId());
-		return (Turma) obterResultadoUnico("br.com.w2c.model.dao.TurmaDAOImpl.obterRepetido", parametros);
+		return (Turma) obterResultadoUnico("Turma.obterRepetido", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -59,7 +59,7 @@ public class TurmaDAOImpl extends BaseDAOImpl<Turma> implements TurmaDAO {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(descricao));
 		parametros.put("anoLetivo", UtilDate.getAnoAtual());
-		return obterResultado("br.com.w2c.model.dao.TurmaDAOImpl.obterListaPorSugestaoDescricaoMatriculados", parametros);
+		return obterResultado("Turma.obterListaPorSugestaoDescricaoMatriculados", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -77,7 +77,7 @@ public class TurmaDAOImpl extends BaseDAOImpl<Turma> implements TurmaDAO {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("descricao", like(descricaoTurma));
 		parametros.put("identificador", usuario.getIdentificador());
-		return obterResultado("br.com.w2c.model.dao.TurmaDAOImpl.obterListaPorSugestaoDescricaoMatriculadosEUsuario", parametros);
+		return obterResultado("Turma.obterListaPorSugestaoDescricaoMatriculadosEUsuario", parametros);
 	}
 	
 }

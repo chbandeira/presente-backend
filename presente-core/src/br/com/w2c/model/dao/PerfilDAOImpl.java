@@ -23,13 +23,13 @@ public class PerfilDAOImpl extends BaseDAOImpl<Perfil> implements PerfilDAO {
 	public Perfil obterPorNome(String nomePerfil) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("nome", nomePerfil);
-		return (Perfil) obterResultadoUnico("br.com.w2c.model.dao.PerfilDAOImpl.obterPorNome", parametros);
+		return (Perfil) obterResultadoUnico("Perfil.obterPorNome", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Perfil> obterTodos() throws AplicacaoException {
-		return obterResultado("br.com.w2c.model.dao.PerfilDAOImpl.obterTodos");
+		return obterResultado("Perfil.obterTodos");
 	}
 
 	@SuppressWarnings("unchecked")
@@ -37,7 +37,7 @@ public class PerfilDAOImpl extends BaseDAOImpl<Perfil> implements PerfilDAO {
 	public List<Perfil> obterTodosSemAdmin() throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("perfil", Constantes.ADMIN.toLowerCase());
-		return obterResultado("br.com.w2c.model.dao.PerfilDAOImpl.obterTodosSemAdmin", parametros);
+		return obterResultado("Perfil.obterTodosSemAdmin", parametros);
 	}
 
 	@SuppressWarnings("unchecked")

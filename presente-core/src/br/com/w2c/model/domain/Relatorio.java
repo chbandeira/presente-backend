@@ -3,6 +3,8 @@ package br.com.w2c.model.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -10,6 +12,9 @@ import javax.persistence.Table;
  * @author charlles
  * @since 04/12/2013
  */
+@NamedQueries({
+	@NamedQuery(name="Relatorio.obterNome", query="select r.nome from Relatorio r where r.id = :idRelatorio")
+})
 @Entity
 @Table(name="relatorio")
 public class Relatorio extends BaseEntity {

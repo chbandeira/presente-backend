@@ -74,7 +74,7 @@ public class OcorrenciaDAOImpl extends BaseDAOImpl<Ocorrencia> implements Ocorre
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("login", usuario.getLogin());
 		parametros.put("identificador", usuario.getIdentificador());
-		return obterResultado("br.com.w2c.model.dao.OcorrenciaDAOImpl.obterPorUsuario", parametros);
+		return obterResultado("Ocorrencia.obterPorUsuario", parametros);
 	}
 
 	@SuppressWarnings("unchecked")

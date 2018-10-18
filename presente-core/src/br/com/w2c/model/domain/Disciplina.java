@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -13,6 +15,10 @@ import javax.persistence.Table;
  * @author Charlles
  * @since 05/05/2015
  */
+@NamedQueries({
+	@NamedQuery(name="Disciplina.obterRepetido", query="select d from Disciplina d where upper(d.nome) = upper(:nome) and d.id != :id and d.ativo = true"),
+	@NamedQuery(name="Disciplina.obterListaPorParametros", query="select d from Disciplina d where upper(d.nome) like upper(:nome) and d.ativo = true")
+})
 @Entity
 @Table(name="disciplina")
 public class Disciplina extends BaseEntity {

@@ -5,9 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+@NamedQueries({
+	@NamedQuery(name="TipoOcorrencia.obterListaPorParametros", query="select to from TipoOcorrencia to where upper(to.descricao) like upper(:descricao) and to.ativo = true"),
+	@NamedQuery(name="TipoOcorrencia.obterListaPorSugestaoDescricao", query="select to from TipoOcorrencia to where upper(to.descricao) like upper(:descricao) and to.ativo = true"),
+	@NamedQuery(name="TipoOcorrencia.obterPorDescricao", query="select to from TipoOcorrencia to where upper(to.descricao) = upper(:descricao) and to.ativo = true"),
+	@NamedQuery(name="TipoOcorrencia.obterListaPorSugestaoDescricaoEUsuario", query="select to from TipoOcorrencia to where upper(to.descricao) like upper(:descricao) and to.ativo = true and to.identificador = :identificador")
+})
 @Entity
 @Table(name="tipo_ocorrencia")
 public class TipoOcorrencia extends BaseEntity {

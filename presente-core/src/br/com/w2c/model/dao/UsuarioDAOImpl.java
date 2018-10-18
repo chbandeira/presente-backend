@@ -22,7 +22,7 @@ public class UsuarioDAOImpl extends BaseDAOImpl<Usuario> implements UsuarioDAO {
 	public Usuario obterPorLogin(String login) throws AplicacaoException {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("login", login);
-		return (Usuario) obterResultadoUnico("br.com.w2c.model.dao.UsuarioDAOImpl.obterPorLogin", parametros);
+		return (Usuario) obterResultadoUnico("Usuario.obterPorLogin", parametros);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -31,7 +31,7 @@ public class UsuarioDAOImpl extends BaseDAOImpl<Usuario> implements UsuarioDAO {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("login", like(usuario.getLogin()));
 		parametros.put("nome", like(usuario.getNome()));
-		return obterResultado("br.com.w2c.model.dao.UsuarioDAOImpl.obterListaPorParametros", parametros);
+		return obterResultado("Usuario.obterListaPorParametros", parametros);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class UsuarioDAOImpl extends BaseDAOImpl<Usuario> implements UsuarioDAO {
 		Map<String, Object> parametros = criarParametros();
 		parametros.put("senhaAtual", senhaAtual);
 		parametros.put("login", login);
-		Long resultado = (Long) obterResultadoUnico("br.com.w2c.model.dao.UsuarioDAOImpl.isSenhaAtualLogin", parametros);
+		Long resultado = (Long) obterResultadoUnico("Usuario.isSenhaAtualLogin", parametros);
 		return resultado > 0;
 	}
 

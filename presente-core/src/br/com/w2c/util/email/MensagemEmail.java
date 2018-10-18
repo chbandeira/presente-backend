@@ -114,7 +114,7 @@ public class MensagemEmail {
 		sb.append("</tr>");
 		if (ocorrencia.getMatricula().getSerie() != null) {
 			sb.append("<tr>");
-			sb.append("	<td><label><b>Série:</b> ").append(ocorrencia.getMatricula().getSerie().getDescricao()).append("</label></td>");
+			sb.append("	<td><label><b>SÃ©rie:</b> ").append(ocorrencia.getMatricula().getSerie().getDescricao()).append("</label></td>");
 			sb.append("</tr>");
 		}
 		if (ocorrencia.getMatricula().getTurma() != null) {
@@ -133,14 +133,14 @@ public class MensagemEmail {
 			sb.append("</tr>");
 		}
 		sb.append("<tr>");
-		sb.append("	<td><label><b>Número da Ocorrência:</b> ").append(ocorrencia.getId()).append("</label></td>");
+		sb.append("	<td><label><b>NÃºmero da OcorrÃªncia:</b> ").append(ocorrencia.getId()).append("</label></td>");
 		sb.append("</tr>");
 		sb.append("<tr>");
 		String dataFormatada = UtilDate.getDataFormatada(ocorrencia.getData(), Constantes.DD_MM_YYYY);
-		sb.append("	<td><label><b>Data da Ocorrência:</b> ").append(dataFormatada).append("</label></td>");
+		sb.append("	<td><label><b>Data da OcorrÃªncia:</b> ").append(dataFormatada).append("</label></td>");
 		sb.append("</tr>");
 		sb.append("<tr>");
-		sb.append("	<td><label><b>Tipo de Ocorrência:</b> ").append(ocorrencia.getTipo().getDescricao()).append("</label></td>");
+		sb.append("	<td><label><b>Tipo de OcorrÃªncia:</b> ").append(ocorrencia.getTipo().getDescricao()).append("</label></td>");
 		sb.append("</tr>");
 		if (ocorrencia.getQtdDias() != null && ocorrencia.getQtdDias() > 0) {
 			sb.append("<tr>");
@@ -148,10 +148,10 @@ public class MensagemEmail {
 			sb.append("</tr>");
 		}
 		sb.append("<tr>");
-		sb.append("	<td><label><b>Responsável pela Ocorrência:</b> ").append(ocorrencia.getUsuario().getNome()).append("</label></td>");
+		sb.append("	<td><label><b>ResponsÃ¡vel pela OcorrÃªncia:</b> ").append(ocorrencia.getUsuario().getNome()).append("</label></td>");
 		sb.append("</tr>");
 		sb.append("<tr>");
-		sb.append("	<td><label><b>Descrição:</b> ").append(ocorrencia.getDescricao()).append("</label></td>");
+		sb.append("	<td><label><b>DescriÃ§Ã£o:</b> ").append(ocorrencia.getDescricao()).append("</label></td>");
 		sb.append("</tr>");
 		sb.append("</tbody>");
 		sb.append("</table>");
