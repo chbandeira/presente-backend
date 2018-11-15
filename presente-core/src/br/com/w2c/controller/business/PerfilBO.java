@@ -118,7 +118,7 @@ public class PerfilBO extends BaseBO<Perfil> {
 	}
 	
 	public List<Perfil> obterPerfis(List<Perfil> perfis) {
-		List<Perfil> perfisEncontrados = new ArrayList<>();
+		List<Perfil> perfisEncontrados = new ArrayList<Perfil>();
 		
 		for (Perfil perfil : perfis) {
 			Perfil perfilEncontrado = obterPorId(perfil.getPerfil());

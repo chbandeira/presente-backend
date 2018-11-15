@@ -118,7 +118,7 @@ public class RelatorioOcorrenciaBO extends GeradorRelatorioBO {
 			String diretorioRealRelatorios, OutputStream outputStream, Ocorrencia ocorrencia, List<Long> idsSalvos) 
 					throws AplicacaoException, NegocioException {
 		
-		List<Matricula> matriculas = new ArrayList<>();
+		List<Matricula> matriculas = new ArrayList<Matricula>();
 		Map<String, Object> params = gerarCompletoTurmas(turmas, ocorrencia, idsSalvos, matriculas);
 		
 		super.gerarCompletoMatriculas(periodoInicial, periodoFinal, matriculas,
@@ -132,7 +132,7 @@ public class RelatorioOcorrenciaBO extends GeradorRelatorioBO {
 			List<Turma> turmas, String diretorioRealRelatorios,
 			OutputStream outputStream, Ocorrencia ocorrencia, List<Long> idsSalvos) throws AplicacaoException, NegocioException {
 		
-		List<Matricula> matriculas = new ArrayList<>();
+		List<Matricula> matriculas = new ArrayList<Matricula>();
 		Map<String, Object> params = gerarCompletoTurmas(turmas, ocorrencia, idsSalvos, matriculas);
 		
 		super.gerarCompletoMatriculas(periodoInicial, periodoFinal, matriculas,

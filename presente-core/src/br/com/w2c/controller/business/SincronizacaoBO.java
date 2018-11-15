@@ -129,7 +129,7 @@ public class SincronizacaoBO extends BaseBO {
 
 	private List<Aluno> obterUltimosAlunosAtualizadosSemFoto(Date dataHoraUltimaAtualizacao) throws AplicacaoException {
 		List<Aluno> alunos = alunoBO.obterUltimosAtualizados(dataHoraUltimaAtualizacao);
-		List<Aluno> alunosRetornar = new ArrayList<>();
+		List<Aluno> alunosRetornar = new ArrayList<Aluno>();
 		for (Aluno aluno : alunos) {
 			aluno.setFoto(null);
 			alunosRetornar.add(aluno);

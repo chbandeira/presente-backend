@@ -197,8 +197,11 @@ public class BaseBO<T> {
 	protected void copiarPropriedades(T destino, T origem) throws AplicacaoException {
 		try {
 			BeanUtils.copyProperties(destino, origem);
-		} catch (IllegalAccessException | InvocationTargetException e) {
+		} catch (IllegalAccessException e) {
+			throw new AplicacaoException(e);
+		} catch (InvocationTargetException e) {
 			throw new AplicacaoException(e);
 		}
+		
 	}
 }

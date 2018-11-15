@@ -125,19 +125,16 @@ public class RegistroDAOImpl extends BaseDAOImpl<Registro> implements RegistroDA
 		return obterResultado("Registro.obterDataStringPorMatriculaEPeriodo", parametros);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Registro> obterSmsNaoEnviado() throws AplicacaoException {
 		return obterResultado("Registro.obterSmsNaoEnviado", 100);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Registro> obterEmailNaoEnviado() throws AplicacaoException {
 		return obterResultado("Registro.obterEmailNaoEnviado", 100);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Registro> obterNaoEnviado() throws AplicacaoException {
 		return obterResultado("Registro.obterNaoEnviado", 100);

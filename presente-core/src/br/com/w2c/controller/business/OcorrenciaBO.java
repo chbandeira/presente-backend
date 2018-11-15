@@ -139,7 +139,7 @@ public class OcorrenciaBO extends BaseBO<Ocorrencia> {
 	 */
 	@SuppressWarnings("rawtypes")
 	public List<Long> salvar(Ocorrencia ocorrencia, List lista, boolean enviarEmail) throws NegocioException, AplicacaoException {
-		List<Long> idsOcorrenciasSalvos = new ArrayList<>();
+		List<Long> idsOcorrenciasSalvos = new ArrayList<Long>();
 		
 		for (Object object : lista) {
 			if (object instanceof Matricula) {

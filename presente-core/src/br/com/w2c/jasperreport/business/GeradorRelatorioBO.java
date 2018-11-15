@@ -159,7 +159,7 @@ public class GeradorRelatorioBO extends BaseBO {
 	
 	private String obterFiltroMatriculas(List<Matricula> matriculas) {
 		
-		List<Long> listaMatriculas = new ArrayList<>();
+		List<Long> listaMatriculas = new ArrayList<Long>();
 		
 		for (Matricula m : matriculas) {
 			listaMatriculas.add(m.getId());
