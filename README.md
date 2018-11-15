@@ -1,8 +1,8 @@
-## Presente
+# Presente
 
 [PT-BR] Projeto de registro de entrada e saída de alunos em Java 6, JSF com PrimeFaces e PostgreSQL.
 
-# Passos
+## Passos
 
 - clonar pasta com os 4 projetos.
 
@@ -10,13 +10,13 @@
 
 - presente.war que será usado para colocar no servidor.
 
-# Diretório necessário
+## Diretório necessário
 
 C:\presente\
 
 - arquivos presente.png e logo.jpg
 
-# Estouro de memória ao gerar relatórios:
+## Estouro de memória ao gerar relatórios:
 
 Com o servidor parado, no arquivo standalone.conf.bat, Provavelmente em (C:\presente\jboss\bin), substitua a linha de código de:
 
@@ -26,7 +26,7 @@ Para:
 
 set "JAVA_OPTS=-Xms128M -Xmx2048M -XX:MaxPermSize=1024M"
 
-# Necessário
+## Necessário
 
 - JDK7 para o JBOSS
 - MAVEN2
@@ -37,7 +37,7 @@ set "JAVA_OPTS=-Xms128M -Xmx2048M -XX:MaxPermSize=1024M"
 - O SERVIDOR SÓ PODERÁ SER INICIADO APÓS TODOS OS SCRIPTS DO BANCO SEREM EXECUTADOS E TODOS OS OUTROS PROCEDIMENTOS PARA IMPLANTAÇÃO FOREM FINALIZADOS.
 - O UPDATE É PARA MUDAR O CÓDIGO DA ESCOLA APENAS UMA VEZ, NORMALMENTE NO INICIO APÓS CRIAR TODAS AS TABELAS NO BANCO DE DADOS.
 
-# Configuração do banco de dados
+## Configuração do banco de dados
 
 - hibernate.cfg.xml
 - applicationContext.xml
@@ -46,6 +46,6 @@ username: presente
 
 password: presente4123
 
-# Tabela parametro_geral
+## Tabela parametro_geral
 
 Informações devem ser alteradas para algum email criado.
