@@ -26,15 +26,12 @@ public enum Turno {
 	}
 	
 	public static Turno toEnum(String sigla) {
-		if (sigla == null) {
-			return null;
-		}
 		for (Turno turno : Turno.values()) {
 			if (turno.getSigla().equals(sigla)) {
 				return turno;
 			}
 		}
-		throw new IllegalArgumentException();
+		return null;
 	}
 	
 }

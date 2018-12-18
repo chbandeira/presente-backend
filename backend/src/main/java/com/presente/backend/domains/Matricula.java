@@ -3,6 +3,7 @@ package com.presente.backend.domains;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,19 +38,19 @@ public class Matricula extends BaseEntity {
 	@Column(name="str_matricula")
 	private String matricula;
 	
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name="id_serie")
 	private Serie serie;
 	
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name="id_turma")
 	private Turma turma;
 	
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name="id_sala")
 	private Sala sala;
 	
-	@ManyToOne
+	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name="id_aluno", nullable=false)
 	private Aluno aluno;
 	
@@ -70,7 +71,7 @@ public class Matricula extends BaseEntity {
 	@Column(name="bol_ativo", columnDefinition="boolean default true", insertable=true, updatable=true, nullable=false)
 	private Boolean ativo;
 	
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="id_responsavel", nullable=true)
 	private Responsavel responsavel;
 	

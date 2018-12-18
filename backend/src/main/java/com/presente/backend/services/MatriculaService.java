@@ -1,47 +1,71 @@
 package com.presente.backend.services;
 
 import java.time.Year;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.presente.backend.domains.Matricula;
-import com.presente.backend.domains.Sala;
-import com.presente.backend.domains.Serie;
-import com.presente.backend.domains.Turma;
 import com.presente.backend.domains.enums.Turno;
 import com.presente.backend.dto.AlunoCadastroDTO;
+import com.presente.backend.exceptions.ObjectNotFoundException;
+import com.presente.backend.repositories.MatriculaRepository;
 
 @Service
 public class MatriculaService {
-	
+
+	@Autowired
+	private MatriculaRepository repository;
+
 	@Autowired
 	private ResponsavelService responsavelService;
+	@Autowired
+	private SalaService salaService;
+	@Autowired
+	private SerieService serieService;
+	@Autowired
+	private TurmaService turmaService;
+	@Autowired
+	private AlunoService alunoService;
 
-	public Matricula fromAlunoCadastroDTO(AlunoCadastroDTO dto) {
-		Matricula matricula = new Matricula(dto.getMatricula());
-		matricula.setAtivo(true);
-		if (dto.getSala() != null && !dto.getSala().isBlank()) {			
-			matricula.setSala(new Sala(dto.getSala()));
+	public Matricula fromAlunoCadastroDTO(AlunoCadastroDTO dto, Matricula matricula) {
+		if (matricula == null) {
+			matricula = new Matricula();
+			matricula.setAtivo(true);
+			// TODO set anoletivo conforme data cadastrada
+			matricula.setAnoLetivo(Year.now().getValue());
 		}
-		if (dto.getSerie() != null && !dto.getSerie().isBlank()) {			
-			matricula.setSerie(new Serie(dto.getSerie()));
-		}
-		if (dto.getTurma() != null && !dto.getTurma().isBlank()) {			
-			matricula.setTurma(new Turma(dto.getTurma()));
-		}
-		if (dto.getTurno() != null && !dto.getTurno().isBlank()) {
+		matricula.setMatricula(dto.getMatricula());
+		matricula.setAluno(this.alunoService.fromDTO(dto, matricula.getAluno()));
+		matricula.setSala(this.salaService.setDescricao(dto.getSala(), matricula.getSala()));
+		matricula.setSerie(this.serieService.setDescricao(dto.getSerie(), matricula.getSerie()));
+		matricula.setTurma(this.turmaService.setDescricao(dto.getTurma(), matricula.getTurma()));
+		if (dto.getTurno() != null) {
 			matricula.setTurno(Turno.toEnum(dto.getTurno()));
 		}
 		matricula.setBolsista(dto.isAlunoBolsista());
-		if (dto.getNomeResponsavel() != null && !dto.getNomeResponsavel().isBlank()) {			
-			matricula.setResponsavel(this.responsavelService.fromAlunoCadastroDTO(dto));
-		}
-		// TODO set anoletivo conforme data cadastrada
-		matricula.setAnoLetivo(Year.now().getValue());
+		matricula.setResponsavel(this.responsavelService.fromAlunoCadastroDTO(dto, matricula.getResponsavel()));
 		matricula.setEnviarEmailRegistro(dto.isEnviarEmail());
 		matricula.setEnviarSmsRegistro(dto.isEnviarSMS());
 		return matricula;
+	}
+
+	public AlunoCadastroDTO findByIdMatricula(Long idMatricula) {
+		Optional<Matricula> mat = this.repository.findById(idMatricula);
+		if (mat.isEmpty()) {
+			throw new ObjectNotFoundException("Matricula não encontrada");
+		}
+		return new AlunoCadastroDTO(mat.get());
+	}
+	
+	public void disableByIdMatricula(Long idMatricula) {
+		Optional<Matricula> mat = this.repository.findById(idMatricula);
+		if (mat.isEmpty()) {
+			throw new ObjectNotFoundException("Matricula não encontrada");
+		}
+		mat.get().setAtivo(false);
+		this.repository.save(mat.get()).getAtivo();
 	}
 
 }

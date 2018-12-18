@@ -33,11 +33,6 @@ public class AlunoControllerTest {
 	private AlunoTestSupplier alunoSupplier = new AlunoTestSupplier();
 
 	@Test
-	public void shouldReturnAluno() throws Exception {
-		this.mvc.perform(get("/alunos").param("idMatricula", "1")).andExpect(status().isOk());
-	}
-	
-	@Test
 	public void shouldReturnAlunos() throws Exception {
 		this.mvc.perform(get("/alunos/search")).andExpect(status().isOk());
 	}

@@ -20,6 +20,7 @@ public class AlunoDTO implements Serializable {
 	private String turma;
 	private String sala;
 	private String turno;
+	private Integer anoLetivo;
 	private boolean alunoBolsista;
 
 	public AlunoDTO() {
@@ -46,6 +47,7 @@ public class AlunoDTO implements Serializable {
 		if (matricula.getTurno() != null) {
 			this.turno = matricula.getTurno().getDescricao();
 		}
+		this.anoLetivo = matricula.getAnoLetivo();
 	}
 
 	public String getNome() {
@@ -110,6 +112,14 @@ public class AlunoDTO implements Serializable {
 
 	public void setIdMatricula(Long idMatricula) {
 		this.idMatricula = idMatricula;
+	}
+
+	public Integer getAnoLetivo() {
+		return anoLetivo;
+	}
+
+	public void setAnoLetivo(Integer anoLetivo) {
+		this.anoLetivo = anoLetivo;
 	}
 
 }

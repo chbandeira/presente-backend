@@ -87,10 +87,10 @@ public class HistoricoAlteracaoService {
 		}
 	}
 	
-	public void saveFromMatricula(Matricula matricula) {
+	public void saveFromMatricula(Matricula matricula, boolean inclusao) {
 		HistoricoAlteracao historicoAlteracao = new HistoricoAlteracao();
 		historicoAlteracao.setEntidadeOrigem(matricula.getClass().getName());
-		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(matricula.getId()));
+		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(inclusao));
 		this.setMatricula(matricula, historicoAlteracao);
 		this.setAluno(matricula.getAluno(), historicoAlteracao);
 		this.setResponsavel(matricula.getResponsavel(), historicoAlteracao);
@@ -100,41 +100,41 @@ public class HistoricoAlteracaoService {
 		this.save(historicoAlteracao);
 	}
 
-	public void saveFromAluno(Aluno aluno) {
+	public void saveFromAluno(Aluno aluno, boolean inclusao) {
 		HistoricoAlteracao historicoAlteracao = new HistoricoAlteracao();
 		historicoAlteracao.setEntidadeOrigem(aluno.getClass().getName());
-		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(aluno.getId()));
+		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(inclusao));
 		this.setAluno(aluno, historicoAlteracao);
 		this.save(historicoAlteracao);
 	}
 
-	public void saveFromSala(Sala sala) {
+	public void saveFromSala(Sala sala, boolean inclusao) {
 		HistoricoAlteracao historicoAlteracao = new HistoricoAlteracao();
 		historicoAlteracao.setEntidadeOrigem(sala.getClass().getName());
-		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(sala.getId()));
+		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(inclusao));
 		this.setSala(sala, historicoAlteracao);
 		this.save(historicoAlteracao);
 	}
 	
-	public void saveFromSerie(Serie serie) {
+	public void saveFromSerie(Serie serie, boolean inclusao) {
 		HistoricoAlteracao historicoAlteracao = new HistoricoAlteracao();
 		historicoAlteracao.setEntidadeOrigem(serie.getClass().getName());
-		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(serie.getId()));
+		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(inclusao));
 		this.setSerie(serie, historicoAlteracao);
 		this.save(historicoAlteracao);
 	}
 	
-	public void saveFromTurma(Turma turma) {
+	public void saveFromTurma(Turma turma, boolean inclusao) {
 		HistoricoAlteracao historicoAlteracao = new HistoricoAlteracao();
 		historicoAlteracao.setEntidadeOrigem(turma.getClass().getName());
-		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(turma.getId()));
+		historicoAlteracao.setTipoHistoricoAlteracao(this.getTipo(inclusao));
 		this.setTurma(turma, historicoAlteracao);
 		this.save(historicoAlteracao);
 	}
 
-	private TipoHistoricoAlteracao getTipo(Long id) {
+	private TipoHistoricoAlteracao getTipo(boolean inclusao) {
 		TipoHistoricoAlteracao tipo;
-		if (id == null) {
+		if (inclusao) {
 			tipo = TipoHistoricoAlteracao.INCLUSAO;
 		} else {
 			tipo = TipoHistoricoAlteracao.ALTERACAO;
