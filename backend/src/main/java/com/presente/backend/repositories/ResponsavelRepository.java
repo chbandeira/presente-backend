@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.presente.backend.domains.Responsavel;
 
 @Repository
-public interface ResponsavelRepository extends JpaRepository<Responsavel, Long> {
+public interface ResponsavelRepository extends JpaRepository<Responsavel, Integer> {
 
 }

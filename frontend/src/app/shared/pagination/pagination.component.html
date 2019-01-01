@@ -1,0 +1,16 @@
+<div *ngIf="page.empty">Nenhum registro encontrado</div>
+<div *ngIf="!page.empty">{{ page.totalElements }} registro(s) encontrado(s)</div>
+
+<nav class="mb-5" aria-label="Páginas de resultados de pesquisa">
+  <ul class="pagination justify-content-center">
+    <li class="page-item" [class.disabled]="page.first">
+      <a class="page-link" (click)="emitPage(page.number - 1)">Anterior</a>
+    </li>
+    <li class="page-item" *ngFor="let pag of createArray(page.totalPages)" [class.active]="page.number === pag">
+      <a class="page-link" (click)="emitPage(pag)" [class.disabled]="page.number === pag">{{ pag + 1 }}</a>
+    </li>
+    <li class="page-item" [class.disabled]="page.last">
+      <a class="page-link" (click)="emitPage(page.number + 1)">Próxima</a>
+    </li>
+  </ul>
+</nav>

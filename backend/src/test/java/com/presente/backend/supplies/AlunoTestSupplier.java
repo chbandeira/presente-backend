@@ -10,9 +10,10 @@ public class AlunoTestSupplier implements Supplier<Aluno> {
 
 	@Override
 	public Aluno get() {
-		Aluno aluno = new Aluno("Nome Aluno");
+		Aluno aluno = new Aluno();
+		aluno.setNome("Nome Aluno");
 		aluno.setDataNascimento(new Calendar.Builder().setDate(1988, 2, 20).build().getTime());
-		aluno.setFoto("C:/local/algumacoisa.jpg");
+		aluno.setUrlFoto("C:/local/algumacoisa.jpg");
 		return aluno;
 	}
 

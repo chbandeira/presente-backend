@@ -38,5 +38,12 @@ public class ResourceExceptionHandler {
 		}		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
+	
+	@ExceptionHandler(ValidationException.class)
+	public ResponseEntity<ValidationError> validation(ValidationException e, HttpServletRequest request) {
+		ValidationError err = new ValidationError(HttpStatus.BAD_REQUEST.value(), "Erro de validação", System.currentTimeMillis());
+		err.addError(e.getField(), e.getMessage());	
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
 
 }

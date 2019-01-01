@@ -9,8 +9,8 @@ import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.presente.backend.domains.Aluno;
-import com.presente.backend.domains.Matricula;
 import com.presente.backend.services.validations.AlunoInsert;
 
 /**
@@ -22,10 +22,11 @@ public class AlunoCadastroDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long idMatricula;
+	private Integer id;
 	@NotEmpty
 	private String nome;
 	@Past
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 	@NotEmpty
 	private String matricula;
@@ -34,17 +35,19 @@ public class AlunoCadastroDTO implements Serializable {
 	private String sala;
 	private String turno;
 	private boolean alunoBolsista;
-	private String uriFoto;
+	private String urlFoto;
 
 	private String nomeResponsavel;
 	@CPF
 	private String cpf;
 	@Email
 	private String email;
+	@Email
+	private String email2;
 	private String telefoneFixo;
 	private String telefoneCelular;
 	private boolean enviarEmail;
-	private boolean enviarSMS;
+	private boolean enviarMensagem;
 
 	private Integer anoLetivo;
 
@@ -52,40 +55,30 @@ public class AlunoCadastroDTO implements Serializable {
 	}
 
 	public AlunoCadastroDTO(Aluno aluno) {
+		this.id = aluno.getId();
 		this.nome = aluno.getNome();
 		this.dataNascimento = aluno.getDataNascimento();
-		this.uriFoto = aluno.getFoto();
-	}
-
-	public AlunoCadastroDTO(Matricula matricula) {
-		this.idMatricula = matricula.getId();
-		this.nome = matricula.getAluno().getNome();
-		this.dataNascimento = matricula.getAluno().getDataNascimento();
-		this.uriFoto = matricula.getAluno().getFoto();
-		this.idMatricula = matricula.getId();
-		this.alunoBolsista = matricula.getBolsista();
-		this.matricula = matricula.getMatricula();
-		if (matricula.getSala() != null) {
-			this.sala = matricula.getSala().getDescricao();
+		this.urlFoto = aluno.getUrlFoto();
+		this.alunoBolsista = aluno.getBolsista();
+		this.matricula = aluno.getMatricula();
+		if (aluno.getTurma() != null) {
+			this.turma = aluno.getTurma().getDescricao();
+			this.sala = aluno.getTurma().getSala();
+			this.serie = aluno.getTurma().getSerie();
+			if (aluno.getTurma().getTurno() != null) {				
+				this.turno = aluno.getTurma().getTurno().getSigla();
+			}
 		}
-		if (matricula.getSerie() != null) {
-			this.serie = matricula.getSerie().getDescricao();
-		}
-		if (matricula.getTurma() != null) {
-			this.turma = matricula.getTurma().getDescricao();
-		}
-		if (matricula.getTurno() != null) {
-			this.turno = matricula.getTurno().getDescricao();
-		}
-		this.enviarEmail = matricula.getEnviarEmailRegistro();
-		this.enviarSMS = matricula.getEnviarSmsRegistro();
-		this.anoLetivo = matricula.getAnoLetivo();
-		if (matricula.getResponsavel() != null) {
-			this.cpf = matricula.getResponsavel().getCpf();
-			this.email = matricula.getResponsavel().getEmail();
-			this.nomeResponsavel = matricula.getResponsavel().getNome();
-			this.telefoneCelular = matricula.getResponsavel().getTelefoneCelular();
-			this.telefoneFixo = matricula.getResponsavel().getTelefoneFixo();
+		this.enviarEmail = aluno.getEnviarEmailRegistro();
+		this.enviarMensagem = aluno.getEnviarMensagem();
+		this.anoLetivo = aluno.getAnoLetivo();
+		if (aluno.getResponsavel() != null) {
+			this.cpf = aluno.getResponsavel().getCpf();
+			this.email = aluno.getResponsavel().getEmail();
+			this.email2 = aluno.getResponsavel().getEmail2();
+			this.nomeResponsavel = aluno.getResponsavel().getNome();
+			this.telefoneCelular = aluno.getResponsavel().getTelefoneCelular();
+			this.telefoneFixo = aluno.getResponsavel().getTelefoneFixo();
 		}
 	}
 
@@ -153,12 +146,12 @@ public class AlunoCadastroDTO implements Serializable {
 		this.alunoBolsista = alunoBolsista;
 	}
 
-	public String getUriFoto() {
-		return uriFoto;
+	public String getUrlFoto() {
+		return urlFoto;
 	}
 
-	public void setUriFoto(String uriFoto) {
-		this.uriFoto = uriFoto;
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 	public String getNomeResponsavel() {
@@ -209,12 +202,12 @@ public class AlunoCadastroDTO implements Serializable {
 		this.enviarEmail = enviarEmail;
 	}
 
-	public boolean isEnviarSMS() {
-		return enviarSMS;
+	public boolean isEnviarMensagem() {
+		return enviarMensagem;
 	}
 
-	public void setEnviarSMS(boolean enviarSMS) {
-		this.enviarSMS = enviarSMS;
+	public void setEnviarMensagem(boolean enviarMensagem) {
+		this.enviarMensagem = enviarMensagem;
 	}
 
 	public Integer getAnoLetivo() {
@@ -225,12 +218,20 @@ public class AlunoCadastroDTO implements Serializable {
 		this.anoLetivo = anoLetivo;
 	}
 
-	public Long getIdMatricula() {
-		return idMatricula;
+	public Integer getId() {
+		return this.id;
 	}
 
-	public void setIdMatricula(Long idMatricula) {
-		this.idMatricula = idMatricula;
+	public void setIdMatricula(Integer id) {
+		this.id = id;
+	}
+
+	public String getEmail2() {
+		return email2;
+	}
+
+	public void setEmail2(String email2) {
+		this.email2 = email2;
 	}
 
 }
