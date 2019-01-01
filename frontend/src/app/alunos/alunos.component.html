@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h4>Cadastro de Alunos</h4>
   <div class="d-flex justify-content-end mb-2 mb-md-0">
-    <a class="btn btn-success" [routerLink]="[ '/aluno' ]"><i class="fas fa-plus"></i> Novo Aluno</a>
+    <a class="btn btn-success" [routerLink]="[ 'cadastro' ]"><i class="fas fa-plus"></i> Novo Aluno</a>
   </div>
 </div>
 
@@ -27,6 +27,7 @@
 </div>
 
 <!-- List -->
+<app-loading [loading]="loading"></app-loading>
 <div class="table-responsive" *ngIf="alunosPagination | async as page">
   <table class="table table-striped">
     <thead>
@@ -53,7 +54,7 @@
         <td>
           <div class="btn-group btn-group-toggle">
             <label class="btn btn-sm btn-outline-warning border-0">
-              <a [routerLink]="[ '/aluno', aluno.id ]" class="btn-outline-warning"> <i class="fas fa-folder-open"></i></a>
+              <a [routerLink]="[ 'cadastro', aluno.id ]" class="btn-outline-warning"> <i class="fas fa-folder-open"></i></a>
             </label>
             <label class="btn btn-sm btn-outline-danger border-0">
               <a data-toggle="modal" [attr.data-target]="'#removeModal'+aluno.id" class="btn-outline-danger"> <i class="fas fa-trash-alt"></i></a>

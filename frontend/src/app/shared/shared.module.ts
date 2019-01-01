@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { TurnoPipe } from './pipes/turno.pipe';
 import { TextMaskModule } from 'angular2-text-mask';
 import { ModalExclusionComponent } from './modals/modal-exclusion/modal-exclusion.component';
-import { AppRoutingModule } from '../app-routing.module';
+import { LoadingComponent } from './loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { AppRoutingModule } from '../app-routing.module';
     PaginationComponent,
     SnackbarComponent,
     MessageFormComponent,
-    ModalExclusionComponent
+    ModalExclusionComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -30,8 +31,7 @@ import { AppRoutingModule } from '../app-routing.module';
     ReactiveFormsModule,
     HttpClientModule,
     NgbDatepickerModule,
-    TextMaskModule,
-    AppRoutingModule
+    TextMaskModule
   ],
   exports: [
     TextMaskModule,
@@ -46,7 +46,7 @@ import { AppRoutingModule } from '../app-routing.module';
     SnackbarComponent,
     MessageFormComponent,
     ModalExclusionComponent,
-    AppRoutingModule
+    LoadingComponent
   ],
   providers: [
     PaginationService,

@@ -4,9 +4,8 @@ import { ApplicationErrorHandler } from './app.erro-handler';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import { AlunosModule } from './alunos/alunos.module';
 import { HomeComponent } from './home/home.component';
-import { TurmasModule } from './turmas/turmas.module';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -17,8 +16,7 @@ import { TurmasModule } from './turmas/turmas.module';
     CommonModule,
     CoreModule,
     SharedModule,
-    AlunosModule,
-    TurmasModule
+    AppRoutingModule
   ],
   providers: [
     { provide: ErrorHandler, useClass: ApplicationErrorHandler }

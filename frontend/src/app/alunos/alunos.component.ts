@@ -3,6 +3,7 @@ import { AlunosService } from './alunos.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { finalize, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-alunos',
@@ -13,6 +14,7 @@ export class AlunosComponent implements OnInit {
 
   alunosPagination: Observable<Page>;
   searchForm: FormGroup;
+  loading: boolean;
 
   constructor(
     private alunosService: AlunosService,
@@ -24,17 +26,26 @@ export class AlunosComponent implements OnInit {
       matricula: this.formBuilder.control(''),
       anoLetivo: this.formBuilder.control('')
     });
-    this.alunosPagination = this.alunosService.search();
+    this.loading = true;
+    this.alunosPagination = this.alunosService.search().pipe(
+      finalize(() => this.loading = false)
+    );
   }
 
   search() {
-    this.alunosPagination = this.alunosService.search(this.searchForm.value);
+    this.loading = true;
+    this.alunosPagination = this.alunosService.search(this.searchForm.value).pipe(
+      finalize(() => this.loading = false)
+    );
   }
 
   onPage(event: any) {
     const pagination: Pagination = new Pagination();
     pagination.page = event;
-    this.alunosPagination = this.alunosService.search(this.searchForm.value, pagination);
+    this.loading = true;
+    this.alunosPagination = this.alunosService.search(this.searchForm.value, pagination).pipe(
+      finalize(() => this.loading = false)
+    );
   }
 
   onDelete(id: number) {

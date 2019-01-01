@@ -4,6 +4,7 @@ import { TurmasService } from './turmas.service';
 import { TurmaComponent } from './turma/turma.component';
 import { TurmasComponent } from './turmas.component';
 import { SharedModule } from '../shared/shared.module';
+import { TurmasRoutingModule } from './turmas-routing.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,9 @@ import { SharedModule } from '../shared/shared.module';
     TurmasComponent
   ],
   imports: [
-    SharedModule
+    CommonModule,
+    SharedModule,
+    TurmasRoutingModule
   ],
   providers: [TurmasService]
 })

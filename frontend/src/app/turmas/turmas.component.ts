@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { TurmasService } from './turmas.service';
 import { Observable } from 'rxjs';
 import { Page, Pagination } from '../shared/pagination/pagination.model';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-turmas',
@@ -13,6 +14,7 @@ export class TurmasComponent implements OnInit {
 
   searchForm: FormGroup;
   turmasPagination: Observable<Page>;
+  loading: boolean;
 
   constructor(private formBuilder: FormBuilder, private turmasService: TurmasService) { }
 
@@ -23,17 +25,26 @@ export class TurmasComponent implements OnInit {
       sala: [''],
       turno: ['']
     });
-    this.turmasPagination = this.turmasService.search();
+    this.loading = true;
+    this.turmasPagination = this.turmasService.search().pipe(
+      finalize(() => this.loading = false)
+    );
   }
 
   search() {
-    this.turmasPagination = this.turmasService.search(this.searchForm.value);
+    this.loading = true;
+    this.turmasPagination = this.turmasService.search(this.searchForm.value).pipe(
+      finalize(() => this.loading = false)
+    );
   }
 
   onPage(event: any) {
     const pagination: Pagination = new Pagination();
     pagination.page = event;
-    this.turmasPagination = this.turmasService.search(this.searchForm.value, pagination);
+    this.loading = true;
+    this.turmasPagination = this.turmasService.search(this.searchForm.value, pagination).pipe(
+      finalize(() => this.loading = false)
+    );
   }
 
   onDelete(id: number) {
