@@ -33,7 +33,7 @@ public class TurmaService {
 		if ((dto.getTurma() == null || dto.getTurma().isBlank()) 
 				&& (dto.getSerie() == null || dto.getSerie().isBlank()) 
 				&& (dto.getSala() == null || dto.getSala().isBlank()) 
-				&& (dto.getTurno() == null || dto.getTurno().isBlank())) {
+				&& (dto.getTurno() == null)) {
 			return null;
 		}
 		Example<Turma> example = this
@@ -54,7 +54,7 @@ public class TurmaService {
 		if (dto.getSala() != null && !dto.getSala().isBlank()) {
 			turma.setSala(dto.getSala());
 		}
-		if (dto.getTurno() != null && !dto.getTurno().isBlank()) {
+		if (dto.getTurno() != null) {
 			turma.setTurno(Turno.toEnum(dto.getTurno()));
 		}
 		turma.setDataUltimaAtualizacao(new Date());
@@ -103,7 +103,7 @@ public class TurmaService {
 			turma.setSala(dto.getSala());
 			matcher = matcher.withMatcher("sala", contains());
 		}
-		if (dto.getTurno() != null && !dto.getTurno().isBlank()) {
+		if (dto.getTurno() != null) {
 			turma.setTurno(Turno.toEnum(dto.getTurno()));
 			matcher = matcher.withMatcher("turno", exact());
 		}
@@ -124,7 +124,7 @@ public class TurmaService {
 		if (dto.getSala() != null && !dto.getSala().isBlank()) {
 			turma.setSala(dto.getSala());
 		}
-		if (dto.getTurno() != null && !dto.getTurno().isBlank()) {
+		if (dto.getTurno() != null) {
 			turma.setTurno(Turno.toEnum(dto.getTurno()));
 		}
 		turma.setAtivo(true);

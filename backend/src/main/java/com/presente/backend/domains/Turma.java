@@ -31,7 +31,7 @@ public class Turma extends BaseEntity {
 
 	private String sala;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private Turno turno;
 
 	public Turma() {

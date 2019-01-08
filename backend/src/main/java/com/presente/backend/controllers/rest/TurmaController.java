@@ -5,7 +5,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,10 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.presente.backend.dto.TurmaDTO;
 import com.presente.backend.services.TurmaService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/turmas")
-public class TurmaController {
+public class TurmaController extends BaseController {
 
 	@Autowired
 	public TurmaService service;
@@ -32,7 +30,7 @@ public class TurmaController {
 			@RequestParam(value = "descricao", defaultValue = "") String descricao,
 			@RequestParam(value = "serie", defaultValue = "") String serie,
 			@RequestParam(value = "sala", defaultValue = "") String sala,
-			@RequestParam(value = "turno", defaultValue = "") String turno,
+			@RequestParam(value = "turno", defaultValue = "") Integer turno,
 			@RequestParam(value = "page", defaultValue = "0") Integer page,
 			@RequestParam(value = "size", defaultValue = "10") Integer size,
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction,

@@ -27,6 +27,8 @@ public class HistoricoAlteracaoAluno extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
+	private Integer idAluno;
 
 	private String nome;
 
@@ -72,7 +74,7 @@ public class HistoricoAlteracaoAluno extends BaseEntity {
 	
 	private Boolean enviarMensagem;
 
-	@Enumerated(EnumType.STRING)
+	@Enumerated(EnumType.ORDINAL)
 	private AlteracaoAluno alteracaoAluno;
 
 	public Integer getId() {
@@ -282,6 +284,14 @@ public class HistoricoAlteracaoAluno extends BaseEntity {
 
 	public void setEmailResponsavel2(String emailResponsavel2) {
 		this.emailResponsavel2 = emailResponsavel2;
+	}
+
+	public Integer getIdAluno() {
+		return idAluno;
+	}
+
+	public void setIdAluno(Integer idAluno) {
+		this.idAluno = idAluno;
 	}
 
 }

@@ -1,17 +1,17 @@
 package com.presente.backend.domains.enums;
 
 /**
- * 
- * @author Charlles
+ * @author charlles
+ * @since 01/09/2013
  */
-public enum AlteracaoAluno {
+public enum TipoRegistro {
 
-	INCLUSAO("INCLUSAO"),
-	ALTERACAO("ALTERACAO");
-
+	ENTRADA("Entrada"),
+	SAIDA("Saida");
+	
 	private String descricao;
 
-	AlteracaoAluno(String descricao) {
+	TipoRegistro(String descricao) {
 		this.descricao = descricao;
 	}
 

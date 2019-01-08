@@ -53,7 +53,7 @@ public class AlunoService {
 			this.validateMatricula(dto.getMatricula());
 		}
 		aluno = this.fromAlunoCadastroDTO(dto, aluno);
-		if (!inclusao) {			
+		if (inclusao) {			
 			aluno.setAtivo(true);
 			aluno.setDataMatricula(new Date());
 		}

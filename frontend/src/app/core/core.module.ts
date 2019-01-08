@@ -5,11 +5,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { AppRoutingModule } from '../app-routing.module';
+import { HomeComponent } from '../home/home.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    SidebarComponent
+    SidebarComponent,
+    HomeComponent
   ],
   imports: [
     CommonModule,

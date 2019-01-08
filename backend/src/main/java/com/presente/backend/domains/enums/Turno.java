@@ -5,29 +5,32 @@ package com.presente.backend.domains.enums;
  */
 public enum Turno {
 	
-	MANHA("M","Matutino"),
-	TARDE("V","Vespertino"),
-	NOITE("N","Noturno");
+	MANHA("Matutino"),
+	TARDE("Vespertino"),
+	NOITE("Noturno");
 	
-	private String sigla;
 	private String descricao;
 
-	Turno(String sigla, String descricao) {
-		this.sigla = sigla;
+	Turno(String descricao) {
 		this.descricao = descricao;
-	}
-	
-	public String getSigla() {
-		return sigla;
 	}
 
 	public String getDescricao() {
 		return descricao;
 	}
 	
-	public static Turno toEnum(String sigla) {
+	public static Turno toEnum(int ordinal) {
 		for (Turno turno : Turno.values()) {
-			if (turno.getSigla().equals(sigla)) {
+			if (turno.ordinal() == ordinal) {
+				return turno;
+			}
+		}
+		return null;
+	}
+	
+	public static Turno toEnum(String ordinal) {
+		for (Turno turno : Turno.values()) {
+			if (turno.ordinal() == Integer.parseInt(ordinal)) {
 				return turno;
 			}
 		}

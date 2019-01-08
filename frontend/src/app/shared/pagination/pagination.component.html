@@ -1,7 +1,7 @@
 <div *ngIf="page.empty">Nenhum registro encontrado</div>
 <div *ngIf="!page.empty">{{ page.totalElements }} registro(s) encontrado(s)</div>
 
-<nav class="mb-5" aria-label="Páginas de resultados de pesquisa">
+<nav class="mb-5 mt-2" aria-label="Páginas de resultados de pesquisa">
   <ul class="pagination justify-content-center">
     <li class="page-item" [class.disabled]="page.first">
       <a class="page-link" (click)="emitPage(page.number - 1)">Anterior</a>

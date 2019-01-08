@@ -16,7 +16,7 @@ public class TurmaDTO implements Serializable {
 
 	private String sala;
 
-	private String turno;
+	private Integer turno;
 
 	public TurmaDTO() {
 	}
@@ -27,11 +27,11 @@ public class TurmaDTO implements Serializable {
 		this.sala = turma.getSala();
 		this.serie = turma.getSerie();
 		if (turma.getTurno() != null) {			
-			this.turno = turma.getTurno().getSigla();
+			this.turno = turma.getTurno().ordinal();
 		}
 	}
 
-	public TurmaDTO(String descricao, String serie, String sala, String turno) {
+	public TurmaDTO(String descricao, String serie, String sala, Integer turno) {
 		super();
 		this.descricao = descricao;
 		this.serie = serie;
@@ -71,11 +71,11 @@ public class TurmaDTO implements Serializable {
 		this.sala = sala;
 	}
 
-	public String getTurno() {
+	public Integer getTurno() {
 		return turno;
 	}
 
-	public void setTurno(String turno) {
+	public void setTurno(Integer turno) {
 		this.turno = turno;
 	}
 

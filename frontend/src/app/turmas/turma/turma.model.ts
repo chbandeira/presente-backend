@@ -3,5 +3,5 @@ export class Turma {
     descricao: string;
     sala: string;
     serie: string;
-    turno: string;
+    turno: number;
 }

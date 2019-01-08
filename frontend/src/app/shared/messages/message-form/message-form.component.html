@@ -1,6 +1,6 @@
-<div *ngIf="showMessage && typeMessage === 'success'" class="alert alert-success" role="alert">
+<div *ngIf="showMessage && isSuccess()" class="alert alert-success" role="alert">
   <i class="fas fa-check-circle"></i> Salvo com sucesso!
 </div>
-<div *ngIf="showMessage && typeMessage === 'error'" class="alert alert-danger" role="alert">
-  <i class="fas fa-times-circle"></i> Campos obrigatórios ou inválidos!
+<div *ngIf="showMessage && isError()" class="alert alert-danger" role="alert">
+  <i class="fas fa-times-circle"></i> {{ getMessage() }}
 </div>

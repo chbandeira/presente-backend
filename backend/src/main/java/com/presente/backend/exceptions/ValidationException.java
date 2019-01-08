@@ -12,6 +12,11 @@ public class ValidationException extends RuntimeException {
 		this.field = field;
 	}
 
+	public ValidationException(String field, String message) {
+		super(message);
+		this.field = field;
+	}
+
 	public Integer getStatus() {
 		return status;
 	}

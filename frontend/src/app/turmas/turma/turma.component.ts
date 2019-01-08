@@ -2,8 +2,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { TurmasService } from '../turmas.service';
 import { Turma } from './turma.model';
-import { MessageTypes } from '../../shared/messages/message-form/message-types';
 import { ActivatedRoute } from '@angular/router';
+import { MessageEnum } from '../../shared/messages/message.enum';
 
 @Component({
   selector: 'app-turma',
@@ -18,15 +18,16 @@ export class TurmaComponent implements OnInit {
   editMode = false;
   formValid = false;
   turma: Turma;
+  turmaErros: string;
 
   constructor(
-    private turmasService: TurmasService, 
+    private turmasService: TurmasService,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.turma = new Turma();
-    //this.alunoErrors = new AlunoErrors();
+    this.turmaErros = '';
     this.startForm();
     this.turma.id = this.route.snapshot.params['id'];
     if (this.turma.id) {
@@ -51,11 +52,11 @@ export class TurmaComponent implements OnInit {
     return this.turma.id ? 'Alterar' : 'Nova';
   }
 
-  typeOfMessage(): string {
+  getMessageEnum(): MessageEnum {
     if (this.submitForm.invalid || !this.formValid) {
-      return MessageTypes.error;
+      return MessageEnum.error;
     }
-    return MessageTypes.success;
+    return MessageEnum.success;
   }
 
   newTurma() {
@@ -67,6 +68,7 @@ export class TurmaComponent implements OnInit {
   }
 
   clean() {
+    this.turmaErros = '';
     this.showMessage = false;
     this.startForm();
   }
@@ -78,8 +80,11 @@ export class TurmaComponent implements OnInit {
   }
 
   save() {
-    //this.alunoErrors = new AlunoErrors();
-    if (this.submitForm.valid) {
+    if (!this.isFormValid()) {
+      this.turmaErros = 'Informe ao menos Turma, Série e/ou Sala';
+      this.formValid = false;
+      this.showMessage = true;
+    } else if (this.submitForm.valid) {
       const turma = this.getTurmaFromForm();
       this.turmasService.save(turma).subscribe(id => {
         if (Number(id)) {
@@ -94,14 +99,23 @@ export class TurmaComponent implements OnInit {
       }, err => {
         this.formValid = false;
         this.showMessage = true;
-        err.error.errors.forEach(e => {
-          switch (e.fieldName) {
-            default:
-              break;
-          }
-        });
+        this.turmaErros = err.error.msg;
       });
     }
+  }
+
+  isFormValid(): boolean {
+    const turma: Turma = this.submitForm.value;
+    if (turma.descricao !== null && turma.descricao.trim().length > 0) {
+      return true;
+    }
+    if (turma.serie !== null && turma.serie.trim().length > 0) {
+      return true;
+    }
+    if (turma.sala !== null && turma.sala.trim().length > 0) {
+      return true;
+    }
+    return false;
   }
 
 }

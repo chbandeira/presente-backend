@@ -6,7 +6,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,10 +20,9 @@ import com.presente.backend.dto.AlunoCadastroDTO;
 import com.presente.backend.dto.AlunoDTO;
 import com.presente.backend.services.AlunoService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/alunos")
-public class AlunoController {
+public class AlunoController extends BaseController {
 
 	@Autowired
 	private AlunoService service;

@@ -1,5 +1,3 @@
-import { Turma } from "../../turmas/turma/turma.model";
-
 export class Aluno {
     id: number;
     nome: string;
@@ -8,7 +6,7 @@ export class Aluno {
     turma: string;
     serie: string;
     sala: string;
-    turno: string;
+    turno: number;
     alunoBolsista: boolean;
     urlFoto: string;
     nomeResponsavel: string;

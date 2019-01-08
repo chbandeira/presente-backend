@@ -6,11 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class TurnoPipe implements PipeTransform {
 
   transform(value: any, args?: any): any {
-    if (value === 'M') {
+    if (value === 0) {
       return 'Matutino';
-    } else if (value === 'V') {
+    } else if (value === 1) {
       return 'Vespertino';
-    } else if (value === 'N') {
+    } else if (value === 2) {
       return 'Noturno';
     }
   }

@@ -18,7 +18,7 @@ public class AlunoDTO implements Serializable {
 	private String serie;
 	private String turma;
 	private String sala;
-	private String turno;
+	private Integer turno;
 	private Integer anoLetivo;
 	private boolean alunoBolsista;
 
@@ -35,7 +35,7 @@ public class AlunoDTO implements Serializable {
 			this.serie = aluno.getTurma().getSerie();
 			this.sala = aluno.getTurma().getSala();
 			if (aluno.getTurma().getTurno() != null) {
-				this.turno = aluno.getTurma().getTurno().getSigla();
+				this.turno = aluno.getTurma().getTurno().ordinal();
 			}
 		}
 		this.anoLetivo = aluno.getAnoLetivo();
@@ -81,11 +81,11 @@ public class AlunoDTO implements Serializable {
 		this.sala = sala;
 	}
 
-	public String getTurno() {
+	public Integer getTurno() {
 		return turno;
 	}
 
-	public void setTurno(String turno) {
+	public void setTurno(Integer turno) {
 		this.turno = turno;
 	}
 

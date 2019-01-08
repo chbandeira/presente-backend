@@ -57,7 +57,7 @@ export class TurmasService {
       httpParams = httpParams.set('serie', turma.serie);
     }
     if (turma.turno) {
-      httpParams = httpParams.set('turno', turma.turno);
+      httpParams = httpParams.set('turno', turma.turno.toString());
     }
     return httpParams;
   }

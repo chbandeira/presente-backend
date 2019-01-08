@@ -5,13 +5,12 @@ import { AlunosService } from '../alunos.service';
 import { Aluno } from './aluno.model';
 import { ActivatedRoute } from '@angular/router';
 import { NgbDatePtParserFormatter } from './../../shared/formatter/ngb-date-pt-parser-formatter';
-import { MessageTypes } from '../../shared/messages/message-form/message-types';
 import { AlunoErrors } from './aluno.errors';
 import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
 import { TurmasService } from '../../turmas/turmas.service';
 import { TurmaFormatter } from '../../turmas/turma/turma.formatter';
-import { Turma } from '../../turmas/turma/turma.model';
+import { MessageEnum } from '../../shared/messages/message.enum';
 
 
 @Component({
@@ -137,7 +136,6 @@ export class AlunoComponent implements OnInit {
 
   private getAlunoFromForm(): Aluno {
     const aluno: Aluno = this.submitForm.value;
-    console.log(aluno)
     aluno.dataNascimento = this.dateFormatter.format(this.submitForm.value.dataNascimento);
     aluno.id = this.aluno.id;
     return aluno;
@@ -160,11 +158,11 @@ export class AlunoComponent implements OnInit {
     this.alunoAlreadyNew = false;
   }
 
-  typeOfMessage(): string {
+  getMessageEnum(): MessageEnum {
     if (this.submitForm.invalid || !this.formValid) {
-      return MessageTypes.error;
+      return MessageEnum.error;
     }
-    return MessageTypes.success;
+    return MessageEnum.success;
   }
 
   searchTurma = (text: Observable<string>) =>
@@ -181,5 +179,5 @@ export class AlunoComponent implements OnInit {
           }))
       ),
       tap(() => this.searching = false)
-    );
+    )
 }

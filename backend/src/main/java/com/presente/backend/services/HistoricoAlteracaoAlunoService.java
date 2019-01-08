@@ -1,6 +1,8 @@
 package com.presente.backend.services;
 
+import java.time.Year;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,7 @@ public class HistoricoAlteracaoAlunoService {
 
 	public void save(Aluno aluno, boolean inclusao) {
 		HistoricoAlteracaoAluno historico = new HistoricoAlteracaoAluno();
-		historico.setId(aluno.getId());
+		historico.setIdAluno(aluno.getId());
 		historico.setAlteracaoAluno(this.getTipo(inclusao));
 		historico.setAnoLetivo(aluno.getAnoLetivo());
 		historico.setBolsista(aluno.getBolsista());
@@ -58,6 +60,10 @@ public class HistoricoAlteracaoAlunoService {
 			historico.setTurma(aluno.getTurma().getDescricao());
 		}
 		this.repository.save(historico);
+	}
+
+	public Optional<HistoricoAlteracaoAluno> findLastByMatricula(String matricula) {
+		return repository.findFirstByMatriculaAndAnoLetivoOrderByDataUltimaAtualizacaoDesc(matricula, Year.now().getValue());
 	}
 
 }
