@@ -20,7 +20,7 @@ import com.presente.backend.domains.enums.AlteracaoAluno;
  * @author Charlles
  */
 @Entity
-public class HistoricoAlteracaoAluno extends BaseEntity {
+public class LogAlteracaoAluno extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,11 +68,11 @@ public class HistoricoAlteracaoAluno extends BaseEntity {
 
 	private String cpfResponsavel;
 
-	private String loginResponsavel;
-
 	private Boolean enviarEmailRegistro;
 	
 	private Boolean enviarMensagem;
+	
+	private Boolean ativo;
 
 	@Enumerated(EnumType.ORDINAL)
 	private AlteracaoAluno alteracaoAluno;
@@ -221,14 +221,6 @@ public class HistoricoAlteracaoAluno extends BaseEntity {
 		this.cpfResponsavel = cpfResponsavel;
 	}
 
-	public String getLoginResponsavel() {
-		return loginResponsavel;
-	}
-
-	public void setLoginResponsavel(String loginResponsavel) {
-		this.loginResponsavel = loginResponsavel;
-	}
-
 	public Boolean getEnviarEmailRegistro() {
 		return enviarEmailRegistro;
 	}
@@ -253,7 +245,7 @@ public class HistoricoAlteracaoAluno extends BaseEntity {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		HistoricoAlteracaoAluno other = (HistoricoAlteracaoAluno) obj;
+		LogAlteracaoAluno other = (LogAlteracaoAluno) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -292,6 +284,14 @@ public class HistoricoAlteracaoAluno extends BaseEntity {
 
 	public void setIdAluno(Integer idAluno) {
 		this.idAluno = idAluno;
+	}
+
+	public Boolean getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(Boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

@@ -1,6 +1,5 @@
 package com.presente.backend.domains;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,11 +29,8 @@ public class Responsavel extends BaseEntity {
 	private String telefoneCelular;
 
 	private String cpf;
-
-	private String login;
 	
-	@Column(columnDefinition = "boolean default true", insertable = true, updatable = true, nullable = false)
-	private Boolean ativo;
+	private boolean ativo = true;
 
 	public Integer getId() {
 		return id;
@@ -84,14 +80,6 @@ public class Responsavel extends BaseEntity {
 		this.cpf = cpf;
 	}
 
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
 	public String getEmail2() {
 		return email2;
 	}
@@ -100,14 +88,14 @@ public class Responsavel extends BaseEntity {
 		this.email2 = email2;
 	}
 
-	public Boolean getAtivo() {
+	public boolean isAtivo() {
 		return ativo;
 	}
 
-	public void setAtivo(Boolean ativo) {
+	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

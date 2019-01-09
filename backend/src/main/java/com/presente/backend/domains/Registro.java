@@ -1,5 +1,9 @@
 package com.presente.backend.domains;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,11 +29,20 @@ public class Registro extends BaseEntity {
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "historico_alteracao_aluno_id", nullable = false)
-	private HistoricoAlteracaoAluno historicoAlteracaoAluno;
+	@JoinColumn(name = "log_alteracao_aluno_id", nullable = false)
+	private LogAlteracaoAluno logAlteracaoAluno;
 
 	@Enumerated(EnumType.ORDINAL)
 	private TipoRegistro tipoRegistro;
+
+	public Registro() {
+	}
+
+	public Registro(LogAlteracaoAluno logAlteracaoAluno, TipoRegistro tipoRegistro, Date data) {
+		this.logAlteracaoAluno = logAlteracaoAluno;
+		this.tipoRegistro = tipoRegistro;
+		setDataUltimaAtualizacao(data);
+	}
 
 	public Integer getId() {
 		return id;
@@ -47,12 +60,12 @@ public class Registro extends BaseEntity {
 		this.tipoRegistro = tipoRegistro;
 	}
 
-	public HistoricoAlteracaoAluno getHistoricoAlteracaoAluno() {
-		return historicoAlteracaoAluno;
+	public LogAlteracaoAluno getLogAlteracaoAluno() {
+		return logAlteracaoAluno;
 	}
 
-	public void setHistoricoAlteracaoAluno(HistoricoAlteracaoAluno historicoAlteracaoAluno) {
-		this.historicoAlteracaoAluno = historicoAlteracaoAluno;
+	public void setLogAlteracaoAluno(LogAlteracaoAluno logAlteracaoAluno) {
+		this.logAlteracaoAluno = logAlteracaoAluno;
 	}
 
 	@Override
@@ -79,4 +92,17 @@ public class Registro extends BaseEntity {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, new Locale("pt", "BR"));
+		DateFormat tf = DateFormat.getTimeInstance(DateFormat.FULL, new Locale("pt", "BR"));
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.logAlteracaoAluno.getNome());
+		builder.append(" registrou ").append(this.tipoRegistro.getDescricao());
+		builder.append(" em ").append(df.format(this.getDataUltimaAtualizacao()));
+		builder.append(" às ").append(tf.format(this.getDataUltimaAtualizacao()));
+		return builder.toString();
+	}
+
 }

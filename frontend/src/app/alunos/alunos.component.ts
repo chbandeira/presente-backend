@@ -3,7 +3,7 @@ import { AlunosService } from './alunos.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { finalize, debounceTime } from 'rxjs/operators';
+import { finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-alunos',

@@ -28,7 +28,7 @@ public class AlunoDTO implements Serializable {
 	public AlunoDTO(Aluno aluno) {
 		this.id = aluno.getId();
 		this.nome = aluno.getNome();
-		this.alunoBolsista = aluno.getBolsista();
+		this.alunoBolsista = aluno.isBolsista();
 		this.matricula = aluno.getMatricula();
 		if (aluno.getTurma() != null) {
 			this.turma = aluno.getTurma().getDescricao();

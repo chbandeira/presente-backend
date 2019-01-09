@@ -1,5 +1,6 @@
 import { MessageEnum } from './../message.enum';
 import { Component, OnInit, Input } from '@angular/core';
+import { FormValidation } from '../../form-validation';
 
 @Component({
   selector: 'app-message-form',
@@ -8,9 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class MessageFormComponent implements OnInit {
 
-  @Input() showMessage: boolean;
-  @Input() messageEnum: number;
-  @Input() message: string;
+  @Input() formValidation: FormValidation;
 
   constructor() { }
 
@@ -18,14 +17,22 @@ export class MessageFormComponent implements OnInit {
   }
 
   isSuccess(): boolean {
-    return MessageEnum.success === this.messageEnum;
+    return MessageEnum.success === this.formValidation.getMessageEnum();
   }
 
   isError(): boolean {
-    return MessageEnum.error === this.messageEnum;
+    return MessageEnum.error === this.formValidation.getMessageEnum();
   }
 
   getMessage(): string {
-    return this.message === undefined ? 'Campos obrigatórios ou inválidos!' : this.message;
+    if (!this.formValidation.message) {
+      if (this.isError()) {
+        return 'Ops! Ocorreu algum erro!';
+      } else if (this.isSuccess()) {
+        return 'Salvo com sucesso!';
+      }
+    } else {
+      return this.formValidation.message;
+    }
   }
 }

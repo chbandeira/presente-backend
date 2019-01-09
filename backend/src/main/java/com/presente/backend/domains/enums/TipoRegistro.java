@@ -7,7 +7,7 @@ package com.presente.backend.domains.enums;
 public enum TipoRegistro {
 
 	ENTRADA("Entrada"),
-	SAIDA("Saida");
+	SAIDA("Saída");
 	
 	private String descricao;
 

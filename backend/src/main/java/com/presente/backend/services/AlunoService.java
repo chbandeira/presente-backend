@@ -33,7 +33,7 @@ public class AlunoService {
 	@Autowired
 	private TurmaService turmaService;
 	@Autowired
-	private HistoricoAlteracaoAlunoService historicoAlteracaoService;
+	private LogAlteracaoAlunoService historicoAlteracaoService;
 
 	@Autowired
 	private AlunoRepository repository;
@@ -54,7 +54,6 @@ public class AlunoService {
 		}
 		aluno = this.fromAlunoCadastroDTO(dto, aluno);
 		if (inclusao) {			
-			aluno.setAtivo(true);
 			aluno.setDataMatricula(new Date());
 		}
 		this.repository.save(aluno);
@@ -74,16 +73,6 @@ public class AlunoService {
 		if (alunoFound.isPresent()) {
 			throw new ValidationException(HttpStatus.BAD_REQUEST.value(), "matricula", "Matrícula já existe");
 		}
-	}
-
-	public Aluno fromDTO(AlunoCadastroDTO dto, Aluno aluno) {
-		if (aluno == null) {
-			aluno = new Aluno();
-		}
-		aluno.setNome(dto.getNome());
-		aluno.setDataNascimento(dto.getDataNascimento());
-		aluno.setUrlFoto(dto.getUrlFoto());
-		return aluno;
 	}
 
 	public Page<AlunoDTO> search(String nome, String codMatricula, Integer anoLetivo, Integer page, Integer size,
@@ -107,8 +96,8 @@ public class AlunoService {
 			aluno.setAnoLetivo(anoLetivo);
 			matcher = matcher.withMatcher("anoLetivo", exact());
 		}
-		aluno.setAtivo(true);
 		matcher = matcher.withMatcher("ativo", exact());
+		matcher = matcher.withIgnorePaths("bolsista", "enviarEmailRegistro", "enviarMensagem");
 
 		Example<Aluno> example = Example.of(aluno, matcher);
 
@@ -118,7 +107,6 @@ public class AlunoService {
 	public Aluno fromAlunoCadastroDTO(AlunoCadastroDTO dto, Aluno aluno) {
 		if (aluno == null) {
 			aluno = new Aluno();
-			// TODO set anoletivo conforme data cadastrada
 			aluno.setAnoLetivo(Year.now().getValue());
 		}
 		aluno.setId(dto.getId());
@@ -152,5 +140,6 @@ public class AlunoService {
 		}
 		aluno.get().setAtivo(false);
 		this.repository.save(aluno.get());
+		this.historicoAlteracaoService.save(aluno.get(), false);
 	}
 }

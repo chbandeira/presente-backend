@@ -13,13 +13,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.presente.backend.domains.Turma;
 import com.presente.backend.domains.enums.Turno;
 import com.presente.backend.dto.AlunoCadastroDTO;
 import com.presente.backend.dto.TurmaDTO;
 import com.presente.backend.exceptions.ObjectNotFoundException;
+import com.presente.backend.exceptions.StandardValidationException;
 import com.presente.backend.repositories.TurmaRepository;
 
 @Service
@@ -30,10 +30,8 @@ public class TurmaService {
 
 	public Turma fromAlunoCadastroDto(AlunoCadastroDTO dto) {
 		Turma turma = null;
-		if ((dto.getTurma() == null || dto.getTurma().isBlank()) 
-				&& (dto.getSerie() == null || dto.getSerie().isBlank()) 
-				&& (dto.getSala() == null || dto.getSala().isBlank()) 
-				&& (dto.getTurno() == null)) {
+		if ((dto.getTurma() == null || dto.getTurma().isBlank()) && (dto.getSerie() == null || dto.getSerie().isBlank())
+				&& (dto.getSala() == null || dto.getSala().isBlank()) && (dto.getTurno() == null)) {
 			return null;
 		}
 		Example<Turma> example = this
@@ -43,7 +41,6 @@ public class TurmaService {
 			turma = turmaFound.get();
 		} else {
 			turma = new Turma();
-			turma.setAtivo(true);
 		}
 		if (dto.getTurma() != null && !dto.getTurma().isBlank()) {
 			turma.setDescricao(dto.getTurma());
@@ -77,7 +74,6 @@ public class TurmaService {
 		if (dto.getTurno() != null) {
 			turma.setTurno(Turno.toEnum(dto.getTurno()));
 		}
-		turma.setAtivo(true);
 		turma.setDataUltimaAtualizacao(new Date());
 		return turma;
 	}
@@ -107,7 +103,6 @@ public class TurmaService {
 			turma.setTurno(Turno.toEnum(dto.getTurno()));
 			matcher = matcher.withMatcher("turno", exact());
 		}
-		turma.setAtivo(true);
 		matcher = matcher.withMatcher("ativo", exact());
 		return Example.of(turma, matcher);
 	}
@@ -127,7 +122,6 @@ public class TurmaService {
 		if (dto.getTurno() != null) {
 			turma.setTurno(Turno.toEnum(dto.getTurno()));
 		}
-		turma.setAtivo(true);
 		matcher = matcher.withMatcher("descricao", exact());
 		matcher = matcher.withMatcher("serie", exact());
 		matcher = matcher.withMatcher("sala", exact());
@@ -137,8 +131,8 @@ public class TurmaService {
 		return Example.of(turma, matcher);
 	}
 
-	@Transactional
 	public Integer save(TurmaDTO dto) {
+		this.validate(dto);
 		Turma turma = null;
 		if (dto.getId() != null) {
 			Optional<Turma> turmaFound = this.repository.findById(dto.getId());
@@ -147,9 +141,16 @@ public class TurmaService {
 			}
 		}
 		turma = this.fromDto(dto, turma);
-		turma.setAtivo(true);
 		this.repository.save(turma);
 		return turma.getId();
+	}
+
+	private void validate(TurmaDTO dto) {
+		if ((dto.getDescricao() == null || dto.getDescricao().isBlank())
+				&& (dto.getSerie() == null || dto.getSerie().isBlank())
+				&& (dto.getSala() == null || dto.getSala().isBlank())) {
+			throw new StandardValidationException("Informe ao menos Turma, Série e/ou Sala");
+		}
 	}
 
 	public TurmaDTO findById(Integer id) {
@@ -160,7 +161,6 @@ public class TurmaService {
 		return new TurmaDTO(turma.get());
 	}
 
-	@Transactional
 	public void disableById(Integer id) {
 		Optional<Turma> turma = this.repository.findById(id);
 		if (turma.isEmpty()) {

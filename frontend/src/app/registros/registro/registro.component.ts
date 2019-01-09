@@ -1,9 +1,9 @@
-import { MessageEnum } from './../../shared/messages/message.enum';
-import { Component, OnInit, OnChanges, SimpleChanges, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RegistrosService } from '../registros.service';
 import { RegistroEnum } from './registro.enum';
+import { FormValidation } from './../../shared/form-validation';
 
 @Component({
   selector: 'app-registro',
@@ -12,12 +12,11 @@ import { RegistroEnum } from './registro.enum';
 })
 export class RegistroComponent implements OnInit, DoCheck {
 
+  formValidation = new FormValidation();
   tipoRegistro: string;
   title = 'Entrada';
   submitForm: FormGroup;
-  matriculaError: string;
-  showMessage: boolean;
-  formValid: boolean;
+  loading: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -30,47 +29,38 @@ export class RegistroComponent implements OnInit, DoCheck {
       matricula: ['']
     });
   }
-
+    
   ngDoCheck()	{
     if (this.tipoRegistro !== this.route.snapshot.params['tipoRegistro']) {
       this.tipoRegistro = this.route.snapshot.params['tipoRegistro'];
       this.submitForm = this.fb.group({
         matricula: ['']
       });
-      this.formValid = false;
-      this.showMessage = false;
-      this.matriculaError = '';
+      this.formValidation.reset();
     }
     this.title = this.route.snapshot.params['tipoRegistro'] === RegistroEnum[RegistroEnum.saida] ? 'Saída' : 'Entrada';
   }
 
   registrar() {
+    this.loading = true;
     if (!this.submitForm.value.matricula) {
-      this.matriculaError = 'Informe a matrícula para registro';
-      this.formValid = false;
+      this.formValidation.invalidate('Informe a matrícula para registro');
+      this.loading = false;
       return;
     }
     this.registrosService.registrar(this.route.snapshot.params['tipoRegistro'], this.submitForm.value.matricula)
       .subscribe(() => {
-        this.showMessage = true;
-        this.formValid = true;
+        this.formValidation.validate('Registrado!');
+        this.loading = false;
       }, err => {
-        this.formValid = false;
-        this.showMessage = true;
-        this.matriculaError = err.error.msg;
+        this.formValidation.invalidate(err.error.msg);
+        this.loading = false;
       });
   }
 
   clean() {
-    this.matriculaError = '';
-    this.formValid = false;
-  }
-
-  getMessageEnum(): MessageEnum {
-    if (this.submitForm.invalid || !this.formValid) {
-      return MessageEnum.error;
-    }
-    return MessageEnum.success;
+    this.formValidation.reset();
+    this.loading = false;
   }
 
 }

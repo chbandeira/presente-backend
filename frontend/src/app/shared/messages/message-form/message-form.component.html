@@ -1,6 +1,6 @@
-<div *ngIf="showMessage && isSuccess()" class="alert alert-success" role="alert">
-  <i class="fas fa-check-circle"></i> Salvo com sucesso!
+<div *ngIf="formValidation?.showMessage && isSuccess()" class="alert alert-success" role="alert">
+  <i class="fas fa-check-circle"></i> {{ getMessage() }}
 </div>
-<div *ngIf="showMessage && isError()" class="alert alert-danger" role="alert">
+<div *ngIf="formValidation?.showMessage && isError()" class="alert alert-danger" role="alert">
   <i class="fas fa-times-circle"></i> {{ getMessage() }}
 </div>

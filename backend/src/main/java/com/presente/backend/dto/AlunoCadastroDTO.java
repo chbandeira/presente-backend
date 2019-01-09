@@ -59,7 +59,7 @@ public class AlunoCadastroDTO implements Serializable {
 		this.nome = aluno.getNome();
 		this.dataNascimento = aluno.getDataNascimento();
 		this.urlFoto = aluno.getUrlFoto();
-		this.alunoBolsista = aluno.getBolsista();
+		this.alunoBolsista = aluno.isBolsista();
 		this.matricula = aluno.getMatricula();
 		if (aluno.getTurma() != null) {
 			this.turma = aluno.getTurma().getDescricao();
@@ -69,8 +69,8 @@ public class AlunoCadastroDTO implements Serializable {
 				this.turno = aluno.getTurma().getTurno().ordinal();
 			}
 		}
-		this.enviarEmail = aluno.getEnviarEmailRegistro();
-		this.enviarMensagem = aluno.getEnviarMensagem();
+		this.enviarEmail = aluno.isEnviarEmailRegistro();
+		this.enviarMensagem = aluno.isEnviarMensagem();
 		this.anoLetivo = aluno.getAnoLetivo();
 		if (aluno.getResponsavel() != null) {
 			this.cpf = aluno.getResponsavel().getCpf();

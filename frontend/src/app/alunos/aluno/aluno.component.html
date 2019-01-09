@@ -10,14 +10,14 @@
           <h5>Aluno</h5>
           <div class="form-group">
             <label for="nomeAluno">Nome</label>
-            <input type="text" class="form-control" [class.is-invalid]="alunoErrors.nome" formControlName="nome" id="nomeAluno">
+            <input type="text" class="form-control" [class.is-invalid]="alunoErrors.nome" formControlName="nome" maxlength="100" id="nomeAluno">
             <small class="invalid-feedback">{{alunoErrors.nome}}</small>
             <small class="form-text text-muted">Campo obrigatório</small>
           </div>
           <div class="form-row">
             <div class="form-group col-sm-6">
               <label for="matricula">Matrícula</label>
-              <input type="text" class="form-control" [class.is-invalid]="alunoErrors.matricula" formControlName="matricula"
+              <input type="text" class="form-control" [class.is-invalid]="alunoErrors.matricula" formControlName="matricula" maxlength="20"
                 id="matricula">
               <small class="invalid-feedback">{{alunoErrors.matricula}}</small>
               <small class="form-text text-muted">Campo obrigatório</small>
@@ -58,15 +58,15 @@
           <div class="form-row">
             <div class="form-group col-sm-2">
               <label for="turma">Turma</label>
-              <input type="text" class="form-control" formControlName="turma" id="turma">
+              <input type="text" class="form-control" formControlName="turma" maxlength="5" id="turma">
             </div>
             <div class="form-group col-sm-2">
               <label for="serie">Série</label>
-              <input type="text" class="form-control" formControlName="serie" id="serie">
+              <input type="text" class="form-control" formControlName="serie" maxlength="5" id="serie">
             </div>
             <div class="form-group col-sm-2">
               <label for="sala">Sala</label>
-              <input type="text" class="form-control" formControlName="sala" id="sala">
+              <input type="text" class="form-control" formControlName="sala" maxlength="5" id="sala">
             </div>
             <div class="form-group col-sm-6">
               <label for="turnoSelect">Turno</label>
@@ -90,7 +90,7 @@
               <label class="form-check-label" for="alunoBolsistaSim">Sim</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" [checked]="aluno.alunoBolsista === false || !editMode"
+              <input class="form-check-input" type="radio" [checked]="aluno.alunoBolsista === false || !formValidation.editMode"
                 formControlName="alunoBolsista" id="alunoBolsistaNao" value="false">
               <label class="form-check-label" for="alunoBolsistaNao">Não</label>
             </div>
@@ -104,11 +104,11 @@
           <h5>Responsável</h5>
           <div class="form-group">
             <label for="nomeResponsavel">Nome</label>
-            <input type="text" class="form-control" formControlName="nomeResponsavel" id="nomeResponsavel">
+            <input type="text" class="form-control" formControlName="nomeResponsavel" maxlength="100" id="nomeResponsavel">
           </div>
           <div class="form-group">
             <label for="email">Email </label>
-            <input type="text" class="form-control" [class.is-invalid]="alunoErrors.email" formControlName="email" id="email">
+            <input type="text" class="form-control" [class.is-invalid]="alunoErrors.email" formControlName="email" maxlength="200" id="email">
             <small class="invalid-feedback">{{alunoErrors.email}}</small>
           </div>
           <div class="form-group">
@@ -119,7 +119,7 @@
               </a>
             </label>
             <div [class.collapse]="!aluno.email2" id="collapseEmailAdicional">
-              <input type="text" class="form-control" [class.is-invalid]="alunoErrors.email2" formControlName="email2"
+              <input type="text" class="form-control" [class.is-invalid]="alunoErrors.email2" formControlName="email2" maxlength="200"
                 id="email2" placeholder="Informe um email adicional">
               <small class="invalid-feedback">{{alunoErrors.email2}}</small>
             </div>
@@ -128,16 +128,16 @@
             <div class="form-group col-sm-4">
               <label for="cpf">CPF</label>
               <input type="text" class="form-control" [class.is-invalid]="alunoErrors.cpf" formControlName="cpf" id="cpf"
-                [textMask]="{mask: cpfMask}">
+                [textMask]="{mask: masks.CPF}">
               <small class="invalid-feedback">{{alunoErrors.cpf}}</small>
             </div>
             <div class="form-group col-sm-4">
               <label for="telefoneFixo">Telefone Fixo</label>
-              <input type="text" class="form-control" formControlName="telefoneFixo" id="telefoneFixo" [textMask]="{mask: telefoneFixoMask}">
+              <input type="text" class="form-control" formControlName="telefoneFixo" id="telefoneFixo" [textMask]="{mask: masks.telefoneFixo}">
             </div>
             <div class="form-group col-sm-4">
               <label for="telefoneCelular">Telefone Celular</label>
-              <input type="text" class="form-control" formControlName="telefoneCelular" id="telefoneCelular" [textMask]="{mask: telefoneCelularMask}">
+              <input type="text" class="form-control" formControlName="telefoneCelular" id="telefoneCelular" [textMask]="{mask: masks.telefoneCelular}">
             </div>
           </div>
           <div class="form-group">
@@ -148,7 +148,7 @@
               <label class="form-check-label" for="enviarEmailSim">Sim</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" [checked]="aluno.enviarEmail === false || !editMode"
+              <input class="form-check-input" type="radio" [checked]="aluno.enviarEmail === false || !formValidation.editMode"
                 formControlName="enviarEmail" id="enviarEmailNao" value="false">
               <label class="form-check-label" for="enviarEmailNao">Não</label>
             </div>
@@ -159,16 +159,16 @@
     </div>
   </div>
 
-  <app-message-form [showMessage]="showMessage" [messageEnum]="getMessageEnum()"></app-message-form>
+  <app-message-form [formValidation]="formValidation"></app-message-form>
 
   <div class="d-flex justify-content-center m-3">
     <a [routerLink]="[ '/alunos' ]" class="btn btn-secondary mr-2"><i class="fas fa-folder-open"></i> Cadastro</a>
 
-    <ng-container *ngIf="editMode; then edit; else new"></ng-container>
+    <ng-container *ngIf="formValidation.editMode; then edit; else new"></ng-container>
     <ng-template #edit>
-      <a *ngIf="!alunoAlreadyNew" class="btn btn-success mr-2" [routerLink]="[ '/alunos/cadastro' ]"><i class="fas fa-plus"></i>
+      <a *ngIf="!formValidation.alreadyNew" class="btn btn-success mr-2" [routerLink]="[ '/alunos/cadastro' ]"><i class="fas fa-plus"></i>
         Novo Aluno</a>
-      <button *ngIf="alunoAlreadyNew" (click)="newAluno()" class="btn btn-success mr-2"><i class="fas fa-plus"></i>
+      <button *ngIf="formValidation.alreadyNew" (click)="newAluno()" class="btn btn-success mr-2"><i class="fas fa-plus"></i>
         Novo Aluno</button>
     </ng-template>
     <ng-template #new>

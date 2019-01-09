@@ -43,24 +43,20 @@ public class Aluno extends BaseEntity {
 	private Integer anoLetivo;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(columnDefinition = "timestamp DEFAULT now()", insertable = true, updatable = true, nullable = false)
+	@Column(columnDefinition = "timestamp DEFAULT now()", insertable = true, updatable = false, nullable = false)
 	private Date dataMatricula;
 
-	@Column(columnDefinition = "boolean default false", insertable = true, updatable = true, nullable = false)
-	private Boolean bolsista;
+	private boolean bolsista = true;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinColumn(name = "responsavel_id")
 	private Responsavel responsavel;
 
-	@Column(columnDefinition = "boolean default true", insertable = true, updatable = true, nullable = false)
-	private Boolean enviarEmailRegistro;
+	private boolean enviarEmailRegistro;
 	
-	@Column(columnDefinition = "boolean default true", insertable = true, updatable = true, nullable = false)
-	private Boolean enviarMensagem;
+	private boolean enviarMensagem;
 
-	@Column(columnDefinition = "boolean default true", insertable = true, updatable = true, nullable = false)
-	private Boolean ativo;
+	private boolean ativo = true;
 	
 	public Aluno() {
 	}
@@ -87,14 +83,6 @@ public class Aluno extends BaseEntity {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
 	}
 
 	public String getUrlFoto() {
@@ -137,11 +125,11 @@ public class Aluno extends BaseEntity {
 		this.dataMatricula = dataMatricula;
 	}
 
-	public Boolean getBolsista() {
+	public boolean isBolsista() {
 		return bolsista;
 	}
 
-	public void setBolsista(Boolean bolsista) {
+	public void setBolsista(boolean bolsista) {
 		this.bolsista = bolsista;
 	}
 
@@ -153,20 +141,28 @@ public class Aluno extends BaseEntity {
 		this.responsavel = responsavel;
 	}
 
-	public Boolean getEnviarEmailRegistro() {
+	public boolean isEnviarEmailRegistro() {
 		return enviarEmailRegistro;
 	}
 
-	public void setEnviarEmailRegistro(Boolean enviarEmailRegistro) {
+	public void setEnviarEmailRegistro(boolean enviarEmailRegistro) {
 		this.enviarEmailRegistro = enviarEmailRegistro;
 	}
 
-	public Boolean getEnviarMensagem() {
+	public boolean isEnviarMensagem() {
 		return enviarMensagem;
 	}
 
-	public void setEnviarMensagem(Boolean enviarMensagem) {
+	public void setEnviarMensagem(boolean enviarMensagem) {
 		this.enviarMensagem = enviarMensagem;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

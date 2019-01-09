@@ -1,6 +1,5 @@
-import { Masks } from './../../shared/formatter/masks';
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AlunosService } from '../alunos.service';
 import { Aluno } from './aluno.model';
 import { ActivatedRoute } from '@angular/router';
@@ -10,8 +9,8 @@ import { Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap, switchMap, catchError } from 'rxjs/operators';
 import { TurmasService } from '../../turmas/turmas.service';
 import { TurmaFormatter } from '../../turmas/turma/turma.formatter';
-import { MessageEnum } from '../../shared/messages/message.enum';
-
+import { Masks } from './../../shared/formatter/masks';
+import { FormValidation } from '../../shared/form-validation';
 
 @Component({
   selector: 'app-aluno',
@@ -20,23 +19,16 @@ import { MessageEnum } from '../../shared/messages/message.enum';
 })
 export class AlunoComponent implements OnInit {
 
+  formValidation = new FormValidation();
   submitForm: FormGroup;
   fileToUpload: File;
   aluno: Aluno;
   alunoErrors: AlunoErrors;
-
-  editMode = false;
-  alunoAlreadyNew = false;
-  showMessage = false;
-  formValid = false;
+  masks = Masks;
 
   turmaFormatter: TurmaFormatter;
   searching = false;
   searchFailed = false;
-
-  telefoneCelularMask = Masks.telefoneCelular;
-  telefoneFixoMask = Masks.telefoneFixo;
-  cpfMask = Masks.CPF;
 
   constructor(
     private alunosService: AlunosService,
@@ -46,12 +38,14 @@ export class AlunoComponent implements OnInit {
     private dateFormatter: NgbDatePtParserFormatter) { }
 
   ngOnInit() {
+    this.formValidation = new FormValidation();
     this.aluno = new Aluno();
     this.alunoErrors = new AlunoErrors();
     this.startForm();
     this.aluno.id = this.route.snapshot.params['id'];
     if (this.aluno.id) {
-      this.editMode = true;
+      this.formValidation.editMode = true;
+      this.formValidation.alreadyNew = false;
       this.alunosService.getAluno(this.aluno.id).subscribe(a => {
         this.aluno = a;
         this.startForm();
@@ -61,7 +55,7 @@ export class AlunoComponent implements OnInit {
 
   private startForm() {
     this.submitForm = this.formBuilder.group({
-      nome: [this.aluno.nome],
+      nome: [this.aluno.nome, Validators.required],
       dataNascimento: [this.dateFormatter.parse(this.aluno.dataNascimento)],
       matricula: [this.aluno.matricula],
       serie: [this.aluno.serie],
@@ -94,16 +88,13 @@ export class AlunoComponent implements OnInit {
         if (Number(id)) {
           this.submitForm.value.dataNascimento = this.dateFormatter.parse(this.aluno.dataNascimento);
           if (!this.aluno.id) {
-            this.alunoAlreadyNew = true;
+            this.formValidation.alreadyNew = true;
           }
           this.aluno.id = id;
-          this.editMode = true;
-          this.formValid = true;
-          this.showMessage = true;
+          this.formValidation.validate();
         }
       }, err => {
-        this.formValid = false;
-        this.showMessage = true;
+        this.formValidation.invalidate(err.error.msg);
         if (err.error.errors) {
           err.error.errors.forEach(e => {
             switch (e.fieldName) {
@@ -146,23 +137,14 @@ export class AlunoComponent implements OnInit {
   }
 
   clean() {
-    this.showMessage = false;
     this.startForm();
+    this.formValidation.reset();
   }
 
   newAluno() {
     this.aluno = new Aluno();
     this.startForm();
-    this.showMessage = false;
-    this.editMode = false;
-    this.alunoAlreadyNew = false;
-  }
-
-  getMessageEnum(): MessageEnum {
-    if (this.submitForm.invalid || !this.formValid) {
-      return MessageEnum.error;
-    }
-    return MessageEnum.success;
+    this.formValidation.reset();
   }
 
   searchTurma = (text: Observable<string>) =>

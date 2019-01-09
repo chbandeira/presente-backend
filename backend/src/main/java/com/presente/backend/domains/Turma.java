@@ -1,6 +1,5 @@
 package com.presente.backend.domains;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,8 +23,7 @@ public class Turma extends BaseEntity {
 
 	private String descricao;
 
-	@Column(columnDefinition = "boolean default true", insertable = true, updatable = true, nullable = false)
-	private Boolean ativo;
+	private boolean ativo = true;
 
 	private String serie;
 
@@ -65,14 +63,6 @@ public class Turma extends BaseEntity {
 		this.descricao = descricao;
 	}
 
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
-
 	public String getSerie() {
 		return serie;
 	}
@@ -95,6 +85,14 @@ public class Turma extends BaseEntity {
 
 	public void setTurno(Turno turno) {
 		this.turno = turno;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override
