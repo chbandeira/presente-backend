@@ -25,7 +25,7 @@ public class TurmaController extends BaseController {
 	@Autowired
 	public TurmaService service;
 
-	@GetMapping("/search")
+	@GetMapping
 	public Page<TurmaDTO> findByDescricao(
 			@RequestParam(value = "descricao", defaultValue = "") String descricao,
 			@RequestParam(value = "serie", defaultValue = "") String serie,

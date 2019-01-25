@@ -27,7 +27,7 @@ public class AlunoController extends BaseController {
 	@Autowired
 	private AlunoService service;
 
-	@GetMapping("/search")
+	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
 	public Page<AlunoDTO> search(
 			@RequestParam(value = "nome", defaultValue = "") String nome,

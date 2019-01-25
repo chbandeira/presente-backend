@@ -29,7 +29,7 @@ export class AlunosService {
     if (aluno) {
       httpParams = this.setHttpParamsToSearch(aluno, httpParams);
     }
-    return this.http.get<PaginationResponse>(url + '/search', {
+    return this.http.get<PaginationResponse>(url, {
       params: httpParams
     });
   }

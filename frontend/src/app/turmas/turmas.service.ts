@@ -26,7 +26,7 @@ export class TurmasService {
     }
 
     const httpParams = new HttpParams().set('descricao', term);
-    return this.http.get<any>(url + '/search', {
+    return this.http.get<any>(url, {
       params: httpParams
     }).pipe(
       map(x => x['content'])
@@ -41,7 +41,7 @@ export class TurmasService {
     if (turma) {
       httpParams = this.setHttpParamsToSearch(turma, httpParams);
     }
-    return this.http.get<PaginationResponse>(url + '/search', {
+    return this.http.get<PaginationResponse>(url, {
       params: httpParams
     });
   }
