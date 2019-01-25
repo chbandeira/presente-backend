@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Pagination, Page } from '../shared/pagination/pagination.model';
+import { Pagination, PaginationResponse } from '../shared/pagination/pagination.model';
 import { PaginationService } from '../shared/pagination/pagination.service';
 
 const url = '/api/turmas';
@@ -33,7 +33,7 @@ export class TurmasService {
     );
   }
 
-  search(turma?: Turma, pagination?: Pagination): Observable<Page> {
+  search(turma?: Turma, pagination?: Pagination): Observable<PaginationResponse> {
     let httpParams = new HttpParams();
     if (pagination) {
       httpParams = this.paginationService.getHttpParamsToSearch(pagination);
@@ -41,7 +41,7 @@ export class TurmasService {
     if (turma) {
       httpParams = this.setHttpParamsToSearch(turma, httpParams);
     }
-    return this.http.get<Page>(url + '/search', {
+    return this.http.get<PaginationResponse>(url + '/search', {
       params: httpParams
     });
   }

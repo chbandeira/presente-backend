@@ -55,7 +55,7 @@ export class AlunoComponent implements OnInit {
 
   private startForm() {
     this.submitForm = this.formBuilder.group({
-      nome: [this.aluno.nome, Validators.required],
+      nome: [this.aluno.nome],
       dataNascimento: [this.dateFormatter.parse(this.aluno.dataNascimento)],
       matricula: [this.aluno.matricula],
       serie: [this.aluno.serie],
@@ -91,7 +91,7 @@ export class AlunoComponent implements OnInit {
             this.formValidation.alreadyNew = true;
           }
           this.aluno.id = id;
-          this.formValidation.validate();
+          this.formValidation.validate('Aluno salvo com sucesso!');
         }
       }, err => {
         this.formValidation.invalidate(err.error.msg);

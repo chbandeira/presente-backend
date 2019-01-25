@@ -12,10 +12,16 @@ import com.presente.backend.domains.Aluno;
 import com.presente.backend.domains.LogAlteracaoAluno;
 import com.presente.backend.domains.Registro;
 import com.presente.backend.domains.enums.TipoRegistro;
+import com.presente.backend.dto.RegistroDTO;
 import com.presente.backend.exceptions.StandardValidationException;
 import com.presente.backend.repositories.AlunoRepository;
 import com.presente.backend.repositories.RegistroRepository;
 
+
+/**
+ * @author Charlles Bandeira
+ *
+ */
 @Service
 public class RegistroService {
 
@@ -29,23 +35,45 @@ public class RegistroService {
 
 	@Autowired
 	private LogAlteracaoAlunoService logAlteracaoAlunoService;
-	
+
 	@Autowired
 	private LogEnvioEmailService logEnvioEmailService;
-	
+
 	@Autowired
 	private AlunoRepository alunoRepository;
 
-	public void registrar(String matricula, TipoRegistro tipo) {
-		Optional<LogAlteracaoAluno> logAlteracaoAluno = this.logAlteracaoAlunoService.findByMatriculaAtiva(matricula);
-		Optional<Aluno> aluno = this.alunoRepository.findById(logAlteracaoAluno.get().getIdAluno());
-		if (aluno.get().isAtivo() && logAlteracaoAluno.isPresent()) {
-			Registro registro = new Registro(logAlteracaoAluno.get(), tipo, new Date());
-			this.repository.save(registro);
-			this.sendEmail(logAlteracaoAluno.get(), registro);
+	public RegistroDTO registrar(RegistroDTO dto) {
+		Optional<LogAlteracaoAluno> logAlteracaoAluno = this.logAlteracaoAlunoService.findByMatriculaAtiva(dto.getMatricula());
+		if (logAlteracaoAluno.isPresent()) {
+			Optional<Aluno> aluno = this.alunoRepository.findById(logAlteracaoAluno.get().getIdAluno());
+			if (aluno.get().isAtivo()) {
+				Registro registro = new Registro(
+						logAlteracaoAluno.get(), 
+						TipoRegistro.toEnum(dto.getTipoRegistro()), 
+						new Date());
+				this.repository.save(registro);
+				this.sendEmail(logAlteracaoAluno.get(), registro);
+				dto.setMessageRetorno(this.getMessageRetornoRegistro(logAlteracaoAluno.get()));
+			} else {
+				throw new StandardValidationException("Matrícula excluída anteriormente!");
+			}
 		} else {
-			throw new StandardValidationException("Matrícula não encontrada");
+			throw new StandardValidationException("Matrícula não encontrada!");
 		}
+		return dto;
+	}
+
+	private String getMessageRetornoRegistro(LogAlteracaoAluno logAlteracaoAluno) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(logAlteracaoAluno.getNome()).append(", Matrícula ").append(logAlteracaoAluno.getMatricula());
+		sb.append(" registrada com sucesso!");
+		if (logAlteracaoAluno.getEnviarEmailRegistro()) {			
+			sb.append(" Um email será enviado para o responsável.");
+		}
+		if (logAlteracaoAluno.getEnviarMensagem()) {			
+			sb.append(" Uma mensagem será enviada para o responsável.");
+		}
+		return sb.toString();
 	}
 
 	private void sendEmail(LogAlteracaoAluno historico, Registro registro) {
@@ -56,7 +84,7 @@ public class RegistroService {
 				} catch (Exception e) {
 					this.logEnvioEmailService.save(registro, e.getMessage());
 					LOG.error(e.getMessage());
-				} finally {					
+				} finally {
 					this.repository.save(registro);
 				}
 			}).start();

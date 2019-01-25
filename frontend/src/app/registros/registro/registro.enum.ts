@@ -1,4 +1,4 @@
 export enum RegistroEnum {
-    entrada,
-    saida
+    entrada = 1,
+    saida = 2
 }

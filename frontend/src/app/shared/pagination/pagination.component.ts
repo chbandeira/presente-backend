@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Page } from './pagination.model';
+import { PaginationResponse } from './pagination.model';
 
 @Component({
   selector: 'app-pagination',
@@ -8,21 +8,21 @@ import { Page } from './pagination.model';
 })
 export class PaginationComponent implements OnInit {
 
-  @Input() page: Page;
+  @Input() paginationResponse: PaginationResponse;
   @Output() eventPage = new EventEmitter<number>();
+  currentPage: number;
+  previousPage: number;
 
   constructor() { }
 
   ngOnInit() {
+    this.currentPage = this.paginationResponse.number + 1;
   }
 
-  createArray(num: number) {
-    return Array.from({length: num}, (x, i) => i);
-  }
-
-  emitPage(numPage: number) {
-    if (this.page.number !== numPage) {
-      this.eventPage.emit(numPage);
+  emitPage(page: number) {
+    if (page !== this.previousPage) {
+      this.previousPage = page;
+      this.eventPage.emit(page - 1);
     }
   }
 

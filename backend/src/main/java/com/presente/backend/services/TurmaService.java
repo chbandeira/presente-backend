@@ -22,6 +22,11 @@ import com.presente.backend.exceptions.ObjectNotFoundException;
 import com.presente.backend.exceptions.StandardValidationException;
 import com.presente.backend.repositories.TurmaRepository;
 
+
+/**
+ * @author Charlles Bandeira
+ *
+ */
 @Service
 public class TurmaService {
 
@@ -149,14 +154,14 @@ public class TurmaService {
 		if ((dto.getDescricao() == null || dto.getDescricao().isBlank())
 				&& (dto.getSerie() == null || dto.getSerie().isBlank())
 				&& (dto.getSala() == null || dto.getSala().isBlank())) {
-			throw new StandardValidationException("Informe ao menos Turma, Série e/ou Sala");
+			throw new StandardValidationException("Informe ao menos Turma, Série e/ou Sala!");
 		}
 	}
 
 	public TurmaDTO findById(Integer id) {
 		Optional<Turma> turma = this.repository.findById(id);
 		if (turma.isEmpty()) {
-			throw new ObjectNotFoundException("Turma não encontrada");
+			throw new ObjectNotFoundException("Turma não encontrada!");
 		}
 		return new TurmaDTO(turma.get());
 	}
@@ -164,7 +169,7 @@ public class TurmaService {
 	public void disableById(Integer id) {
 		Optional<Turma> turma = this.repository.findById(id);
 		if (turma.isEmpty()) {
-			throw new ObjectNotFoundException("Turma não encontrada");
+			throw new ObjectNotFoundException("Turma não encontrada!");
 		}
 		turma.get().setAtivo(false);
 		this.repository.save(turma.get());

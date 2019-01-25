@@ -84,7 +84,7 @@ export class TurmaComponent implements OnInit, OnDestroy {
             this.formValidation.alreadyNew = true;
           }
           this.turma.id = id;
-          this.formValidation.validate();
+          this.formValidation.validate('Turma salva com sucesso!');
         }
       }, err => {
         this.formValidation.invalidate(err.error.msg);

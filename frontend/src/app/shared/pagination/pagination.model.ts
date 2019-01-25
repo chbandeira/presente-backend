@@ -5,7 +5,7 @@ class Pagination {
     orderBy: string;
 }
 
-interface Page {
+interface PaginationResponse {
     content: any;
     totalElements: number;
     totalPages: number;
@@ -15,4 +15,4 @@ interface Page {
     empty: boolean;
 }
 
-export { Pagination, Page };
+export { Pagination, PaginationResponse };

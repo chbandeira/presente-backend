@@ -10,6 +10,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+
+/**
+ * @author Charlles Bandeira
+ *
+ */
 @Service
 public class SmtpEmailService extends AbstractEmailService {
 
@@ -26,7 +31,7 @@ public class SmtpEmailService extends AbstractEmailService {
 		LOG.info("Enviando email...");
 		this.mailSender.send(msg);
 		LOG.info(msg.toString());
-		LOG.info("Email enviado");
+		LOG.info("Email enviado.");
 	}
 
 	@Override
@@ -34,7 +39,7 @@ public class SmtpEmailService extends AbstractEmailService {
 		LOG.info("Enviando email HTML...");
 		this.javaMailSender.send(msg);
 		LOG.info(msg.toString());
-		LOG.info("Email enviado");
+		LOG.info("Email enviado.");
 	}
 
 }

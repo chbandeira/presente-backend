@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { TurmasService } from './turmas.service';
 import { Observable } from 'rxjs';
-import { Page, Pagination } from '../shared/pagination/pagination.model';
+import { PaginationResponse, Pagination } from '../shared/pagination/pagination.model';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -13,7 +13,7 @@ import { finalize } from 'rxjs/operators';
 export class TurmasComponent implements OnInit {
 
   searchForm: FormGroup;
-  turmasPagination: Observable<Page>;
+  turmasPagResponse: Observable<PaginationResponse>;
   loading: boolean;
 
   constructor(private formBuilder: FormBuilder, private turmasService: TurmasService) { }
@@ -26,14 +26,14 @@ export class TurmasComponent implements OnInit {
       turno: ['']
     });
     this.loading = true;
-    this.turmasPagination = this.turmasService.search().pipe(
+    this.turmasPagResponse = this.turmasService.search().pipe(
       finalize(() => this.loading = false)
     );
   }
 
   search() {
     this.loading = true;
-    this.turmasPagination = this.turmasService.search(this.searchForm.value).pipe(
+    this.turmasPagResponse = this.turmasService.search(this.searchForm.value).pipe(
       finalize(() => this.loading = false)
     );
   }
@@ -42,7 +42,7 @@ export class TurmasComponent implements OnInit {
     const pagination: Pagination = new Pagination();
     pagination.page = event;
     this.loading = true;
-    this.turmasPagination = this.turmasService.search(this.searchForm.value, pagination).pipe(
+    this.turmasPagResponse = this.turmasService.search(this.searchForm.value, pagination).pipe(
       finalize(() => this.loading = false)
     );
   }

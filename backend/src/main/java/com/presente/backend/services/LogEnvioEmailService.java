@@ -7,6 +7,11 @@ import com.presente.backend.domains.LogEnvioEmail;
 import com.presente.backend.domains.Registro;
 import com.presente.backend.repositories.LogEnvioEmailRepository;
 
+
+/**
+ * @author Charlles Bandeira
+ *
+ */
 @Service
 public class LogEnvioEmailService {
 	

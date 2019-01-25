@@ -1,9 +1,10 @@
-import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { RegistrosService } from '../registros.service';
 import { RegistroEnum } from './registro.enum';
 import { FormValidation } from './../../shared/form-validation';
+import { Registro } from './registro.model';
 
 @Component({
   selector: 'app-registro',
@@ -25,17 +26,19 @@ export class RegistroComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.tipoRegistro = this.route.snapshot.params['tipoRegistro'];
+    this.startForm();
+  }
+
+  private startForm() {
     this.submitForm = this.fb.group({
       matricula: ['']
     });
   }
-    
+
   ngDoCheck()	{
     if (this.tipoRegistro !== this.route.snapshot.params['tipoRegistro']) {
       this.tipoRegistro = this.route.snapshot.params['tipoRegistro'];
-      this.submitForm = this.fb.group({
-        matricula: ['']
-      });
+      this.startForm();
       this.formValidation.reset();
     }
     this.title = this.route.snapshot.params['tipoRegistro'] === RegistroEnum[RegistroEnum.saida] ? 'Saída' : 'Entrada';
@@ -48,10 +51,14 @@ export class RegistroComponent implements OnInit, DoCheck {
       this.loading = false;
       return;
     }
-    this.registrosService.registrar(this.route.snapshot.params['tipoRegistro'], this.submitForm.value.matricula)
-      .subscribe(() => {
-        this.formValidation.validate('Registrado!');
+    const registro = new Registro(
+      RegistroEnum[this.route.snapshot.params['tipoRegistro']],
+      this.submitForm.value.matricula);
+    this.registrosService.registrar(registro)
+      .subscribe((retorno: Registro) => {
+        this.formValidation.validate(retorno.messageRetorno);
         this.loading = false;
+        this.startForm();
       }, err => {
         this.formValidation.invalidate(err.error.msg);
         this.loading = false;

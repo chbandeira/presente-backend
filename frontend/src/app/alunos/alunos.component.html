@@ -20,15 +20,15 @@
       <input type="number" class="form-control" formControlName="anoLetivo" id="anoLetivo" placeholder="Filtrar pelo ano letivo">
     </div>
     <div class="d-flex justify-content-center m-4">
-      <button type="reset" class="btn btn-secondary mr-2"><i class="fas fa-eraser"></i> Limpar</button>
+      <button type="reset" class="btn btn-warning mr-2"><i class="fas fa-eraser"></i> Limpar</button>
       <button type="submit" (click)="search()" class="btn btn-info"><i class="fas fa-search"></i> Pesquisar</button>
     </div>
   </form>
 </div>
 
 <!-- List -->
-<app-loading [loading]="loading"></app-loading>
-<div class="table-responsive" *ngIf="alunosPagination | async as page">
+<app-loading [loading]="loading" [message]="'Carregando...'"></app-loading>
+<div class="table-responsive" *ngIf="alunosPagResponse | async as paginationResponse">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -43,7 +43,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let aluno of page.content">
+      <tr *ngFor="let aluno of paginationResponse.content">
         <td>{{ aluno.matricula }}</td>
         <td>{{ aluno.anoLetivo }}</td>
         <td>{{ aluno.nome }}</td>
@@ -67,5 +67,5 @@
     </tbody>
   </table>
 
-  <app-pagination [page]="page" (eventPage)="onPage($event)"></app-pagination>
+  <app-pagination [paginationResponse]="paginationResponse" (eventPage)="onPage($event)"></app-pagination>
 </div>

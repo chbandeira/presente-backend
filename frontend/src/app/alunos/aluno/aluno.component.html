@@ -28,7 +28,7 @@
                 <input ngbDatepicker #d="ngbDatepicker" class="form-control" [class.is-invalid]="alunoErrors.dataNascimento"
                   formControlName="dataNascimento" id="dataNascimento" placeholder="dd/mm/aaaa">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button" id="button-addon2">
+                  <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
                     <i class="far fa-calendar-alt"></i>
                   </button>
                 </div>
@@ -48,8 +48,9 @@
               <div [class.collapse]="true" id="collapsePesquisaTurma">
                 <input type="text" class="form-control" [ngbTypeahead]="searchTurma" placeholder="Pesquisar Turma, Série ou Sala"
                   [resultFormatter]="turmaFormatter.formatterTurmaResult" [inputFormatter]="turmaFormatter.formatterTurmaInput">
-                <small class="form-text text-muted" *ngIf="searching"><i class="fas fa-hourglass-half"></i>
-                  pesquisando...</small>
+                <small class="form-text text-muted" *ngIf="searching">
+                  <i class="fas fa-hourglass-half"></i> Pesquisando...
+                </small>
                 <small class="invalid-feedback" *ngIf="searchFailed">Sugestões não puderam ser carregadas.</small>
               </div>
             </div>

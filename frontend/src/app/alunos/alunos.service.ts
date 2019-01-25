@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { PaginationService } from '../shared/pagination/pagination.service';
-import { Pagination, Page } from '../shared/pagination/pagination.model';
+import { Pagination, PaginationResponse } from '../shared/pagination/pagination.model';
 import { Observable } from 'rxjs';
 import { Aluno } from './aluno/aluno.model';
 
@@ -21,7 +21,7 @@ export class AlunosService {
     private http: HttpClient,
     private paginationService: PaginationService) { }
 
-  search(aluno?: Aluno, pagination?: Pagination): Observable<Page> {
+  search(aluno?: Aluno, pagination?: Pagination): Observable<PaginationResponse> {
     let httpParams = new HttpParams();
     if (pagination) {
       httpParams = this.paginationService.getHttpParamsToSearch(pagination);
@@ -29,7 +29,7 @@ export class AlunosService {
     if (aluno) {
       httpParams = this.setHttpParamsToSearch(aluno, httpParams);
     }
-    return this.http.get<Page>(url + '/search', {
+    return this.http.get<PaginationResponse>(url + '/search', {
       params: httpParams
     });
   }

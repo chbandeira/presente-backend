@@ -1,5 +1,3 @@
-import { MessageEnum } from './messages/message.enum';
-
 export class FormValidation {
 
     public editMode = false;
@@ -7,20 +5,23 @@ export class FormValidation {
     public valid = false;
     public alreadyNew = true;
     public message = '';
+    public typeMessage = 'info';
 
     constructor() { }
 
-    validate(message?: string) {
+    validate(message: string) {
         this.valid = true;
         this.showMessage = true;
         this.editMode = true;
         this.message = message;
+        this.typeMessage = 'success';
     }
 
     invalidate(message: string) {
         this.valid = false;
         this.showMessage = true;
         this.message = message;
+        this.typeMessage = 'danger';
     }
 
     reset() {
@@ -29,12 +30,6 @@ export class FormValidation {
         this.valid = false;
         this.alreadyNew = true;
         this.message = '';
-    }
-
-    getMessageEnum(): MessageEnum {
-        if (!this.valid) {
-            return MessageEnum.error;
-        }
-        return MessageEnum.success;
+        this.typeMessage = 'info';
     }
 }

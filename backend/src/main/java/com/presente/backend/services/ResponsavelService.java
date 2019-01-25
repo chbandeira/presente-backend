@@ -26,7 +26,7 @@ public class ResponsavelService {
 		
 		if (isResponsavelFilled(responsavel) || dto.isEnviarEmail() || dto.isEnviarMensagem()) {
 			if (responsavel.getNome() == null || responsavel.getNome().isBlank()) {
-				throw new StandardValidationException("Necessário informar o nome do responsável");
+				throw new StandardValidationException("Necessário informar o nome do responsável!");
 			} else {
 				return responsavel;
 			}

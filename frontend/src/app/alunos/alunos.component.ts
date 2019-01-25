@@ -1,4 +1,4 @@
-import { Pagination, Page } from './../shared/pagination/pagination.model';
+import { Pagination, PaginationResponse } from './../shared/pagination/pagination.model';
 import { AlunosService } from './alunos.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { finalize} from 'rxjs/operators';
 })
 export class AlunosComponent implements OnInit {
 
-  alunosPagination: Observable<Page>;
+  alunosPagResponse: Observable<PaginationResponse>;
   searchForm: FormGroup;
   loading: boolean;
 
@@ -27,14 +27,14 @@ export class AlunosComponent implements OnInit {
       anoLetivo: this.formBuilder.control('')
     });
     this.loading = true;
-    this.alunosPagination = this.alunosService.search().pipe(
+    this.alunosPagResponse = this.alunosService.search().pipe(
       finalize(() => this.loading = false)
     );
   }
 
   search() {
     this.loading = true;
-    this.alunosPagination = this.alunosService.search(this.searchForm.value).pipe(
+    this.alunosPagResponse = this.alunosService.search(this.searchForm.value).pipe(
       finalize(() => this.loading = false)
     );
   }
@@ -43,7 +43,7 @@ export class AlunosComponent implements OnInit {
     const pagination: Pagination = new Pagination();
     pagination.page = event;
     this.loading = true;
-    this.alunosPagination = this.alunosService.search(this.searchForm.value, pagination).pipe(
+    this.alunosPagResponse = this.alunosService.search(this.searchForm.value, pagination).pipe(
       finalize(() => this.loading = false)
     );
   }

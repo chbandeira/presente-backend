@@ -6,6 +6,11 @@ import org.springframework.mail.SimpleMailMessage;
 
 import com.presente.backend.domains.Registro;
 
+
+/**
+ * @author Charlles Bandeira
+ *
+ */
 public interface EmailService {
 	
 	void sendOrderConfirmationEmail(Registro registro);

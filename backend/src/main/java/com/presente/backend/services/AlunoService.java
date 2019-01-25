@@ -25,6 +25,11 @@ import com.presente.backend.exceptions.ValidationException;
 import com.presente.backend.repositories.AlunoRepository;
 import com.presente.backend.services.utils.URL;
 
+
+/**
+ * @author Charlles Bandeira
+ *
+ */
 @Service
 public class AlunoService {
 

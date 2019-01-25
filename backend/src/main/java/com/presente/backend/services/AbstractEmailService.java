@@ -15,6 +15,11 @@ import org.thymeleaf.context.Context;
 
 import com.presente.backend.domains.Registro;
 
+
+/**
+ * @author Charlles Bandeira
+ *
+ */
 public abstract class AbstractEmailService implements EmailService {
 
 	@Value("${spring.mail.username}")
