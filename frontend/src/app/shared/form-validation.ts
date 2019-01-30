@@ -14,13 +14,26 @@ export class FormValidation {
         this.showMessage = true;
         this.editMode = true;
         this.message = message;
+        if (!this.message || this.message === '') {
+            this.message = 'Sucesso!';
+        }
         this.typeMessage = 'success';
     }
 
-    invalidate(message: string) {
+    invalidate(message: string, errors?: []) {
         this.valid = false;
         this.showMessage = true;
         this.message = message;
+        if (errors.length > 0) {
+            this.message = `${this.message}: `;
+            for (let i = 0; i < errors.length; i++) {
+                this.message += `${errors[i]['fieldName']}, `;
+            }
+            this.message = this.message.substr(0, this.message.length - 2);
+        }
+        if (!this.message || this.message === '') {
+            this.message = 'Erro inesperado!';
+        }
         this.typeMessage = 'danger';
     }
 

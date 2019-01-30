@@ -91,10 +91,10 @@ export class AlunoComponent implements OnInit {
             this.formValidation.alreadyNew = true;
           }
           this.aluno.id = id;
-          this.formValidation.validate('Aluno salvo com sucesso!');
         }
+        this.formValidation.validate('Aluno salvo com sucesso!');
       }, err => {
-        this.formValidation.invalidate(err.error.msg);
+        this.formValidation.invalidate(err.error.msg, err.error.errors);
         if (err.error.errors) {
           err.error.errors.forEach(e => {
             switch (e.fieldName) {

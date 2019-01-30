@@ -58,6 +58,10 @@ export class AlunosService {
       // TODO foto in server?
       aluno.urlFoto = fileToUpload.name;
     }
+
+    if (aluno.id) {
+      return this.http.put<number>(url, aluno, params);
+    }
     return this.http.post<number>(url, aluno, params);
   }
 

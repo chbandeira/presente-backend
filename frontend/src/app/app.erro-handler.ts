@@ -19,11 +19,14 @@ export class ApplicationErrorHandler extends ErrorHandler {
           case 400:
             this.ns.notify(message || `Erro ${codStatus} - Solicitação inválida.`);
             break;
+          case 403:
+            this.ns.notify(message || `Erro ${codStatus} - Acesso negado.`);
+            break;
           case 404:
             this.ns.notify(message || `Erro ${codStatus} - Recurso não encontrado.`);
             break;
           default:
-            this.ns.notify(message || `Erro ${codStatus}`);
+            this.ns.notify(message || `Erro ${codStatus} - Erro inesperado.`);
             break;
         }
       });
