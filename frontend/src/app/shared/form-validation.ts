@@ -20,14 +20,18 @@ export class FormValidation {
         this.typeMessage = 'success';
     }
 
-    invalidate(message: string, errors?: []) {
+    invalidate(message: string, errors?: [], fieldName = true) {
         this.valid = false;
         this.showMessage = true;
         this.message = message;
-        if (errors.length > 0) {
+        if (errors && errors.length > 0) {
             this.message = `${this.message}: `;
             for (let i = 0; i < errors.length; i++) {
-                this.message += `${errors[i]['fieldName']}, `;
+                if (!fieldName) {
+                    this.message += `${errors[i]['messageString']}, `;
+                } else {
+                    this.message += `${errors[i]['fieldName']}, `;
+                }
             }
             this.message = this.message.substr(0, this.message.length - 2);
         }

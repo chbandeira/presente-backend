@@ -45,9 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
+		//TODO retirar apos testes
+		//if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
 			http.authorizeRequests().antMatchers(PUBLIC_DEV_MATCHERS).permitAll();			
-		}
+		//}
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()

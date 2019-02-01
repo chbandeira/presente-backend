@@ -43,7 +43,7 @@ public class Aluno extends BaseEntity {
 	private Integer anoLetivo;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(columnDefinition = "timestamp DEFAULT now()", insertable = true, updatable = false, nullable = false)
+	@Column(insertable = true, updatable = false, nullable = false)
 	private Date dataMatricula;
 
 	private boolean bolsista = true;

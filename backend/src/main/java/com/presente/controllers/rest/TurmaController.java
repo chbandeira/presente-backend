@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.presente.dto.TurmaDTO;
+import com.presente.dto.TurmaInsertDTO;
+import com.presente.dto.TurmaUpdateDTO;
 import com.presente.services.TurmaService;
 
 @RestController
@@ -42,7 +45,13 @@ public class TurmaController extends BaseController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Integer save(@Valid @RequestBody TurmaDTO dto) {
+	public Integer insert(@Valid @RequestBody TurmaInsertDTO dto) {
+		return this.service.save(dto);
+	}
+	
+	@PutMapping
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public Integer update(@Valid @RequestBody TurmaUpdateDTO dto) {
 		return this.service.save(dto);
 	}
 	

@@ -63,6 +63,9 @@ export class TurmasService {
   }
 
   save(turma: Turma): Observable<number> {
+    if (turma.id) {
+      return this.http.put<number>(url, turma, params);
+    }
     return this.http.post<number>(url, turma, params);
   }
 
