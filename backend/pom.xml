@@ -10,11 +10,7 @@
 	</parent>
 	<groupId>com.presente</groupId>
 	<artifactId>presente-backend</artifactId>
-<<<<<<< HEAD
 	<version>3.0.0-SNAPSHOT</version>
-=======
-	<version>0.0.1-SNAPSHOT</version>
->>>>>>> 3.0.x
 	<packaging>jar</packaging>
 	<name>presente-backend</name>
 	<description></description>
@@ -90,6 +86,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>
