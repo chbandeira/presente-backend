@@ -1,4 +1,5 @@
 # Presente 3
+<<<<<<< HEAD
 
 [PT-BR] Projeto de registro de entrada e saída de alunos em Java (backend) e Angular (frontend).
 
@@ -33,3 +34,6 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+=======
+[PT-BR] Projeto de registro de entrada e saída de alunos em Java (backend) e Angular (frontend)
+>>>>>>> 3.0.x
