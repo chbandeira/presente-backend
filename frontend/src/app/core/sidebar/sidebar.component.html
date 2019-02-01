@@ -1,0 +1,22 @@
+<ul class="list-group list-group-flush d-none d-md-block">
+  <li class="list-group-item">
+    <a class="nav-link d-flex align-items-center" [routerLink]="[ '/alunos' ]">
+      <i class="fas fa-user-graduate fa-2x text-info mr-2"></i>Alunos
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a class="nav-link d-flex align-items-center disabled">
+      <i class="fas fa-calendar-check fa-2x text-secondary mr-2"></i>Ocorrências
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a class="nav-link d-flex align-items-center" [routerLink]="[ '/registros', 'entrada' ]">
+      <i class="fas fa-arrow-alt-circle-right fa-2x text-success mr-2"></i>Entrada
+    </a>
+  </li>
+  <li class="list-group-item">
+    <a class="nav-link d-flex align-items-center" [routerLink]="[ '/registros', 'saida' ]">
+      <i class="fas fa-arrow-alt-circle-left fa-2x text-danger mr-2"></i>Saída
+    </a>
+  </li>
+</ul>

@@ -1,18 +1,10 @@
-# Presente 3
+# Frontend
 
-[PT-BR] Projeto de registro de entrada e saída de alunos em Java (backend) e Angular (frontend).
-
-# Java
-
-Requer Java 11, MySQL 
-
-# Angular
-
-Requer Angular 7
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.6.
 
 ## Development server
 
-Run `npm start` for a dev server with CrossOrigin. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 

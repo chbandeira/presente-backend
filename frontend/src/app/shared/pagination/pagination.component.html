@@ -1,0 +1,6 @@
+<div *ngIf="paginationResponse.empty">Nenhum registro encontrado</div>
+<div *ngIf="!paginationResponse.empty">{{ paginationResponse.totalElements }} registro(s) encontrado(s)</div>
+
+<nav class="mb-5 mt-2" aria-label="Páginas de resultados de pesquisa">
+  <ngb-pagination class="d-flex justify-content-center" [collectionSize]="paginationResponse.totalElements" [(page)]="currentPage" (pageChange)="emitPage($event)" [maxSize]="3" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+</nav>

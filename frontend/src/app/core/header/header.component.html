@@ -1,0 +1,93 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#"><strong>Presente! </strong><i class="far fa-hand-paper text-warning"></i></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto" data-toggle="collapse" data-target=".navbar-collapse.show">
+
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-toolbox"></i> Administração
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownAdmin">
+          <a class="dropdown-item disabled" href="#"><i class="fas fa-database"></i> Importação de Dados</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="fas fa-database"></i> Ocorrências de Importação</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="far fa-list-alt"></i> Parâmetros Gerais</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCadastros" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-folder-open"></i> Cadastros
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownCadastros">
+          <a class="dropdown-item disabled" href="#"><i class="fas fa-users"></i> Usuários</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" [routerLink]="[ '/alunos' ]"><i class="fas fa-user-graduate"></i> Alunos</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" [routerLink]="[ '/turmas' ]" href="#"><i class="fas fa-chalkboard-teacher"></i> Turmas</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="far fa-calendar-alt"></i> Calendário Escolar</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="fas fa-calendar-check"></i> Ocorrências</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRelatorios" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-exchange-alt"></i> Registros
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownRelatorios">
+          <a class="dropdown-item" [routerLink]="[ '/registros', 'entrada' ]"><i class="fas fa-arrow-alt-circle-right"></i> Entrada</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" [routerLink]="[ '/registros', 'saida' ]"><i class="fas fa-arrow-alt-circle-left"></i> Saída</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRelatorios" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-file-alt"></i> Relatórios
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownRelatorios">
+          <a class="dropdown-item disabled" href="#"><i class="far fa-file-alt"></i> Faltas</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="far fa-file-alt"></i> Presenças</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="far fa-file-alt"></i> Ocorrências</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="far fa-file-alt"></i> Ficha Disciplinar</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownRelatorios" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-question-circle"></i> Ajuda
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownRelatorios">
+          <a class="dropdown-item disabled" href="#"><i class="fas fa-key"></i> Alterar Senha</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="fas fa-cog"></i> Configurações</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="far fa-file-pdf"></i> Manual</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item disabled" href="#"><i class="fas fa-info-circle"></i> Sobre</a>
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">
+        <span class="text-light"><i class="fas fa-sign-out-alt"></i> Sair</span>
+      </button>
+    </form>
+  </div>
+</nav>

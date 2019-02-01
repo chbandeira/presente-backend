@@ -1,0 +1,24 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h4>Registro de {{ title }}</h4>
+</div>
+
+<form class="mb-5" [formGroup]="submitForm" novalidate>
+
+  <div class="col-lg">
+    <div class="d-flex justify-content-center">
+      <div class="form-group">
+        <label for="matricula">Matrícula</label>
+        <input type="text" class="form-control" [class.is-invalid]="registroError" formControlName="matricula" maxlength="20" id="matricula">
+        <small class="form-text text-muted">Campo obrigatório</small>
+      </div>
+    </div>
+
+    <app-message-form [formValidation]="formValidation"></app-message-form>
+
+    <div class="d-flex justify-content-center m-3">
+      <button type="reset" (click)="clean()" class="btn btn-warning mr-2"><i class="fas fa-eraser"></i> Limpar</button>
+      <button (click)="registrar()" class="btn btn-primary" [disabled]="loading"><i class="fas fa-check"></i> Registrar {{ title }}</button>
+    </div>
+    <app-loading [loading]="loading" [message]="'Processando...'"></app-loading>
+  </div>
+</form>
