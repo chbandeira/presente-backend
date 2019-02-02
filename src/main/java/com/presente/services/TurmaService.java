@@ -4,7 +4,6 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.ignoreCase;
 
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +22,7 @@ import com.presente.dto.AlunoCadastroDTO;
 import com.presente.dto.TurmaDTO;
 import com.presente.exceptions.ObjectNotFoundException;
 import com.presente.repositories.TurmaRepository;
+import com.presente.services.utils.DateTime;
 
 
 /**
@@ -61,7 +61,7 @@ public class TurmaService {
 		if (dto.getTurno() != null) {
 			turma.setTurno(Turno.toEnum(dto.getTurno()));
 		}
-		turma.setDataUltimaAtualizacao(new Date());
+		turma.setDataUltimaAtualizacao(DateTime.getDataAtual());
 		return turma;
 	}
 
@@ -84,7 +84,7 @@ public class TurmaService {
 		if (dto.getTurno() != null) {
 			turma.setTurno(Turno.toEnum(dto.getTurno()));
 		}
-		turma.setDataUltimaAtualizacao(new Date());
+		turma.setDataUltimaAtualizacao(DateTime.getDataAtual());
 		return turma;
 	}
 

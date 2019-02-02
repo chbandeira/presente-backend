@@ -4,7 +4,6 @@ import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatc
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
 import java.time.Year;
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import com.presente.dto.AlunoCadastroDTO;
 import com.presente.dto.AlunoDTO;
 import com.presente.exceptions.ObjectNotFoundException;
 import com.presente.repositories.AlunoRepository;
+import com.presente.services.utils.DateTime;
 import com.presente.services.utils.URL;
 
 /**
@@ -100,12 +100,12 @@ public class AlunoService {
 		if (aluno == null) {
 			aluno = new Aluno();
 			aluno.setAnoLetivo(Year.now().getValue());
-			aluno.setDataMatricula(new Date());
+			aluno.setDataMatricula(DateTime.getDataAtual());
 		}
 		aluno.setId(dto.getId());
 		aluno.setBolsista(dto.isAlunoBolsista());
 		aluno.setDataNascimento(dto.getDataNascimento());
-		aluno.setDataUltimaAtualizacao(new Date());
+		aluno.setDataUltimaAtualizacao(DateTime.getDataAtual());
 		aluno.setEnviarEmailRegistro(dto.isEnviarEmail());
 		aluno.setEnviarMensagem(dto.isEnviarMensagem());
 		aluno.setMatricula(dto.getMatricula());

@@ -1,7 +1,6 @@
 package com.presente.services;
 
 import java.time.Year;
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import com.presente.domains.Aluno;
 import com.presente.domains.LogAlteracaoAluno;
 import com.presente.domains.enums.AlteracaoAluno;
 import com.presente.repositories.LogAlteracaoAlunoRepository;
+import com.presente.services.utils.DateTime;
 
 /**
  * @author Charlles Bandeira
@@ -40,7 +40,7 @@ public class LogAlteracaoAlunoService {
 		logAlteracaoAluno.setBolsista(aluno.isBolsista());
 		logAlteracaoAluno.setDataMatricula(aluno.getDataMatricula());
 		logAlteracaoAluno.setDataNascimento(aluno.getDataNascimento());
-		logAlteracaoAluno.setDataUltimaAtualizacao(new Date());
+		logAlteracaoAluno.setDataUltimaAtualizacao(DateTime.getDataAtual());
 		logAlteracaoAluno.setMatricula(aluno.getMatricula());
 		logAlteracaoAluno.setNome(aluno.getNome());
 		logAlteracaoAluno.setUrlFoto(aluno.getUrlFoto());
