@@ -31,7 +31,7 @@ public class ResponsavelService {
 		responsavel.setEmail2(dto.getEmail2());
 		responsavel.setTelefoneFixo(dto.getTelefoneFixo());
 		responsavel.setTelefoneCelular(dto.getTelefoneCelular());
-		if (responsavel.getId() == null) {
+		if (responsavel.getId() == null && dto.getMatricula() != null && !dto.getMatricula().isBlank()) {
 			responsavel.setSenha(this.encoder.encode(dto.getMatricula()));
 		}
 		return responsavel;
