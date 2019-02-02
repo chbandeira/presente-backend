@@ -1,6 +1,5 @@
 package com.presente.services;
 
-import java.util.Date;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -44,15 +43,6 @@ public class RegistroService {
 	@Autowired
 	private AlunoRepository alunoRepository;
 
-	public static void main(String[] args) {
-		
-		Registro registro = new Registro(
-				new LogAlteracaoAluno(), 
-				TipoRegistro.ENTRADA, 
-				DateTime.getDataAtual());
-		System.out.println(registro.toString());
-	}
-	
 	@Transactional
 	public RegistroDTO registrar(RegistroDTO dto) {
 		Optional<LogAlteracaoAluno> logAlteracaoAluno = this.logAlteracaoAlunoService.findByMatriculaAtiva(dto.getMatricula());
@@ -62,7 +52,7 @@ public class RegistroService {
 				Registro registro = new Registro(
 						logAlteracaoAluno.get(), 
 						TipoRegistro.toEnum(dto.getTipoRegistro()), 
-						new Date());
+						DateTime.getDataAtual());
 				this.repository.save(registro);
 				this.sendEmail(logAlteracaoAluno.get(), registro);
 				dto.setMessageRetorno(this.getMessageRetornoRegistro(logAlteracaoAluno.get()));
