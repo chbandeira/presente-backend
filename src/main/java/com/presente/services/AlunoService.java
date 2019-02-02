@@ -24,7 +24,6 @@ import com.presente.exceptions.ObjectNotFoundException;
 import com.presente.repositories.AlunoRepository;
 import com.presente.services.utils.URL;
 
-
 /**
  * @author Charlles Bandeira
  *
@@ -45,24 +44,27 @@ public class AlunoService {
 	@Transactional
 	public Integer save(AlunoCadastroDTO dto) {
 		Aluno aluno = null;
-		boolean inclusao = true;
 		if (dto.getId() != null) {
 			Optional<Aluno> alunoFound = this.repository.findById(dto.getId());
 			if (alunoFound.isPresent()) {
 				aluno = alunoFound.get();
-				inclusao = false;
+				if (!hasResponsavel(dto)) {
+					long count = this.repository.countByResponsavel(aluno.getResponsavel());
+					if (count == 1) {
+						this.responsavelService.disable(aluno.getResponsavel());
+					}
+				}
 			}
-		} 
-		aluno = this.fromAlunoCadastroDTO(dto, aluno);
-		if (inclusao) {			
-			aluno.setDataMatricula(new Date());
 		}
+		aluno = this.fromAlunoCadastroDTO(dto, aluno, hasResponsavel(dto));
 		this.repository.save(aluno);
-		this.historicoAlteracaoService.save(aluno, inclusao);
+		this.historicoAlteracaoService.save(aluno, false);
 		return aluno.getId();
 	}
 
-	
+	private boolean hasResponsavel(AlunoCadastroDTO dto) {
+		return dto.getNomeResponsavel() != null && !dto.getNomeResponsavel().isBlank();
+	}
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	public Page<AlunoDTO> search(String nome, String codMatricula, Integer anoLetivo, Integer page, Integer size,
@@ -94,14 +96,14 @@ public class AlunoService {
 		return this.repository.findAll(example, pageRequest).map(mat -> new AlunoDTO(mat));
 	}
 
-	public Aluno fromAlunoCadastroDTO(AlunoCadastroDTO dto, Aluno aluno) {
+	public Aluno fromAlunoCadastroDTO(AlunoCadastroDTO dto, Aluno aluno, boolean hasResponsavel) {
 		if (aluno == null) {
 			aluno = new Aluno();
 			aluno.setAnoLetivo(Year.now().getValue());
+			aluno.setDataMatricula(new Date());
 		}
 		aluno.setId(dto.getId());
 		aluno.setBolsista(dto.isAlunoBolsista());
-		aluno.setDataMatricula(new Date());
 		aluno.setDataNascimento(dto.getDataNascimento());
 		aluno.setDataUltimaAtualizacao(new Date());
 		aluno.setEnviarEmailRegistro(dto.isEnviarEmail());
@@ -110,7 +112,11 @@ public class AlunoService {
 		aluno.setNome(dto.getNome());
 		aluno.setUrlFoto(dto.getUrlFoto());
 		aluno.setTurma(this.turmaService.fromAlunoCadastroDto(dto));
-		aluno.setResponsavel(this.responsavelService.fromAlunoCadastroDto(dto, aluno.getResponsavel()));
+		if (hasResponsavel) {			
+			aluno.setResponsavel(this.responsavelService.fromAlunoCadastroDto(dto, aluno.getResponsavel()));
+		} else {
+			aluno.setResponsavel(null);
+		}
 		return aluno;
 	}
 
@@ -130,6 +136,10 @@ public class AlunoService {
 			throw new ObjectNotFoundException("Aluno não encontrado");
 		}
 		aluno.get().setAtivo(false);
+		long count = this.repository.countByResponsavel(aluno.get().getResponsavel());
+		if (count == 1) {
+			aluno.get().getResponsavel().setAtivo(false);
+		}
 		this.repository.save(aluno.get());
 		this.historicoAlteracaoService.save(aluno.get(), false);
 	}

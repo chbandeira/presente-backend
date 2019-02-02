@@ -6,16 +6,19 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.presente.domains.Aluno;
+import com.presente.domains.Responsavel;
 
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Integer> {
  
-	Optional<Aluno> findByMatriculaAndAnoLetivoAndIdNot(String matricula, Integer anoLetivo, Integer id);
+	long countByResponsavel(Responsavel responsavel);
 
-	Optional<Aluno> findByMatriculaAndAnoLetivo(String matricula, Integer anoLetivo);
+	Optional<Aluno> findByMatriculaAndAnoLetivoAndAtivo(String matricula, Integer anoLetivo, boolean ativo);
 
-	Optional<Aluno> findByNomeAndAnoLetivoAndIdNot(String nome, Integer anoLetivo, Integer id);
+	Optional<Aluno> findByNomeAndAnoLetivoAndAtivo(String nome, Integer anoLetivo, boolean ativo);
 
-	Optional<Aluno> findByNomeAndAnoLetivo(String nome, Integer anoLetivo);
+	Optional<Aluno> findByNomeAndAnoLetivoAndAtivoAndIdNot(String nome, Integer anoLetivo, boolean ativo, Integer id);
+
+	Optional<Aluno> findByMatriculaAndAnoLetivoAndAtivoAndIdNot(String matricula, Integer anoLetivo, boolean ativo, Integer id);
 
 }

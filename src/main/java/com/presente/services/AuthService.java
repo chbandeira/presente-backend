@@ -26,9 +26,9 @@ public class AuthService {
 
 	@Transactional
 	public void sendNewPassword(String email) {
-		Optional<Responsavel> responsavel = this.responsavelRepository.findByEmail(email);
+		Optional<Responsavel> responsavel = this.responsavelRepository.findByEmailAndAtivo(email, true);
 		if (responsavel.isEmpty()) {
-			responsavel = this.responsavelRepository.findByEmail2(email);
+			responsavel = this.responsavelRepository.findByEmail2AndAtivo(email, true);
 			if (responsavel.isEmpty()) {
 				throw new ObjectNotFoundException("Email não encontrado");
 			}

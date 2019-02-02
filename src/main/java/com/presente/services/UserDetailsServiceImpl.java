@@ -23,9 +23,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		Optional<Responsavel> responsavel = this.responsavelRepository.findByEmail(email);
+		Optional<Responsavel> responsavel = this.responsavelRepository.findByEmailAndAtivo(email, true);
 		if (responsavel.isEmpty()) {
-			responsavel = this.responsavelRepository.findByEmail2(email);
+			responsavel = this.responsavelRepository.findByEmail2AndAtivo(email, true);
 			if (responsavel.isEmpty()) {
 				throw new UsernameNotFoundException(email);
 			}

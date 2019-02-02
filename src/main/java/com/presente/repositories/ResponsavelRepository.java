@@ -10,12 +10,12 @@ import com.presente.domains.Responsavel;
 @Repository
 public interface ResponsavelRepository extends JpaRepository<Responsavel, Integer> {
 
-	Optional<Responsavel> findByEmail(String email);
+	Optional<Responsavel> findByEmailAndAtivo(String email, boolean ativo);
 
-	Optional<Responsavel> findByEmail2(String email);
+	Optional<Responsavel> findByEmail2AndAtivo(String email, boolean ativo);
 
-	Optional<Responsavel> findByEmailAndIdNot(String email, Integer id);
+	Optional<Responsavel> findByEmailAndAtivoAndIdNot(String email, boolean ativo, Integer id);
 	
-	Optional<Responsavel> findByEmail2AndIdNot(String email, Integer id);
+	Optional<Responsavel> findByEmail2AndAtivoAndIdNot(String email, boolean ativo, Integer id);
 
 }
