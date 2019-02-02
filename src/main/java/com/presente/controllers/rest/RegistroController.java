@@ -14,7 +14,7 @@ import com.presente.services.RegistroService;
 
 @RestController
 @RequestMapping("/registros")
-public class RegistroController extends BaseController {
+public class RegistroController {
 	
 	@Autowired
 	private RegistroService registroService;

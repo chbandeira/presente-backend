@@ -23,7 +23,7 @@ import com.presente.services.TurmaService;
 
 @RestController
 @RequestMapping("/turmas")
-public class TurmaController extends BaseController {
+public class TurmaController {
 
 	@Autowired
 	public TurmaService service;

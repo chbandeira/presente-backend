@@ -18,7 +18,7 @@ import com.presente.services.UserService;
 
 @RestController
 @RequestMapping("/auth")
-public class AuthController extends BaseController {
+public class AuthController {
 	
 	@Autowired
 	private JWTService jwtUtil;

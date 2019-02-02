@@ -25,7 +25,7 @@ import com.presente.services.AlunoService;
 
 @RestController
 @RequestMapping("/alunos")
-public class AlunoController extends BaseController {
+public class AlunoController {
 
 	@Autowired
 	private AlunoService service;
