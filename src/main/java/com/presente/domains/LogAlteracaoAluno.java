@@ -61,11 +61,7 @@ public class LogAlteracaoAluno extends BaseEntity {
 	private String emailResponsavel;
 	
 	private String emailResponsavel2;
-
-	private String telefoneFixoResponsavel;
-
-	private String telefoneCelularResponsavel;
-
+	
 	private String cpfResponsavel;
 
 	private Boolean enviarEmailRegistro;
@@ -195,22 +191,6 @@ public class LogAlteracaoAluno extends BaseEntity {
 
 	public void setEmailResponsavel(String emailResponsavel) {
 		this.emailResponsavel = emailResponsavel;
-	}
-
-	public String getTelefoneFixoResponsavel() {
-		return telefoneFixoResponsavel;
-	}
-
-	public void setTelefoneFixoResponsavel(String telefoneFixoResponsavel) {
-		this.telefoneFixoResponsavel = telefoneFixoResponsavel;
-	}
-
-	public String getTelefoneCelularResponsavel() {
-		return telefoneCelularResponsavel;
-	}
-
-	public void setTelefoneCelularResponsavel(String telefoneCelularResponsavel) {
-		this.telefoneCelularResponsavel = telefoneCelularResponsavel;
 	}
 
 	public String getCpfResponsavel() {

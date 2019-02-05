@@ -2,16 +2,20 @@ package com.presente.dto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.presente.domains.Aluno;
+import com.presente.domains.Telefone;
 
 /**
  * @author Charlles Bandeira
@@ -22,33 +26,57 @@ public class AlunoCadastroDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
 	@NotEmpty
+	@Length(min = 3, max = 200)
 	private String nome;
+	
 	@Past
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
+	
 	@NotEmpty
+	@Length(min = 1, max = 20)
 	private String matricula;
+	
+	@Length(max = 5)
 	private String serie;
+	
+	@Length(max = 5)
 	private String turma;
+	
+	@Length(max = 5)
 	private String sala;
+	
 	private Integer turno;
+	
 	private boolean alunoBolsista;
+	
 	private String urlFoto;
 
+	@Length(max = 200)
 	private String nomeResponsavel;
+	
 	@CPF
 	private String cpf;
+	
 	@Email
+	@Length(max = 200)
 	private String email;
+	
 	@Email
+	@Length(max = 200)
 	private String email2;
-	private String telefoneFixo;
-	private String telefoneCelular;
+	
+	private Set<TelefoneDTO> telefones = new HashSet<>();
+	
 	private boolean enviarEmail;
+	
 	private boolean enviarMensagem;
+	
 	@JsonIgnore
 	private String senha;
+	
 	private Integer anoLetivo;
 
 	public AlunoCadastroDTO() {
@@ -77,8 +105,9 @@ public class AlunoCadastroDTO implements Serializable {
 			this.email = aluno.getResponsavel().getEmail();
 			this.email2 = aluno.getResponsavel().getEmail2();
 			this.nomeResponsavel = aluno.getResponsavel().getNome();
-			this.telefoneCelular = aluno.getResponsavel().getTelefoneCelular();
-			this.telefoneFixo = aluno.getResponsavel().getTelefoneFixo();
+			for (Telefone tel : aluno.getResponsavel().getTelefones()) {				
+				this.telefones.add(new TelefoneDTO(tel));
+			}
 		}
 	}
 
@@ -178,22 +207,6 @@ public class AlunoCadastroDTO implements Serializable {
 		this.email = email;
 	}
 
-	public String getTelefoneFixo() {
-		return telefoneFixo;
-	}
-
-	public void setTelefoneFixo(String telefoneFixo) {
-		this.telefoneFixo = telefoneFixo;
-	}
-
-	public String getTelefoneCelular() {
-		return telefoneCelular;
-	}
-
-	public void setTelefoneCelular(String telefoneCelular) {
-		this.telefoneCelular = telefoneCelular;
-	}
-
 	public boolean isEnviarEmail() {
 		return enviarEmail;
 	}
@@ -240,6 +253,14 @@ public class AlunoCadastroDTO implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Set<TelefoneDTO> getTelefones() {
+		return telefones;
+	}
+
+	public void addTelefone(Telefone telefone) {
+		this.telefones.add(new TelefoneDTO(telefone));
 	}
 
 }

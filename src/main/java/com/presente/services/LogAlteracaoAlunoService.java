@@ -52,8 +52,6 @@ public class LogAlteracaoAlunoService {
 			logAlteracaoAluno.setEmailResponsavel(aluno.getResponsavel().getEmail());
 			logAlteracaoAluno.setEmailResponsavel2(aluno.getResponsavel().getEmail2());
 			logAlteracaoAluno.setIdResponsavel(aluno.getResponsavel().getId());
-			logAlteracaoAluno.setTelefoneCelularResponsavel(aluno.getResponsavel().getTelefoneCelular());
-			logAlteracaoAluno.setTelefoneFixoResponsavel(aluno.getResponsavel().getTelefoneFixo());
 			logAlteracaoAluno.setNomeResponsavel(aluno.getResponsavel().getNome());
 		}
 		if (aluno.getTurma() != null) {

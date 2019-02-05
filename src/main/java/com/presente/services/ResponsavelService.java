@@ -5,7 +5,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.presente.domains.Responsavel;
+import com.presente.domains.Telefone;
 import com.presente.dto.AlunoCadastroDTO;
+import com.presente.dto.TelefoneDTO;
 import com.presente.repositories.ResponsavelRepository;
 
 /**
@@ -19,6 +21,9 @@ public class ResponsavelService {
 	private ResponsavelRepository repository;
 	
 	@Autowired
+	private TelefoneService telefoneService;
+	
+	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	public Responsavel fromAlunoCadastroDto(AlunoCadastroDTO dto, Responsavel responsavel) {
@@ -29,8 +34,11 @@ public class ResponsavelService {
 		responsavel.setCpf(dto.getCpf());
 		responsavel.setEmail(dto.getEmail());
 		responsavel.setEmail2(dto.getEmail2());
-		responsavel.setTelefoneFixo(dto.getTelefoneFixo());
-		responsavel.setTelefoneCelular(dto.getTelefoneCelular());
+		responsavel.getTelefones().clear();
+		for (TelefoneDTO tel : dto.getTelefones()) {			
+			Telefone telefone = this.telefoneService.fromDTO(tel);
+			responsavel.addTelefone(telefone);
+		}
 		if (responsavel.getId() == null && dto.getMatricula() != null && !dto.getMatricula().isBlank()) {
 			responsavel.setSenha(this.encoder.encode(dto.getMatricula()));
 		}
@@ -40,6 +48,11 @@ public class ResponsavelService {
 	public void disable(Responsavel responsavel) {
 		responsavel.setAtivo(false);
 		this.repository.save(responsavel);
+	}
+	
+
+	public Responsavel save(Responsavel responsavel) {
+		return this.repository.save(responsavel);
 	}
 
 }

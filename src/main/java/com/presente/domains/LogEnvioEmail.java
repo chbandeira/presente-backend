@@ -22,7 +22,7 @@ public class LogEnvioEmail extends BaseEntity {
 	private String logError;
 	
 	@ManyToOne
-	@JoinColumn(name = "registro_id")
+	@JoinColumn(name = "REGISTRO_ID")
 	private Registro registro;
 
 	public LogEnvioEmail() {

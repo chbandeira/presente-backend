@@ -1,5 +1,6 @@
 package com.presente.domains;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,12 +22,15 @@ public class Turma extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(length = 5)
 	private String descricao;
 
 	private boolean ativo = true;
 
+	@Column(length = 5)
 	private String serie;
 
+	@Column(length = 5)
 	private String sala;
 
 	@Enumerated(EnumType.ORDINAL)

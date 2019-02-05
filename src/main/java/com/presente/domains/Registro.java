@@ -29,7 +29,7 @@ public class Registro extends BaseEntity {
 	private Integer id;
 
 	@ManyToOne
-	@JoinColumn(name = "log_alteracao_aluno_id", nullable = false)
+	@JoinColumn(name = "LOG_ALTERACAO_ALUNO_ID", nullable = false)
 	private LogAlteracaoAluno logAlteracaoAluno;
 
 	@Enumerated(EnumType.ORDINAL)

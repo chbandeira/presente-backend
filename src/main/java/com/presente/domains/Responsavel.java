@@ -4,13 +4,16 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.presente.domains.enums.Perfil;
@@ -28,16 +31,19 @@ public class Responsavel extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
+	@Column(length = 200)
 	private String nome;
 
+	@Column(length = 200)
 	private String email;
 	
+	@Column(length = 200)
 	private String email2;
 
-	private String telefoneFixo;
+	@OneToMany(mappedBy = "id.responsavel", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Telefone> telefones = new HashSet<>();
 
-	private String telefoneCelular;
-
+	@Column(length = 20)
 	private String cpf;
 	
 	private boolean ativo = true;
@@ -46,7 +52,7 @@ public class Responsavel extends BaseEntity {
 	private String senha;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "perfis")
+	@CollectionTable(name = "PERFIS")
 	private Set<Integer> perfis = new HashSet<>();
 	
 	public Responsavel() {
@@ -75,22 +81,6 @@ public class Responsavel extends BaseEntity {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getTelefoneFixo() {
-		return telefoneFixo;
-	}
-
-	public void setTelefoneFixo(String telefoneFixo) {
-		this.telefoneFixo = telefoneFixo;
-	}
-
-	public String getTelefoneCelular() {
-		return telefoneCelular;
-	}
-
-	public void setTelefoneCelular(String telefoneCelular) {
-		this.telefoneCelular = telefoneCelular;
 	}
 
 	public String getCpf() {
@@ -125,6 +115,15 @@ public class Responsavel extends BaseEntity {
 		this.senha = senha;
 	}
 	
+	public Set<Telefone> getTelefones() {
+		return telefones;
+	}
+
+	public void addTelefone(Telefone telefone) {
+		telefone.getId().setResponsavel(this);
+		this.telefones.add(telefone);
+	}
+
 	public Set<Perfil> getPerfis() {
 		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
@@ -156,6 +155,11 @@ public class Responsavel extends BaseEntity {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Responsavel [id=" + id + ", nome=" + nome + "]";
 	}
 
 }

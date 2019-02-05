@@ -81,10 +81,7 @@ public abstract class AlunoAbstractValidator {
 		if (responsavel.getEmail2() != null && !responsavel.getEmail2().isBlank()) {
 			return true;
 		}
-		if (responsavel.getTelefoneFixo() != null && !responsavel.getTelefoneFixo().isBlank()) {
-			return true;
-		}
-		if (responsavel.getTelefoneCelular() != null && !responsavel.getTelefoneCelular().isBlank()) {
+		if (!responsavel.getTelefones().isEmpty()) {
 			return true;
 		}
 		return false;

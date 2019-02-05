@@ -25,7 +25,7 @@ public class Aluno extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 200)
 	private String nome;
 
 	@Temporal(TemporalType.DATE)
@@ -34,10 +34,11 @@ public class Aluno extends BaseEntity {
 	@Column
 	private String urlFoto;
 
+	@Column(length = 20)
 	private String matricula;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "turma_id")
+	@JoinColumn(name = "TURMA_ID")
 	private Turma turma;
 
 	private Integer anoLetivo;
@@ -49,7 +50,7 @@ public class Aluno extends BaseEntity {
 	private boolean bolsista = true;
 
 	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinColumn(name = "responsavel_id")
+	@JoinColumn(name = "RESPONSAVEL_ID")
 	private Responsavel responsavel;
 
 	private boolean enviarEmailRegistro;

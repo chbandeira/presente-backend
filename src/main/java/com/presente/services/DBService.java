@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.presente.domains.Telefone;
+import com.presente.domains.enums.TipoTelefone;
 import com.presente.dto.AlunoInsertDTO;
 
 
@@ -36,6 +38,8 @@ public class DBService {
 			if (i == 0) {
 				dto.setEmail("charlles_df@hotmail.com");
 				dto.setMatricula("123");
+				dto.addTelefone(new Telefone(TipoTelefone.CELULAR.ordinal(), "(61)99999-9999", null));
+				dto.addTelefone(new Telefone(TipoTelefone.FIXO.ordinal(), "(61)3999-9999", null));
 			} else {
 				dto.setEmail("aluno_"+String.valueOf(i)+"@email.com");
 				dto.setMatricula(String.valueOf(i));
