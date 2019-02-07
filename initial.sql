@@ -32,8 +32,8 @@ CREATE TABLE `aluno` (
   `data_nascimento` date DEFAULT NULL,
   `enviar_email_registro` bit(1) NOT NULL,
   `enviar_mensagem` bit(1) NOT NULL,
-  `matricula` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nome` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `matricula` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nome` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `url_foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `responsavel_id` int(11) DEFAULT NULL,
   `turma_id` int(11) DEFAULT NULL,
@@ -81,8 +81,6 @@ CREATE TABLE `log_alteracao_aluno` (
   `nome_responsavel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sala` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `serie` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telefone_celular_responsavel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telefone_fixo_responsavel` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `turma` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `url_foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -184,13 +182,11 @@ CREATE TABLE `responsavel` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data_ultima_atualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ativo` bit(1) NOT NULL,
-  `cpf` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `email2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `nome` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `cpf` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email2` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `nome` varchar(200) COLLATE utf8_unicode_ci DEFAULT NULL,
   `senha` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telefone_celular` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `telefone_fixo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -205,6 +201,31 @@ LOCK TABLES `responsavel` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `telefone`
+--
+
+DROP TABLE IF EXISTS `telefone`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `telefone` (
+  `telefone` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  `descricao` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tipo` int(11) DEFAULT NULL,
+  `responsavel_id` int(11) NOT NULL,
+  PRIMARY KEY (`responsavel_id`,`telefone`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `telefone`
+--
+
+LOCK TABLES `telefone` WRITE;
+/*!40000 ALTER TABLE `telefone` DISABLE KEYS */;
+/*!40000 ALTER TABLE `telefone` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `turma`
 --
 
@@ -215,9 +236,9 @@ CREATE TABLE `turma` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `data_ultima_atualizacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `ativo` bit(1) NOT NULL,
-  `descricao` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `sala` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `serie` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `descricao` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sala` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `serie` varchar(5) COLLATE utf8_unicode_ci DEFAULT NULL,
   `turno` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -241,4 +262,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-01 14:54:41
+-- Dump completed on 2019-02-06 21:47:53
