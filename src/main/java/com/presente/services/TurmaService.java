@@ -117,7 +117,7 @@ public class TurmaService {
 		matcher = matcher.withMatcher("ativo", exact());
 		return Example.of(turma, matcher);
 	}
-
+	
 	private Example<Turma> getExampleExactly(TurmaDTO dto) {
 		ExampleMatcher matcher = ExampleMatcher.matching().withIncludeNullValues();
 		Turma turma = new Turma();
@@ -184,5 +184,15 @@ public class TurmaService {
 				.withMatcher("turno", ignoreCase().exact())
 				.withIgnorePaths("id", "dataUltimaAtualizacao");
 		return this.repository.findOne(Example.of(turma, exampleMatcher));
+	}
+
+	/**
+	 * 
+	 * @param term Turma, Serie ou Sala
+	 * @return
+	 */
+	public Page<TurmaDTO> searchByTerm(String term) {
+		PageRequest pageable = PageRequest.of(0, 10, Direction.ASC, "descricao");
+		return repository.findAllByAtivoAndDescricaoOrSerieOrSala(true, term, term, term, pageable).map(t -> new TurmaDTO(t));
 	}
 }

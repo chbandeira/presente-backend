@@ -29,7 +29,8 @@ public class TurmaController {
 	public TurmaService service;
 
 	@GetMapping
-	public Page<TurmaDTO> findByDescricao(
+	@ResponseStatus(HttpStatus.OK)
+	public Page<TurmaDTO> search(
 			@RequestParam(value = "descricao", defaultValue = "") String descricao,
 			@RequestParam(value = "serie", defaultValue = "") String serie,
 			@RequestParam(value = "sala", defaultValue = "") String sala,
@@ -41,6 +42,12 @@ public class TurmaController {
 
 		TurmaDTO dto = new TurmaDTO(descricao, serie, sala, turno);
 		return this.service.search(dto, page, size, direction, orderBy);
+	}
+	
+	@GetMapping("/term")
+	@ResponseStatus(HttpStatus.OK)
+	public Page<TurmaDTO> searchByTerm(@RequestParam(value = "term", defaultValue = "") String term) {
+		return this.service.searchByTerm(term);
 	}
 	
 	@PostMapping
