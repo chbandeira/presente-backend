@@ -44,7 +44,7 @@ public class TurmaController {
 		return this.service.search(dto, page, size, direction, orderBy);
 	}
 	
-	@GetMapping("/term")
+	@GetMapping("/search")
 	@ResponseStatus(HttpStatus.OK)
 	public Page<TurmaDTO> searchByTerm(@RequestParam(value = "term", defaultValue = "") String term) {
 		return this.service.searchByTerm(term);

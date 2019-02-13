@@ -48,22 +48,18 @@ public class AlunoService {
 			Optional<Aluno> alunoFound = this.repository.findById(dto.getId());
 			if (alunoFound.isPresent()) {
 				aluno = alunoFound.get();
-				if (!hasResponsavel(dto)) {
+				if (!this.hasResponsavel(dto)) {
 					long count = this.repository.countByResponsavel(aluno.getResponsavel());
 					if (count == 1) {
 						this.responsavelService.disable(aluno.getResponsavel());
 					}
-				}
+				} 
 			}
 		}
-		aluno = this.fromAlunoCadastroDTO(dto, aluno, hasResponsavel(dto));
+		aluno = this.fromAlunoCadastroDTO(dto, aluno);
 		this.repository.save(aluno);
 		this.historicoAlteracaoService.save(aluno, false);
 		return aluno.getId();
-	}
-
-	private boolean hasResponsavel(AlunoCadastroDTO dto) {
-		return dto.getNomeResponsavel() != null && !dto.getNomeResponsavel().isBlank();
 	}
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -96,28 +92,46 @@ public class AlunoService {
 		return this.repository.findAll(example, pageRequest).map(mat -> new AlunoDTO(mat));
 	}
 
-	public Aluno fromAlunoCadastroDTO(AlunoCadastroDTO dto, Aluno aluno, boolean hasResponsavel) {
+	public Aluno fromAlunoCadastroDTO(AlunoCadastroDTO dto, Aluno aluno) {
 		if (aluno == null) {
 			aluno = new Aluno();
 			aluno.setAnoLetivo(Year.now().getValue());
 			aluno.setDataMatricula(DateTime.getDataAtual());
+			aluno.setId(dto.getId());
 		}
-		aluno.setId(dto.getId());
 		aluno.setBolsista(dto.isAlunoBolsista());
 		aluno.setDataNascimento(dto.getDataNascimento());
 		aluno.setDataUltimaAtualizacao(DateTime.getDataAtual());
-		aluno.setEnviarEmailRegistro(dto.isEnviarEmail());
-		aluno.setEnviarMensagem(dto.isEnviarMensagem());
 		aluno.setMatricula(dto.getMatricula());
 		aluno.setNome(dto.getNome());
 		aluno.setUrlFoto(dto.getUrlFoto());
 		aluno.setTurma(this.turmaService.fromAlunoCadastroDto(dto));
-		if (hasResponsavel) {			
+		if (this.hasNewResponsavel(dto)) {			
 			aluno.setResponsavel(this.responsavelService.fromAlunoCadastroDto(dto, aluno.getResponsavel()));
-		} else {
+		} else if (!this.hasResponsavel(dto)) {
 			aluno.setResponsavel(null);
+		} else if (this.hasOtherResponsavel(dto, aluno)) {
+			aluno.setResponsavel(this.responsavelService.findById(dto.getIdResponsavel()).get());
 		}
 		return aluno;
+	}
+
+	private boolean hasNewResponsavel(AlunoCadastroDTO dto) {
+		return dto.getIdResponsavel() == null && dto.getNomeResponsavel() != null && !dto.getNomeResponsavel().isBlank();
+	}
+
+	private boolean hasResponsavel(AlunoCadastroDTO dto) {
+		return dto.getIdResponsavel() != null 
+				|| (dto.getNomeResponsavel() != null && !dto.getNomeResponsavel().isBlank());
+	}
+
+	private boolean hasOtherResponsavel(AlunoCadastroDTO dto, Aluno aluno) {
+		return 	(dto.getIdResponsavel() != null
+					&& aluno.getResponsavel() != null 
+					&& aluno.getResponsavel().getId() != null
+					&& !dto.getIdResponsavel().equals(aluno.getResponsavel().getId())) 
+				||
+				(dto.getIdResponsavel() != null && aluno.getResponsavel() == null);
 	}
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)

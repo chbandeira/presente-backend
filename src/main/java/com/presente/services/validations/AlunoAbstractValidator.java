@@ -53,11 +53,11 @@ public abstract class AlunoAbstractValidator {
 	}
 
 	protected void addMessageMatriculaExists(List<FieldMessage> list) {
-		list.add(new FieldMessage("matricula", "Matrícula já existe"));
+		list.add(new FieldMessage("matricula", "Matrícula já utilizado"));
 	}
 
 	protected void addMessageNomeExists(List<FieldMessage> list) {
-		list.add(new FieldMessage("nome", "Nome já existe"));
+		list.add(new FieldMessage("nome", "Nome já utilizado"));
 	}
 
 	protected void addMessageResponsavelInvalid(List<FieldMessage> list) {
@@ -65,7 +65,7 @@ public abstract class AlunoAbstractValidator {
 	}
 
 	protected void addMessageEmailExists(List<FieldMessage> list, String field) {
-		list.add(new FieldMessage(field, "Email já existe"));
+		list.add(new FieldMessage(field, "Email já utilizado"));
 	}
 
 	protected boolean isResponsavelFilled(Responsavel responsavel) {
@@ -103,5 +103,48 @@ public abstract class AlunoAbstractValidator {
 
 	protected boolean areEmailsEqual(String email, String email2) {
 		return email != null && !email.isBlank() && email2 != null && !email2.isBlank() && email.equals(email2);
+	}
+
+	protected void addMessageCpfExists(List<FieldMessage> list) {
+		list.add(new FieldMessage("cpf", "CPF já utilizado. Selecione o responsável existente ou informe outro CPF."));
+	}
+	
+	protected void validadeCpf(List<FieldMessage> list, String cpf) {
+		if (cpf != null && !cpf.isBlank()) {			
+			Optional<Responsavel> responsavelFound = this.responsavelRepository.findByCpfAndAtivo(cpf, true);
+			if (responsavelFound.isPresent()) {
+				this.addMessageCpfExists(list);
+			}
+		}
+	}
+
+	protected void validadeNomeResponsavel(List<FieldMessage> list, String nomeResponsavel) {
+		if (nomeResponsavel != null && !nomeResponsavel.isBlank()) {	
+			Optional<Responsavel> responsavelFound = this.responsavelRepository.findByNomeAndAtivo(nomeResponsavel, true);
+			if (responsavelFound.isPresent()) {
+				this.addMessageNomeResponsavelExists(list);
+			}
+		}
+	}
+
+	protected void addMessageNomeResponsavelExists(List<FieldMessage> list) {
+		list.add(new FieldMessage("nomeResponsavel", "Nome do Responsável já utilizado"));
+	}
+	
+	protected void validadeResponsavel(AlunoCadastroDTO value, List<FieldMessage> list) {
+		if (value.getIdResponsavel() == null) {
+			if (!isResponsavelValid(value)) {
+				addMessageResponsavelInvalid(list);
+			}
+			validateEmails(list, value.getEmail(), value.getEmail2());
+			if (value.getEmail() != null && !value.getEmail().isBlank()) {
+				validateEmail(list, value.getEmail(), "email");
+				if (value.getEmail2() != null && !value.getEmail2().isBlank()) {
+					validateEmail(list, value.getEmail2(), "email2");
+				}
+			}
+			validadeCpf(list, value.getCpf());
+			validadeNomeResponsavel(list, value.getNomeResponsavel());
+		}
 	}
 }

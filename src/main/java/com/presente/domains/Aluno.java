@@ -53,10 +53,6 @@ public class Aluno extends BaseEntity {
 	@JoinColumn(name = "RESPONSAVEL_ID")
 	private Responsavel responsavel;
 
-	private boolean enviarEmailRegistro;
-	
-	private boolean enviarMensagem;
-
 	private boolean ativo = true;
 	
 	public Aluno() {
@@ -140,22 +136,6 @@ public class Aluno extends BaseEntity {
 
 	public void setResponsavel(Responsavel responsavel) {
 		this.responsavel = responsavel;
-	}
-
-	public boolean isEnviarEmailRegistro() {
-		return enviarEmailRegistro;
-	}
-
-	public void setEnviarEmailRegistro(boolean enviarEmailRegistro) {
-		this.enviarEmailRegistro = enviarEmailRegistro;
-	}
-
-	public boolean isEnviarMensagem() {
-		return enviarMensagem;
-	}
-
-	public void setEnviarMensagem(boolean enviarMensagem) {
-		this.enviarMensagem = enviarMensagem;
 	}
 
 	public boolean isAtivo() {

@@ -11,8 +11,6 @@ import com.presente.domains.Responsavel;
 @Repository
 public interface AlunoRepository extends JpaRepository<Aluno, Integer> {
  
-	long countByResponsavel(Responsavel responsavel);
-
 	Optional<Aluno> findByMatriculaAndAnoLetivoAndAtivo(String matricula, Integer anoLetivo, boolean ativo);
 
 	Optional<Aluno> findByNomeAndAnoLetivoAndAtivo(String nome, Integer anoLetivo, boolean ativo);
@@ -20,5 +18,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, Integer> {
 	Optional<Aluno> findByNomeAndAnoLetivoAndAtivoAndIdNot(String nome, Integer anoLetivo, boolean ativo, Integer id);
 
 	Optional<Aluno> findByMatriculaAndAnoLetivoAndAtivoAndIdNot(String matricula, Integer anoLetivo, boolean ativo, Integer id);
+
+	long countByResponsavel(Responsavel responsavel);
 
 }

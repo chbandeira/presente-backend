@@ -44,8 +44,6 @@ public class LogAlteracaoAlunoService {
 		logAlteracaoAluno.setMatricula(aluno.getMatricula());
 		logAlteracaoAluno.setNome(aluno.getNome());
 		logAlteracaoAluno.setUrlFoto(aluno.getUrlFoto());
-		logAlteracaoAluno.setEnviarEmailRegistro(aluno.isEnviarEmailRegistro());
-		logAlteracaoAluno.setEnviarMensagem(aluno.isEnviarMensagem());
 		logAlteracaoAluno.setAtivo(aluno.isAtivo());
 		if (aluno.getResponsavel() != null) {
 			logAlteracaoAluno.setCpfResponsavel(aluno.getResponsavel().getCpf());
@@ -53,6 +51,8 @@ public class LogAlteracaoAlunoService {
 			logAlteracaoAluno.setEmailResponsavel2(aluno.getResponsavel().getEmail2());
 			logAlteracaoAluno.setIdResponsavel(aluno.getResponsavel().getId());
 			logAlteracaoAluno.setNomeResponsavel(aluno.getResponsavel().getNome());
+			logAlteracaoAluno.setEnviarEmailRegistro(aluno.getResponsavel().isEnviarEmailRegistro());
+			logAlteracaoAluno.setEnviarMensagem(aluno.getResponsavel().isEnviarMensagem());
 		}
 		if (aluno.getTurma() != null) {
 			logAlteracaoAluno.setIdTurma(aluno.getTurma().getId());

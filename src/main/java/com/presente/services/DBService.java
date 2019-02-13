@@ -36,6 +36,7 @@ public class DBService {
 			dto.setTurno(this.random.nextInt(3));
 			dto.setTurma(new String(new char[] {(char) (this.random.nextInt(26) + 65)}));
 			if (i == 0) {
+				dto.setCpf("184.423.879-27");
 				dto.setEmail("charlles_df@hotmail.com");
 				dto.setMatricula("123");
 				dto.addTelefone(new Telefone(TipoTelefone.CELULAR.ordinal(), "(61)99999-9999", null));

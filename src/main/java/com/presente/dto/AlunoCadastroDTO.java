@@ -53,6 +53,8 @@ public class AlunoCadastroDTO implements Serializable {
 	private boolean alunoBolsista;
 	
 	private String urlFoto;
+	
+	private Integer idResponsavel;
 
 	@Length(max = 200)
 	private String nomeResponsavel;
@@ -97,14 +99,15 @@ public class AlunoCadastroDTO implements Serializable {
 				this.turno = aluno.getTurma().getTurno().ordinal();
 			}
 		}
-		this.enviarEmail = aluno.isEnviarEmailRegistro();
-		this.enviarMensagem = aluno.isEnviarMensagem();
 		this.anoLetivo = aluno.getAnoLetivo();
 		if (aluno.getResponsavel() != null) {
+			this.idResponsavel = aluno.getResponsavel().getId();
 			this.cpf = aluno.getResponsavel().getCpf();
 			this.email = aluno.getResponsavel().getEmail();
 			this.email2 = aluno.getResponsavel().getEmail2();
 			this.nomeResponsavel = aluno.getResponsavel().getNome();
+			this.enviarEmail = aluno.getResponsavel().isEnviarEmailRegistro();
+			this.enviarMensagem = aluno.getResponsavel().isEnviarMensagem();
 			for (Telefone tel : aluno.getResponsavel().getTelefones()) {				
 				this.telefones.add(new TelefoneDTO(tel));
 			}
@@ -261,6 +264,14 @@ public class AlunoCadastroDTO implements Serializable {
 
 	public void addTelefone(Telefone telefone) {
 		this.telefones.add(new TelefoneDTO(telefone));
+	}
+
+	public Integer getIdResponsavel() {
+		return idResponsavel;
+	}
+
+	public void setIdResponsavel(Integer idResponsavel) {
+		this.idResponsavel = idResponsavel;
 	}
 
 }

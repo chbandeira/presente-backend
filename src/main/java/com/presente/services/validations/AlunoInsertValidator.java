@@ -25,7 +25,7 @@ public class AlunoInsertValidator extends AlunoAbstractValidator implements Cons
 		
 		this.validateMatricula(value, list);
 		this.validadeNome(value, list);
-		this.validadeResponsavel(value, list);
+		super.validadeResponsavel(value, list);
 		
 		for (FieldMessage e : list) {
 			context.disableDefaultConstraintViolation();
@@ -33,19 +33,6 @@ public class AlunoInsertValidator extends AlunoAbstractValidator implements Cons
 					.addConstraintViolation();
 		}
 		return list.isEmpty();
-	}
-
-	private void validadeResponsavel(AlunoInsertDTO value, List<FieldMessage> list) {
-		if (!super.isResponsavelValid(value)) {
-			super.addMessageResponsavelInvalid(list);
-		}
-		super.validateEmails(list, value.getEmail(), value.getEmail2());
-		if (value.getEmail() != null && !value.getEmail().isBlank()) {
-			super.validateEmail(list, value.getEmail(), "email");
-			if (value.getEmail2() != null && !value.getEmail2().isBlank()) {
-				super.validateEmail(list, value.getEmail2(), "email2");
-			}
-		}
 	}
 
 	private void validadeNome(AlunoInsertDTO value, List<FieldMessage> list) {

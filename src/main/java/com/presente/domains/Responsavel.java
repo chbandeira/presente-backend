@@ -46,6 +46,10 @@ public class Responsavel extends BaseEntity {
 	@Column(length = 20)
 	private String cpf;
 	
+	private boolean enviarEmailRegistro;
+	
+	private boolean enviarMensagem;
+	
 	private boolean ativo = true;
 	
 	@JsonIgnore
@@ -130,6 +134,22 @@ public class Responsavel extends BaseEntity {
 	
 	public void addPerfil(Perfil perfil) {
 		perfis.add(perfil.getCod());
+	}
+
+	public boolean isEnviarEmailRegistro() {
+		return enviarEmailRegistro;
+	}
+
+	public void setEnviarEmailRegistro(boolean enviarEmailRegistro) {
+		this.enviarEmailRegistro = enviarEmailRegistro;
+	}
+
+	public boolean isEnviarMensagem() {
+		return enviarMensagem;
+	}
+
+	public void setEnviarMensagem(boolean enviarMensagem) {
+		this.enviarMensagem = enviarMensagem;
 	}
 
 	@Override
