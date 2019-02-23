@@ -32,7 +32,6 @@ CREATE TABLE `aluno` (
   `data_nascimento` date DEFAULT NULL,
   `matricula` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nome` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-  `url_foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `responsavel_id` int(11) DEFAULT NULL,
   `turma_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -80,7 +79,6 @@ CREATE TABLE `log_alteracao_aluno` (
   `sala` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `serie` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `turma` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `url_foto` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -262,4 +260,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-12 22:49:45
+-- Dump completed on 2019-02-23 17:46:35
