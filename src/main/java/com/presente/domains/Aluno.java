@@ -31,9 +31,6 @@ public class Aluno extends BaseEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
-	@Column
-	private String urlFoto;
-
 	@Column(length = 20)
 	private String matricula;
 
@@ -80,14 +77,6 @@ public class Aluno extends BaseEntity {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public String getUrlFoto() {
-		return urlFoto;
-	}
-
-	public void setUrlFoto(String urlFoto) {
-		this.urlFoto = urlFoto;
 	}
 
 	public String getMatricula() {
@@ -145,7 +134,7 @@ public class Aluno extends BaseEntity {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

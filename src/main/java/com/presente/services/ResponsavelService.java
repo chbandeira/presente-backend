@@ -44,9 +44,11 @@ public class ResponsavelService {
 		responsavel.setEnviarEmailRegistro(dto.isEnviarEmail());
 		responsavel.setEnviarMensagem(dto.isEnviarMensagem());
 		responsavel.getTelefones().clear();
-		for (TelefoneDTO tel : dto.getTelefones()) {			
-			Telefone telefone = this.telefoneService.fromDTO(tel);
-			responsavel.addTelefone(telefone);
+		if (dto.getTelefones() != null) {			
+			for (TelefoneDTO tel : dto.getTelefones()) {			
+				Telefone telefone = this.telefoneService.fromDTO(tel);
+				responsavel.addTelefone(telefone);
+			}
 		}
 		if (responsavel.getId() == null && dto.getMatricula() != null && !dto.getMatricula().isBlank()) {
 			responsavel.setSenha(this.encoder.encode(dto.getMatricula()));

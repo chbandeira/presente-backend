@@ -11,11 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.presente.dto.AlunoCadastroDTO;
 import com.presente.dto.AlunoDTO;
@@ -45,14 +46,18 @@ public class AlunoController {
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Integer insert(@Valid @RequestBody AlunoInsertDTO dto) {
-		return this.service.save(dto);
+	public Integer insert(
+			@Valid @RequestPart("aluno") AlunoInsertDTO dto, 
+			@RequestPart(value = "file", required = false) MultipartFile file) {
+		return this.service.save(dto, file);
 	}
 	
 	@PutMapping
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(@Valid @RequestBody AlunoUpdateDTO dto) {
-		this.service.save(dto);
+	public void update(
+			@Valid @RequestPart("aluno") AlunoUpdateDTO dto, 
+			@RequestPart(value = "file", required = false) MultipartFile file) {
+		this.service.save(dto, file);
 	}
 	
 	@GetMapping("/{id}")

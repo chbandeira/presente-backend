@@ -88,7 +88,6 @@ public class AlunoCadastroDTO implements Serializable {
 		this.id = aluno.getId();
 		this.nome = aluno.getNome();
 		this.dataNascimento = aluno.getDataNascimento();
-		this.urlFoto = aluno.getUrlFoto();
 		this.alunoBolsista = aluno.isBolsista();
 		this.matricula = aluno.getMatricula();
 		if (aluno.getTurma() != null) {

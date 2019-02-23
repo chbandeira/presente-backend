@@ -35,8 +35,6 @@ public class LogAlteracaoAluno extends BaseEntity {
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 
-	private String urlFoto;
-
 	private String matricula;
 
 	private Integer idTurma;
@@ -95,14 +93,6 @@ public class LogAlteracaoAluno extends BaseEntity {
 
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
-	}
-
-	public String getUrlFoto() {
-		return urlFoto;
-	}
-
-	public void setUrlFoto(String urlFoto) {
-		this.urlFoto = urlFoto;
 	}
 
 	public String getMatricula() {

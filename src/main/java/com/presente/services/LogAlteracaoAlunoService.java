@@ -43,7 +43,6 @@ public class LogAlteracaoAlunoService {
 		logAlteracaoAluno.setDataUltimaAtualizacao(DateTime.getDataAtual());
 		logAlteracaoAluno.setMatricula(aluno.getMatricula());
 		logAlteracaoAluno.setNome(aluno.getNome());
-		logAlteracaoAluno.setUrlFoto(aluno.getUrlFoto());
 		logAlteracaoAluno.setAtivo(aluno.isAtivo());
 		if (aluno.getResponsavel() != null) {
 			logAlteracaoAluno.setCpfResponsavel(aluno.getResponsavel().getCpf());

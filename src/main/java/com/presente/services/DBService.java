@@ -38,6 +38,7 @@ public class DBService {
 			if (i == 0) {
 				dto.setCpf("184.423.879-27");
 				dto.setEmail("charlles_df@hotmail.com");
+				dto.setEmail2("charlles_df2@hotmail.com");
 				dto.setMatricula("123");
 				dto.addTelefone(new Telefone(TipoTelefone.CELULAR.ordinal(), "(61)99999-9999", null));
 				dto.addTelefone(new Telefone(TipoTelefone.FIXO.ordinal(), "(61)3999-9999", null));
@@ -46,7 +47,7 @@ public class DBService {
 				dto.setMatricula(String.valueOf(i));
 			}
 			dto.setSenha(this.encoder.encode("12345"));
-			alunoService.save(dto);
+			alunoService.save(dto, null);
 		}
 	}
 

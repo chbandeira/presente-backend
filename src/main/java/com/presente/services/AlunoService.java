@@ -3,10 +3,13 @@ package com.presente.services;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
 
+import java.awt.image.BufferedImage;
+import java.net.URI;
 import java.time.Year;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.Page;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.presente.domains.Aluno;
 import com.presente.dto.AlunoCadastroDTO;
@@ -37,28 +41,34 @@ public class AlunoService {
 	private TurmaService turmaService;
 	@Autowired
 	private LogAlteracaoAlunoService historicoAlteracaoService;
+	@Autowired
+	private ImageService imageService;
+	@Autowired
+	private S3Service s3Service;
 
 	@Autowired
 	private AlunoRepository repository;
+	
+	@Value("${img.prefix.client.profile}")
+	private String prefix;
+	@Value("${img.profile.size}")
+	private Integer size;
 
 	@Transactional
-	public Integer save(AlunoCadastroDTO dto) {
+	public Integer save(AlunoCadastroDTO dto, MultipartFile foto) {
 		Aluno aluno = null;
 		if (dto.getId() != null) {
 			Optional<Aluno> alunoFound = this.repository.findById(dto.getId());
 			if (alunoFound.isPresent()) {
 				aluno = alunoFound.get();
-				if (!this.hasResponsavel(dto)) {
-					long count = this.repository.countByResponsavel(aluno.getResponsavel());
-					if (count == 1) {
-						this.responsavelService.disable(aluno.getResponsavel());
-					}
-				} 
 			}
 		}
 		aluno = this.fromAlunoCadastroDTO(dto, aluno);
 		this.repository.save(aluno);
 		this.historicoAlteracaoService.save(aluno, false);
+		if (foto != null) {			
+			this.uploadProfilePicture(foto, aluno.getMatricula());
+		}
 		return aluno.getId();
 	}
 
@@ -66,11 +76,9 @@ public class AlunoService {
 	public Page<AlunoDTO> search(String nome, String codMatricula, Integer anoLetivo, Integer page, Integer size,
 			String direction) {
 
-		PageRequest pageRequest = PageRequest.of(page, size, Direction.valueOf(direction), "nome", "matricula",
-				"anoLetivo");
-
+		PageRequest pageRequest = PageRequest.of(page, size, Direction.valueOf(direction), "nome", "matricula", "anoLetivo");
 		Aluno aluno = new Aluno();
-
+		
 		ExampleMatcher matcher = ExampleMatcher.matching().withIgnoreNullValues();
 		if (!nome.isBlank()) {
 			aluno.setNome(URL.decodeParam(nome));
@@ -85,10 +93,9 @@ public class AlunoService {
 			matcher = matcher.withMatcher("anoLetivo", exact());
 		}
 		matcher = matcher.withMatcher("ativo", exact());
-		matcher = matcher.withIgnorePaths("bolsista", "enviarEmailRegistro", "enviarMensagem");
+		matcher = matcher.withIgnorePaths("bolsista", "enviarEmailRegistro", "enviarMensagem", "foto");
 
 		Example<Aluno> example = Example.of(aluno, matcher);
-
 		return this.repository.findAll(example, pageRequest).map(mat -> new AlunoDTO(mat));
 	}
 
@@ -104,7 +111,6 @@ public class AlunoService {
 		aluno.setDataUltimaAtualizacao(DateTime.getDataAtual());
 		aluno.setMatricula(dto.getMatricula());
 		aluno.setNome(dto.getNome());
-		aluno.setUrlFoto(dto.getUrlFoto());
 		aluno.setTurma(this.turmaService.fromAlunoCadastroDto(dto));
 		if (this.hasNewResponsavel(dto)) {			
 			aluno.setResponsavel(this.responsavelService.fromAlunoCadastroDto(dto, aluno.getResponsavel()));
@@ -156,5 +162,13 @@ public class AlunoService {
 		}
 		this.repository.save(aluno.get());
 		this.historicoAlteracaoService.save(aluno.get(), false);
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile, String fileName) {
+		BufferedImage jpgImage = this.imageService.getJpgImageFromFile(multipartFile);
+		jpgImage = this.imageService.cropSquare(jpgImage);
+		jpgImage = this.imageService.resize(jpgImage, size);
+		String fullFileName = this.prefix + fileName + ".jpg";
+		return this.s3Service.uploadFile(this.imageService.getInputStream(jpgImage, "jpg"), fullFileName, "image");
 	}
 }
