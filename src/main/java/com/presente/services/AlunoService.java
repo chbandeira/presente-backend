@@ -53,9 +53,11 @@ public class AlunoService {
 	private String prefix;
 	@Value("${img.profile.size}")
 	private Integer size;
+	@Value("${s3.urlFoto}")
+	private String s3UrlFoto;
 
 	@Transactional
-	public Integer save(AlunoCadastroDTO dto, MultipartFile foto) {
+	public AlunoCadastroDTO save(AlunoCadastroDTO dto, MultipartFile foto) {
 		Aluno aluno = null;
 		if (dto.getId() != null) {
 			Optional<Aluno> alunoFound = this.repository.findById(dto.getId());
@@ -63,13 +65,16 @@ public class AlunoService {
 				aluno = alunoFound.get();
 			}
 		}
+		if (foto != null) {			
+			dto.setUrlFoto(this.uploadProfilePicture(foto, dto.getMatricula()).toString());
+		} else {
+			dto.setUrlFoto(null);
+		}
 		aluno = this.fromAlunoCadastroDTO(dto, aluno);
 		this.repository.save(aluno);
 		this.historicoAlteracaoService.save(aluno, false);
-		if (foto != null) {			
-			this.uploadProfilePicture(foto, aluno.getMatricula());
-		}
-		return aluno.getId();
+		dto.setId(aluno.getId());
+		return dto;
 	}
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
@@ -112,6 +117,7 @@ public class AlunoService {
 		aluno.setMatricula(dto.getMatricula());
 		aluno.setNome(dto.getNome());
 		aluno.setTurma(this.turmaService.fromAlunoCadastroDto(dto));
+		aluno.setFoto(dto.getUrlFoto() != null);
 		if (this.hasNewResponsavel(dto)) {			
 			aluno.setResponsavel(this.responsavelService.fromAlunoCadastroDto(dto, aluno.getResponsavel()));
 		} else if (!this.hasResponsavel(dto)) {
@@ -146,7 +152,15 @@ public class AlunoService {
 		if (aluno.isEmpty()) {
 			throw new ObjectNotFoundException("Aluno não encontrado");
 		}
-		return new AlunoCadastroDTO(aluno.get());
+		AlunoCadastroDTO dto = new AlunoCadastroDTO(aluno.get());
+		if (aluno.get().hasFoto()) {			
+			dto.setUrlFoto(this.getUrlFoto(dto.getMatricula()));
+		}
+		return dto;
+	}
+
+	public String getUrlFoto(String matricula) {
+		return this.s3UrlFoto + this.getFullnameImage(matricula);
 	}
 
 	@Transactional
@@ -168,7 +182,15 @@ public class AlunoService {
 		BufferedImage jpgImage = this.imageService.getJpgImageFromFile(multipartFile);
 		jpgImage = this.imageService.cropSquare(jpgImage);
 		jpgImage = this.imageService.resize(jpgImage, size);
-		String fullFileName = this.prefix + fileName + ".jpg";
+		String fullFileName = getFullnameImage(fileName);
 		return this.s3Service.uploadFile(this.imageService.getInputStream(jpgImage, "jpg"), fullFileName, "image");
+	}
+
+	private String getFullnameImage(String fileName) {
+		return this.prefix + fileName + ".jpg";
+	}
+
+	public boolean isAtivo(Integer idAluno) {
+		return this.repository.findById(idAluno).get().isAtivo();
 	}
 }

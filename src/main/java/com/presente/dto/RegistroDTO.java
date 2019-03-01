@@ -8,7 +8,8 @@ public class RegistroDTO implements Serializable {
 
 	private Integer tipoRegistro;
 	private String matricula;
-	private String messageRetorno; 
+	private String messageRetorno;
+	private String urlFoto;
 
 	public Integer getTipoRegistro() {
 		return tipoRegistro;
@@ -32,6 +33,14 @@ public class RegistroDTO implements Serializable {
 
 	public void setMessageRetorno(String messageRetorno) {
 		this.messageRetorno = messageRetorno;
+	}
+
+	public String getUrlFoto() {
+		return urlFoto;
+	}
+
+	public void setUrlFoto(String urlFoto) {
+		this.urlFoto = urlFoto;
 	}
 
 }

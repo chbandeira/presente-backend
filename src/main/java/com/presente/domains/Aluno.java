@@ -52,6 +52,8 @@ public class Aluno extends BaseEntity {
 
 	private boolean ativo = true;
 	
+	private boolean foto;
+	
 	public Aluno() {
 	}
 
@@ -133,6 +135,14 @@ public class Aluno extends BaseEntity {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+	
+	public boolean hasFoto() {
+		return foto;
+	}
+	
+	public void setFoto(boolean foto) {
+		this.foto = foto;
 	}
 	
 	@Override
