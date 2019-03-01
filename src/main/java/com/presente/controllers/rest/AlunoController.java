@@ -1,11 +1,14 @@
 package com.presente.controllers.rest;
 
 
+import java.net.URI;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.presente.dto.AlunoCadastroDTO;
 import com.presente.dto.AlunoDTO;
@@ -45,19 +49,19 @@ public class AlunoController {
 	}
 
 	@PostMapping
-	@ResponseStatus(HttpStatus.CREATED)
-	public Integer insert(
+	public ResponseEntity<AlunoCadastroDTO> insert(
 			@Valid @RequestPart("aluno") AlunoInsertDTO dto, 
 			@RequestPart(value = "file", required = false) MultipartFile file) {
-		return this.service.save(dto, file);
+		AlunoCadastroDTO alunoCadastroDTO = this.service.save(dto, file);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(alunoCadastroDTO.getId()).toUri();
+		return ResponseEntity.created(uri).body(alunoCadastroDTO);
 	}
 	
 	@PutMapping
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void update(
+	public ResponseEntity<AlunoCadastroDTO> update(
 			@Valid @RequestPart("aluno") AlunoUpdateDTO dto, 
 			@RequestPart(value = "file", required = false) MultipartFile file) {
-		this.service.save(dto, file);
+		return ResponseEntity.ok(this.service.save(dto, file));
 	}
 	
 	@GetMapping("/{id}")

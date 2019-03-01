@@ -273,4 +273,12 @@ public class AlunoCadastroDTO implements Serializable {
 		this.idResponsavel = idResponsavel;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setTelefones(Set<TelefoneDTO> telefones) {
+		this.telefones = telefones;
+	}
+	
 }
