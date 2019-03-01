@@ -8,13 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.presente.domains.Aluno;
 import com.presente.domains.LogAlteracaoAluno;
 import com.presente.domains.Registro;
 import com.presente.domains.enums.TipoRegistro;
 import com.presente.dto.RegistroDTO;
 import com.presente.exceptions.StandardValidationException;
-import com.presente.repositories.AlunoRepository;
 import com.presente.repositories.RegistroRepository;
 import com.presente.services.utils.DateTime;
 
@@ -41,14 +39,13 @@ public class RegistroService {
 	private LogEnvioEmailService logEnvioEmailService;
 
 	@Autowired
-	private AlunoRepository alunoRepository;
+	private AlunoService alunoService;
 
 	@Transactional
 	public RegistroDTO registrar(RegistroDTO dto) {
 		Optional<LogAlteracaoAluno> logAlteracaoAluno = this.logAlteracaoAlunoService.findByMatriculaAtiva(dto.getMatricula());
 		if (logAlteracaoAluno.isPresent()) {
-			Optional<Aluno> aluno = this.alunoRepository.findById(logAlteracaoAluno.get().getIdAluno());
-			if (aluno.get().isAtivo()) {
+			if (this.alunoService.isAtivo(logAlteracaoAluno.get().getIdAluno())) {
 				Registro registro = new Registro(
 						logAlteracaoAluno.get(), 
 						TipoRegistro.toEnum(dto.getTipoRegistro()), 
@@ -62,6 +59,7 @@ public class RegistroService {
 		} else {
 			throw new StandardValidationException("Matrícula não encontrada!");
 		}
+		dto.setUrlFoto(this.alunoService.getUrlFoto(dto.getMatricula()));
 		return dto;
 	}
 
