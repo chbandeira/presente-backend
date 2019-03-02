@@ -147,7 +147,7 @@ public class AlunoService {
 	}
 
 	@Transactional(readOnly = true, propagation = Propagation.SUPPORTS)
-	public AlunoCadastroDTO findById(Integer id) {
+	public AlunoCadastroDTO findDtoById(Integer id) {
 		Optional<Aluno> aluno = this.repository.findById(id);
 		if (aluno.isEmpty()) {
 			throw new ObjectNotFoundException("Aluno não encontrado");

@@ -30,6 +30,7 @@ CREATE TABLE `aluno` (
   `bolsista` bit(1) NOT NULL,
   `data_matricula` datetime NOT NULL,
   `data_nascimento` date DEFAULT NULL,
+  `foto` bit(1) NOT NULL,
   `matricula` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nome` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
   `responsavel_id` int(11) DEFAULT NULL,
@@ -70,6 +71,7 @@ CREATE TABLE `log_alteracao_aluno` (
   `email_responsavel2` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `enviar_email_registro` bit(1) DEFAULT NULL,
   `enviar_mensagem` bit(1) DEFAULT NULL,
+  `foto` bit(1) DEFAULT NULL,
   `id_aluno` int(11) DEFAULT NULL,
   `id_responsavel` int(11) DEFAULT NULL,
   `id_turma` int(11) DEFAULT NULL,
@@ -260,4 +262,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-23 17:46:35
+-- Dump completed on 2019-03-02 15:47:00

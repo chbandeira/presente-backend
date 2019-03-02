@@ -67,7 +67,7 @@ public class AlunoController {
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	public AlunoCadastroDTO findById(@PathVariable Integer id) {
-		return this.service.findById(id);
+		return this.service.findDtoById(id);
 	}
 	
 	@DeleteMapping("/{id}")

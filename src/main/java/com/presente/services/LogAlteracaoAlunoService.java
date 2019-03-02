@@ -44,6 +44,7 @@ public class LogAlteracaoAlunoService {
 		logAlteracaoAluno.setMatricula(aluno.getMatricula());
 		logAlteracaoAluno.setNome(aluno.getNome());
 		logAlteracaoAluno.setAtivo(aluno.isAtivo());
+		logAlteracaoAluno.setFoto(aluno.hasFoto());
 		if (aluno.getResponsavel() != null) {
 			logAlteracaoAluno.setCpfResponsavel(aluno.getResponsavel().getCpf());
 			logAlteracaoAluno.setEmailResponsavel(aluno.getResponsavel().getEmail());

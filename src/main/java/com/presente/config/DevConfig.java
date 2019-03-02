@@ -17,12 +17,15 @@ public class DevConfig {
 	@Autowired
 	private DBService dbService;
 	
-	@Value("${spring.jpa.hibernate.ddl-auto}")
+	@Value("${init.db.dev}")
 	private String strategy;
 
+	/**
+	 * Inicializa com alguns dados para teste no desenvolvimento
+	 */
 	@Bean
 	public void initDatabase() {
-		if (strategy.equals("create")) {
+		if (strategy.equals("true")) {
 			this.dbService.initDbDev();
 		}
 	}

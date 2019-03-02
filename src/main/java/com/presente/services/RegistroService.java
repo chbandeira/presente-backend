@@ -12,7 +12,7 @@ import com.presente.domains.LogAlteracaoAluno;
 import com.presente.domains.Registro;
 import com.presente.domains.enums.TipoRegistro;
 import com.presente.dto.RegistroDTO;
-import com.presente.exceptions.StandardValidationException;
+import com.presente.exceptions.ValidationException;
 import com.presente.repositories.RegistroRepository;
 import com.presente.services.utils.DateTime;
 
@@ -53,13 +53,15 @@ public class RegistroService {
 				this.repository.save(registro);
 				this.sendEmail(logAlteracaoAluno.get(), registro);
 				dto.setMessageRetorno(this.getMessageRetornoRegistro(logAlteracaoAluno.get()));
+				if (logAlteracaoAluno.get().hasFoto() != null && logAlteracaoAluno.get().hasFoto()) {					
+					dto.setUrlFoto(this.alunoService.getUrlFoto(dto.getMatricula()));
+				}
 			} else {
-				throw new StandardValidationException("Matrícula excluída anteriormente!");
+				throw new ValidationException("Matrícula excluída anteriormente!");
 			}
 		} else {
-			throw new StandardValidationException("Matrícula não encontrada!");
+			throw new ValidationException("Matrícula não encontrada!");
 		}
-		dto.setUrlFoto(this.alunoService.getUrlFoto(dto.getMatricula()));
 		return dto;
 	}
 
@@ -67,17 +69,17 @@ public class RegistroService {
 		StringBuilder sb = new StringBuilder();
 		sb.append(logAlteracaoAluno.getNome()).append(", Matrícula ").append(logAlteracaoAluno.getMatricula());
 		sb.append(" registrada com sucesso!");
-		if (logAlteracaoAluno.getEnviarEmailRegistro()) {			
+		if (logAlteracaoAluno.getEnviarEmailRegistro() != null && logAlteracaoAluno.getEnviarEmailRegistro()) {			
 			sb.append(" Um email será enviado para o responsável.");
 		}
-		if (logAlteracaoAluno.getEnviarMensagem()) {			
+		if (logAlteracaoAluno.getEnviarMensagem() != null && logAlteracaoAluno.getEnviarMensagem()) {			
 			sb.append(" Uma mensagem será enviada para o responsável.");
 		}
 		return sb.toString();
 	}
 
 	private void sendEmail(LogAlteracaoAluno historico, Registro registro) {
-		if (historico.getEnviarEmailRegistro()) {
+		if (historico.getEnviarEmailRegistro() != null && historico.getEnviarEmailRegistro()) {
 			new Thread(() -> {
 				try {
 					this.emailService.sendOrderConfirmationEmail(registro);
