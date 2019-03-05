@@ -10,14 +10,14 @@ import com.presente.services.DBService;
 import com.presente.services.EmailService;
 import com.presente.services.MockEmailService;
 
-@Profile("dev")
+@Profile(value = {"dev","test"})
 @Configuration
 public class DevConfig {
 	
 	@Autowired
 	private DBService dbService;
 	
-	@Value("${init.db.dev}")
+	@Value("${init.db.test}")
 	private String strategy;
 
 	/**
