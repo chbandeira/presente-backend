@@ -10,9 +10,9 @@ system.properties está a propriedade para rodar na versão 11 do Java
 
 Procfile é o arquivo que especifica o comando a ser executado na inicialização do app. Veja mais em https://devcenter.heroku.com/articles/procfile
 
-Comando "git push heroku master" publica na conta Heroku logada
+Comando <b>git push heroku master</b> publica na conta Heroku logada
 
-Acesso a base do Heroku, não utilizar acesso SSL (exemplo: spring.datasource.url=jdbc:mysql://localhost:3306/database?useSSL=false) 
+Acesso a base do Heroku, não utilizar acesso SSL (exemplo: spring.datasource.url=jdbc:mysql://localhost:3306/database?<b>useSSL=false</b>) 
 
 ## Variáveis de ambiente
 
@@ -20,6 +20,7 @@ Necessário conta AWS com Bucket S3, um email válido para envio de registro do 
 
 Pode ser informadas nas variáveis do Heroku ou no catalina.properties do Tomcat. 
 
+<pre>
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 DATASOURCE_URL=
@@ -30,3 +31,4 @@ MAIL_PASSWORD=
 MAIL_USERNAME=
 S3_BUCKET=
 S3_REGION=
+</pre>
