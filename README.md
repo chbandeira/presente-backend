@@ -1,6 +1,6 @@
 # Presente Backend (Java)
 
-Java 11, Spring, MySQL
+Java 11, Spring 5, MySQL 8 e AWS S3
 
 Exemplo de implementação com Angular (Frontend) em https://chbandeira.github.io/presente/
 
@@ -26,7 +26,7 @@ AWS_SECRET_ACCESS_KEY=
 DATASOURCE_URL=
 DATASOURCE_USER=
 DATASOURCE_PASS=
-JWT_SECRET=<algum aleatório a sua escolha>
+JWT_SECRET=algum aleatório a sua escolha
 MAIL_PASSWORD=
 MAIL_USERNAME=
 S3_BUCKET=
