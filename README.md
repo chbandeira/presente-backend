@@ -1,8 +1,20 @@
 # Presente Backend (Java)
 
-Java 11, Spring 5, MySQL 8 e AWS S3
+## Linguagens e Frameworks
 
-Exemplo de implementação com Angular (Frontend) em https://chbandeira.github.io/presente/
+- Java 11
+- Hibernate
+- Spring
+- MySQL
+- Amazon Simple Storage Service
+
+## Exemplos
+
+Exemplo de implementação com Angular (Frontend) em https://chbandeira.github.io/presente/ no Heroku (delay de 30 segundos por estar em servidor free).
+
+<img src="https://github.com/chbandeira/presente-backend/blob/master/PresentSample1.jpg">
+<img src="https://github.com/chbandeira/presente-backend/blob/master/PresentSample2.jpg">
+
 
 ## Heroku
 
